@@ -22,10 +22,12 @@ import java.util.List;
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemAlbum> {
     private Context mContext;
     private List<Album> albumList;
+    private OnClickAlbum onClickAlbum;
 
-    public AlbumAdapter(Context mContext, List<Album> albumList) {
+    public AlbumAdapter(Context mContext, List<Album> albumList, OnClickAlbum onClickAlbum) {
         this.mContext = mContext;
         this.albumList = albumList;
+        this.onClickAlbum = onClickAlbum;
     }
 
     @Override
@@ -36,10 +38,16 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemAlbum> {
     }
 
     @Override
-    public void onBindViewHolder(ItemAlbum holder, int position) {
+    public void onBindViewHolder(ItemAlbum holder, final int position) {
         holder.title.setText(albumList.get(position).getBucket());
         holder.size.setText(albumList.get(position).getArrImage().size()+"");
         Glide.with(mContext).load(new File(albumList.get(position).getArrImage().get(0).getPath())).into(holder.thumbnail);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickAlbum.onClick(position);
+            }
+        });
 
     }
 
@@ -59,6 +67,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemAlbum> {
             size = (TextView) itemView.findViewById(R.id.count);
         }
     }
-
+    public interface OnClickAlbum{
+        void onClick(int position);
+    }
 
 }
