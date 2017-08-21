@@ -28,6 +28,12 @@ public class ImageFragment extends Fragment{
     private ImageAdapter imageAdapter;
     private List<Image> arrImage = new ArrayList<>();
     private Context mContext;
+    private ImageAdapter.OnClickImage  onClickImage;
+
+    public void setOnClickImage(ImageAdapter.OnClickImage onClickImage) {
+        this.onClickImage = onClickImage;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +53,7 @@ public class ImageFragment extends Fragment{
     private void initView(View rootView) {
         recycleView = (RecyclerView) rootView.findViewById(R.id.rv_fr_image);
         recycleView.setLayoutManager(new GridLayoutManager(mContext, 3));
-        imageAdapter = new ImageAdapter(arrImage,mContext);
+        imageAdapter = new ImageAdapter(arrImage,mContext,onClickImage);
         recycleView.setAdapter(imageAdapter);
     }
 }

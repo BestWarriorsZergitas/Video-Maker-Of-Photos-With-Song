@@ -42,13 +42,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemAlbum> {
         holder.title.setText(albumList.get(position).getBucket());
         holder.size.setText(albumList.get(position).getArrImage().size()+"");
         Glide.with(mContext).load(new File(albumList.get(position).getArrImage().get(0).getPath())).into(holder.thumbnail);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickAlbum.onClick(position);
+                onClickAlbum.onClickAlbum(position);
             }
         });
-
     }
 
     @Override
@@ -68,7 +67,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemAlbum> {
         }
     }
     public interface OnClickAlbum{
-        void onClick(int position);
+        void onClickAlbum(int position);
     }
 
 }

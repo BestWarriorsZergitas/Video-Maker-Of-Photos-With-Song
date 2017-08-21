@@ -106,6 +106,7 @@ public class ManagerGalary {
                 if ((new File(path)).exists()) {
                     imagePaths.add(path);
                     arrImage.add(new Image(mydate, bucket, path, width, height, sizeImage + ""));
+                    Log.e("asdasd",path);
                 }
             } while (cur.moveToNext());
             Log.e(TAG, "size image : " + arrImage.size());
