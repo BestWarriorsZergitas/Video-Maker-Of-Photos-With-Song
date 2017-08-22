@@ -12,6 +12,7 @@ import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.objects.Image;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,11 +20,11 @@ import java.util.List;
  */
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ItemImage> {
-    private List<Image> imageList;
+    private ArrayList<Image> imageList;
     private Context mContext;
     private OnClickImage onClickImage;
 
-    public ImageAdapter(List<Image> imageList, Context mContext, OnClickImage onClickImage) {
+    public ImageAdapter(ArrayList<Image> imageList, Context mContext, OnClickImage onClickImage) {
         this.imageList = imageList;
         this.mContext = mContext;
         this.onClickImage = onClickImage;

@@ -13,6 +13,7 @@ import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.objects.Image;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,12 +21,12 @@ import java.util.List;
  */
 
 public class PickedImageAdapter extends RecyclerView.Adapter<PickedImageAdapter.ItemPickedImage> {
-    private List<Image> imageList;
+    private ArrayList<Image> imageList;
     private Context mContext;
     private File image;
     private OnClickCancel onClickCancel;
 
-    public PickedImageAdapter(List<Image> imageList, Context mContext, OnClickCancel onClickCancel) {
+    public PickedImageAdapter(ArrayList<Image> imageList, Context mContext, OnClickCancel onClickCancel) {
         this.imageList = imageList;
         this.mContext = mContext;
         this.onClickCancel = onClickCancel;
@@ -57,7 +58,7 @@ public class PickedImageAdapter extends RecyclerView.Adapter<PickedImageAdapter.
         holder.ivCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickCancel.onClick(position);
+                onClickCancel.onClickCancel(position);
             }
         });
     }
@@ -73,7 +74,7 @@ public class PickedImageAdapter extends RecyclerView.Adapter<PickedImageAdapter.
     }
 
     public interface OnClickCancel {
-        void onClick(int position);
+        void onClickCancel(int position);
     }
 
     public class ItemPickedImage extends RecyclerView.ViewHolder {

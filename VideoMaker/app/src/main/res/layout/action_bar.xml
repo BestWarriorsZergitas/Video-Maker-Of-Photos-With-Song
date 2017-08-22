@@ -22,6 +22,7 @@
         android:layout_alignParentRight="true"
         android:layout_margin="8dp"
         android:text="Next"
+        android:id="@+id/tv_next"
         android:textColor="@android:color/white"
         android:gravity="center"
         android:background="@drawable/bg_tv_next_action_bar"

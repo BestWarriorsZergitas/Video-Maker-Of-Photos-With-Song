@@ -13,6 +13,7 @@ import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.objects.Album;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,10 +22,10 @@ import java.util.List;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ItemAlbum> {
     private Context mContext;
-    private List<Album> albumList;
+    private ArrayList<Album> albumList;
     private OnClickAlbum onClickAlbum;
 
-    public AlbumAdapter(Context mContext, List<Album> albumList, OnClickAlbum onClickAlbum) {
+    public AlbumAdapter(Context mContext, ArrayList<Album> albumList, OnClickAlbum onClickAlbum) {
         this.mContext = mContext;
         this.albumList = albumList;
         this.onClickAlbum = onClickAlbum;

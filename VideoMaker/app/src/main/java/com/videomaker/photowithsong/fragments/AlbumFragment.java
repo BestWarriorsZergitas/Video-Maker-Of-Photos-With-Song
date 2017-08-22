@@ -25,9 +25,9 @@ import java.util.List;
 public class AlbumFragment extends Fragment {
     private RecyclerView recycleView;
     private AlbumAdapter albumAdapter;
-    private List<Album> arrAlbum = new ArrayList<>();
-    private List<Image> arrImage = new ArrayList<>();
-    private List<String> arrBucketAlbum = new ArrayList<>();
+    private ArrayList<Album> arrAlbum = new ArrayList<>();
+    private ArrayList<Image> arrImage = new ArrayList<>();
+    private ArrayList<String> arrBucketAlbum = new ArrayList<>();
     private Context mContext;
     private AlbumAdapter.OnClickAlbum onClickAlbum;
 
@@ -43,7 +43,7 @@ public class AlbumFragment extends Fragment {
         mContext = getActivity().getBaseContext();
     }
 
-    public void setImagesAlbum(List<Image> arrImage) {
+    public void setImagesAlbum(ArrayList<Image> arrImage) {
         this.arrImage = arrImage;
     }
 

@@ -26,7 +26,7 @@ import java.util.List;
 public class ImageFragment extends Fragment{
     private RecyclerView recycleView;
     private ImageAdapter imageAdapter;
-    private List<Image> arrImage = new ArrayList<>();
+    private ArrayList<Image> arrImage = new ArrayList<>();
     private Context mContext;
     private ImageAdapter.OnClickImage  onClickImage;
 
@@ -39,7 +39,7 @@ public class ImageFragment extends Fragment{
         super.onCreate(savedInstanceState);
         mContext=getActivity().getBaseContext();
     }
-    public void setImagesAlbum(List<Image> arrImage) {
+    public void setImagesAlbum(ArrayList<Image> arrImage) {
         this.arrImage = arrImage;
     }
     @Nullable
