@@ -3,6 +3,8 @@ package com.zergitas.testmakevideo;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
+
 /**
  * Created by DaiPhongPC on 8/22/2017.
  */
