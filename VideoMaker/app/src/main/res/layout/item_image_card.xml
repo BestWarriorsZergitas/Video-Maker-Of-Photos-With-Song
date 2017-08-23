@@ -23,7 +23,7 @@
                 android:src="@mipmap/ic_launcher"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:scaleType="fitXY" />
+                android:scaleType="centerCrop" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

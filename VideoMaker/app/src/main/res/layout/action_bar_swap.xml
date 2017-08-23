@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@drawable/ic_back" />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/iv_back"
+        android:gravity="center_vertical"
+        android:text="Swap and Edit" />
+
+    <TextView
+        android:id="@+id/tv_next"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_tv_next_action_bar"
+        android:gravity="center"
+        android:text="Next"
+        android:textColor="@android:color/white" />
+</RelativeLayout>

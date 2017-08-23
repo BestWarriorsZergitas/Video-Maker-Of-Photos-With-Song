@@ -1,5 +1,6 @@
 package com.videomaker.photowithsong.objects;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -25,6 +26,7 @@ public class Image implements Parcelable {
     private String width;
     private String height;
     private String size;
+    private Bitmap imgEdited;
 
     public Image(String date, String bucket, String path, String width, String height, String size) {
         this.date = date;
@@ -39,6 +41,14 @@ public class Image implements Parcelable {
         date = in.readString();
         bucket = in.readString();
         path = in.readString();
+    }
+
+    public Bitmap getImgEdited() {
+        return imgEdited;
+    }
+
+    public void setImgEdited(Bitmap imgEdited) {
+        this.imgEdited = imgEdited;
     }
 
     public String getWidth() {

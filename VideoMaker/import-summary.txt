@@ -1,0 +1,94 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:19.+
+gson-2.2.4.jar => com.google.code.gson:gson:2.2.4
+
+Potentially Missing Dependency:
+-------------------------------
+When we replaced the following .jar files with a Gradle dependency, we
+inferred the dependency version number from the filename. This
+specific version may not actually be available from the repository.
+If you get a build error stating that the dependency is missing, edit
+the version number to for example "+" to pick up the latest version
+instead. (This may require you to update your code if the library APIs
+have changed.)
+
+gson-2.2.4.jar => version 2.2.4 in com.google.code.gson:gson:2.2.4
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => fotorSDKLibrary\src\main\AndroidManifest.xml
+* assets\ => fotorSDKLibrary\src\main\assets\
+* libs\armeabi-v7a\libeibitmap.so => fotorSDKLibrary\src\main\jniLibs\armeabi-v7a\libeibitmap.so
+* libs\armeabi-v7a\libeibitmap_4_3.so => fotorSDKLibrary\src\main\jniLibs\armeabi-v7a\libeibitmap_4_3.so
+* libs\armeabi-v7a\libeibitmap_kk.so => fotorSDKLibrary\src\main\jniLibs\armeabi-v7a\libeibitmap_kk.so
+* libs\armeabi-v7a\libfotor_sdk.so => fotorSDKLibrary\src\main\jniLibs\armeabi-v7a\libfotor_sdk.so
+* libs\armeabi-v7a\libie.so => fotorSDKLibrary\src\main\jniLibs\armeabi-v7a\libie.so
+* libs\armeabi-v7a\librs.basefilter.so => fotorSDKLibrary\src\main\jniLibs\armeabi-v7a\librs.basefilter.so
+* libs\armeabi-v7a\librs.optimization.so => fotorSDKLibrary\src\main\jniLibs\armeabi-v7a\librs.optimization.so
+* libs\armeabi-v7a\librs.temporary.so => fotorSDKLibrary\src\main\jniLibs\armeabi-v7a\librs.temporary.so
+* libs\armeabi\libeibitmap.so => fotorSDKLibrary\src\main\jniLibs\armeabi\libeibitmap.so
+* libs\armeabi\libeibitmap_4_3.so => fotorSDKLibrary\src\main\jniLibs\armeabi\libeibitmap_4_3.so
+* libs\armeabi\libeibitmap_kk.so => fotorSDKLibrary\src\main\jniLibs\armeabi\libeibitmap_kk.so
+* libs\armeabi\libfotor_sdk.so => fotorSDKLibrary\src\main\jniLibs\armeabi\libfotor_sdk.so
+* libs\armeabi\libie.so => fotorSDKLibrary\src\main\jniLibs\armeabi\libie.so
+* libs\eibitmap-v3.0.jar => fotorSDKLibrary\libs\eibitmap-v3.0.jar
+* libs\fotorsdk-v1.0.14.jar => fotorSDKLibrary\libs\fotorsdk-v1.0.14.jar
+* libs\mips\librs.basefilter.so => fotorSDKLibrary\src\main\jniLibs\mips\librs.basefilter.so
+* libs\mips\librs.optimization.so => fotorSDKLibrary\src\main\jniLibs\mips\librs.optimization.so
+* libs\mips\librs.temporary.so => fotorSDKLibrary\src\main\jniLibs\mips\librs.temporary.so
+* libs\x86\libeibitmap.so => fotorSDKLibrary\src\main\jniLibs\x86\libeibitmap.so
+* libs\x86\libeibitmap_4_3.so => fotorSDKLibrary\src\main\jniLibs\x86\libeibitmap_4_3.so
+* libs\x86\libeibitmap_kk.so => fotorSDKLibrary\src\main\jniLibs\x86\libeibitmap_kk.so
+* libs\x86\libfotor_sdk.so => fotorSDKLibrary\src\main\jniLibs\x86\libfotor_sdk.so
+* libs\x86\libie.so => fotorSDKLibrary\src\main\jniLibs\x86\libie.so
+* libs\x86\librs.basefilter.so => fotorSDKLibrary\src\main\jniLibs\x86\librs.basefilter.so
+* libs\x86\librs.optimization.so => fotorSDKLibrary\src\main\jniLibs\x86\librs.optimization.so
+* libs\x86\librs.temporary.so => fotorSDKLibrary\src\main\jniLibs\x86\librs.temporary.so
+* lint.xml => fotorSDKLibrary\lint.xml
+* proguard-project.txt => fotorSDKLibrary\proguard-project.txt
+* res\ => fotorSDKLibrary\src\main\res\
+* src\ => fotorSDKLibrary\src\main\java\
+
+Missing Android Support Repository:
+-----------------------------------
+Some useful libraries, such as the Android Support Library, are
+installed from a special Maven repository, which should be installed
+via the SDK manager.
+
+It looks like this library is missing from your SDK installation at:
+null
+
+To install it, open the SDK manager, and in the Extras category,
+select "Android Support Repository". You may also want to install the
+"Google Repository" if you want to use libraries like Google Play
+Services.
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

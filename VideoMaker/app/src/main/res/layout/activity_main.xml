@@ -5,6 +5,24 @@
     android:layout_height="match_parent"
     tools:context="com.videomaker.photowithsong.activities.MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/RecordButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Record Button" />
+        </LinearLayout>
+    </LinearLayout>
+
+
     <Button
         android:id="@+id/bt_new_video"
         android:layout_width="wrap_content"

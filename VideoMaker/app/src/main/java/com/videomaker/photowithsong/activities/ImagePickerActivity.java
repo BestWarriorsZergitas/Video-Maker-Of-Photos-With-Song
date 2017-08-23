@@ -86,6 +86,13 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
+                if (imageFragment.isVisible()){
+                    FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+                    t.replace(R.id.frame_image_picker, albumFragment);
+                    t.commit();
+                }else {
+                    super.onBackPressed();
+                }
                 break;
             case R.id.tv_next:
                 Intent intent = new Intent(this, SwapAndEditActivity.class);
@@ -127,5 +134,16 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     public void onClickCancel(int position) {
         imagesPicked.remove(imagesPicked.get(position));
         pickedImageAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (imageFragment.isVisible()){
+            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+            t.replace(R.id.frame_image_picker, albumFragment);
+            t.commit();
+        }else {
+            super.onBackPressed();
+        }
     }
 }
