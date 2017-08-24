@@ -15,14 +15,14 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.ImagePickerActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activities.SwapAndEditActivity" />
-        <activity android:name=".activities.SlideShowVideoActivity"/>
+        <activity android:name=".activities.SlideShowVideoActivity"> <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
         <activity android:name=".activities.LoadMusicActivity"/>
     </application>
 

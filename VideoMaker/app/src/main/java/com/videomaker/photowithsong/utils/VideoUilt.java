@@ -2,24 +2,23 @@ package com.videomaker.photowithsong.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Surface;
-
-import com.videomaker.photowithsong.R;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+
+import static android.R.attr.bitmap;
 
 /**
  * Created by DaiPhongPC on 8/22/2017.
@@ -67,13 +66,12 @@ public class VideoUilt {
     /**
      * Vì ở đây ta sử dụng bitmap để vẽ, vì vậy cần có thuộc tính FILTER_BITMAP_FLAG để khi zoom ảnh không bị vỡ hoặc nhoè ảnh
      **/
-    private Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
+    private Paint paint = new Paint();
 
     /**
      * Có thể định nghĩa trước số frame, ví dụ muốn tạo video 5giây, số frame = FRAMES_PER_SECOND * 5;
      **/
     private int maxFrame;
-    private float currentZoom = 0.0f;
 
     public VideoUilt(Context context, ArrayList<Bitmap> lsBitmap, String path) {
         this.context = context;
@@ -111,7 +109,7 @@ public class VideoUilt {
         try {
             /** Tạo ra video có thời lượng là 5giây **/
             //5s=maxFrame/FRAMES_PER_SECOND
-            maxFrame = 150;
+            maxFrame = 180;
             for (int i = 0; i < maxFrame; i++) {
 //                // chuẩn bị cho việc vẽ lên surface
                 drainEncoder(false);
@@ -275,31 +273,37 @@ public class VideoUilt {
      * ví dụ ở giây 1 vẽ ảnh với zoom 1.1f,
      * giây 2 vẽ ảnh zoom với 1.2f
      **/
-    private void generateFrame(int frameNum) {
-        /** Khởi tạo canvas để vẽ từng frame cho video **/
-        Canvas canvas = mInputSurface.lockCanvas(null);
-        try {
-            /** Trong 5 giây ta sẽ vẽ hình ảnh zoom từ 1.0 -> 1.3 **/
-            /** Như vậy ta sẽ phải tính toán trong thời gian thứ i hình ảnh đang zoom ở mức bao nhiêu **/
-//            long currentDuration = computePresentationTimeNsec(frameNum);
-//            float currentZoom = 1.0f + currentDuration * (1.3f - 1.0f) / 5000.0f;
-
-            Matrix matrix = new Matrix();
-            matrix.setScale(currentZoom, currentZoom);
-//            Rect rt=new Rect(0,0,0,0);
-            canvas.drawBitmap(lsBitmap.get(0), matrix, paint);
-//            canvas.drawBitmap(bitmap,0,0,paint);
-
-        } finally {
-            mInputSurface.unlockCanvasAndPost(canvas);
-        }
-    }
-
+//    private void generateFrame(int frameNum) {
+//        /** Khởi tạo canvas để vẽ từng frame cho video **/
+//        Canvas canvas = mInputSurface.lockCanvas(null);
+//        try {
+//            /** Trong 5 giây ta sẽ vẽ hình ảnh zoom từ 1.0 -> 1.3 **/
+//            /** Như vậy ta sẽ phải tính toán trong thời gian thứ i hình ảnh đang zoom ở mức bao nhiêu **/
+////            long currentDuration = computePresentationTimeNsec(frameNum);
+////            float currentZoom = 1.0f + currentDuration * (1.3f - 1.0f) / 5000.0f;
+//
+//            Matrix matrix = new Matrix();
+//            matrix.setScale(currentZoom, currentZoom);
+////            Rect rt=new Rect(0,0,0,0);
+//            canvas.drawBitmap(lsBitmap.get(0), matrix, paint);
+////            canvas.drawBitmap(bitmap,0,0,paint);
+//
+//        } finally {
+//            mInputSurface.unlockCanvasAndPost(canvas);
+//        }
+//    }
     private void generateFrame_(int position) {
         /** Khởi tạo canvas để vẽ từng frame cho video **/
         Canvas canvas = mInputSurface.lockCanvas(null);
+        paint.setColor(Color.CYAN);
         try {
-            canvas.drawBitmap(lsBitmap.get(position), 0, 0, paint);
+//            int width = getWindowManager().getDefaultDisplay().getWidth();
+//            int height = getWindowManager().getDefaultDisplay().getHeight();
+            Rect src = new Rect(0, 0, lsBitmap.get(position).getWidth() - 1, lsBitmap.get(position).getHeight() - 1);
+            Rect dest = new Rect(0, 0, VIDEO_WIDTH - 1, VIDEO_HEIGHT - 1);
+            canvas.drawBitmap(lsBitmap.get(position), src, dest, null);
+
+//            canvas.drawBitmap(lsBitmap.get(position), 0, 0, paint);
 
         } finally {
             mInputSurface.unlockCanvasAndPost(canvas);
