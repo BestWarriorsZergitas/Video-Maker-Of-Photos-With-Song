@@ -109,7 +109,7 @@ public class VideoUilt {
         try {
             /** Tạo ra video có thời lượng là 5giây **/
             //5s=maxFrame/FRAMES_PER_SECOND
-            maxFrame = 180;
+            maxFrame = 150;
             for (int i = 0; i < maxFrame; i++) {
 //                // chuẩn bị cho việc vẽ lên surface
                 drainEncoder(false);
