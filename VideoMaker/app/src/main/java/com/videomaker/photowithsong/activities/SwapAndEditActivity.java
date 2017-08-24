@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,6 +34,7 @@ public class SwapAndEditActivity extends AppCompatActivity implements OnStartDra
 
     public static int CAMERA_PREVIEW_RESULT = 1;
     private ArrayList<Image> imageList;
+    private ArrayList<String> paths;
     private RecyclerView recyclerView;
     private RecyclerListAdapter adapter;
     private ItemTouchHelper mItemTouchHelper;
@@ -85,11 +87,13 @@ public class SwapAndEditActivity extends AppCompatActivity implements OnStartDra
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Bitmap> bitmaps = new ArrayList<Bitmap>();
+                 paths= new ArrayList<String>();
                 for (int i = 0; i < imageList.size(); i++) {
-                    bitmaps.add(getBitmapFromLocalPath(imageList.get(i).getPath(), 1));
+                    paths.add(imageList.get(i).getPath());
                 }
-                
+                Intent data=new Intent(SwapAndEditActivity.this,SlideShowVideoActivity.class);
+                data.putExtra(Constant.IMAGE_ARR,paths);
+                startActivity(data);
             }
         });
 
@@ -145,5 +149,4 @@ public class SwapAndEditActivity extends AppCompatActivity implements OnStartDra
             }
         }
     }
-
 }

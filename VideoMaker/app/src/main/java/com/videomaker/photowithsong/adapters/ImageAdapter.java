@@ -45,6 +45,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ItemImage> {
                 onClickImage.onClickImage(position);
             }
         });
+        if (imageList.get(position).isClicked()){
+            holder.isChecked.setVisibility(View.VISIBLE);
+        }else {
+            holder.isChecked.setVisibility(View.GONE);
+        }
 
     }
 
@@ -59,10 +64,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ItemImage> {
 
     public class ItemImage extends RecyclerView.ViewHolder {
         ImageView thumbnail;
+        ImageView isChecked;
 
         public ItemImage(View itemView) {
             super(itemView);
             thumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
+            isChecked = (ImageView) itemView.findViewById(R.id.iv_checked);
         }
     }
 }

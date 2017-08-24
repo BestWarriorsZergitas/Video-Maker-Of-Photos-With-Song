@@ -56,4 +56,8 @@ public class ImageFragment extends Fragment{
         imageAdapter = new ImageAdapter(arrImage,mContext,onClickImage);
         recycleView.setAdapter(imageAdapter);
     }
+    public void notifiData(ArrayList<Image> arrImage){
+        this.arrImage = arrImage;
+        imageAdapter.notifyDataSetChanged();
+    }
 }

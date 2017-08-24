@@ -6,6 +6,7 @@ package com.videomaker.photowithsong.utils;
 
 public class Constant {
     public static final String IMAGE = "IMAGE";
+    public static final String IMAGE_ARR = "IMAGE_ARR";
     public class Intents {
     }
 

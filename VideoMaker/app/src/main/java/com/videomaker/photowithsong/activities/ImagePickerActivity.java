@@ -86,11 +86,11 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
-                if (imageFragment.isVisible()){
+                if (imageFragment.isVisible()) {
                     FragmentTransaction t = getSupportFragmentManager().beginTransaction();
                     t.replace(R.id.frame_image_picker, albumFragment);
                     t.commit();
-                }else {
+                } else {
                     super.onBackPressed();
                 }
                 break;
@@ -110,6 +110,8 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     @Override
     public void onClickImage(int position) {
         imagesPicked.add(imagesAlBum.get(position));
+        imagesAlBum.get(position).setClicked(true);
+        imageFragment.notifiData(imagesAlBum);
         pickedImageAdapter.notifyDataSetChanged();
         rvPickedImage.smoothScrollToPosition(imagesPicked.size() - 1);
         Log.e("dasdasd", imagesPicked.toString());
@@ -132,17 +134,19 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     // Bắt sự kiện ấn hủy
     @Override
     public void onClickCancel(int position) {
+        imagesAlBum.get(imagesAlBum.indexOf(imagesPicked.get(position))).setClicked(false);
+        imageFragment.notifiData(imagesAlBum);
         imagesPicked.remove(imagesPicked.get(position));
         pickedImageAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onBackPressed() {
-        if (imageFragment.isVisible()){
+        if (imageFragment.isVisible()) {
             FragmentTransaction t = getSupportFragmentManager().beginTransaction();
             t.replace(R.id.frame_image_picker, albumFragment);
             t.commit();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }

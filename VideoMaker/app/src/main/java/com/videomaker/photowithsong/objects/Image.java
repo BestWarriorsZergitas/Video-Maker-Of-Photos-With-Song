@@ -27,6 +27,15 @@ public class Image implements Parcelable {
     private String height;
     private String size;
     private Bitmap imgEdited;
+    private boolean isClicked;
+
+    public boolean isClicked() {
+        return isClicked;
+    }
+
+    public void setClicked(boolean clicked) {
+        isClicked = clicked;
+    }
 
     public Image(String date, String bucket, String path, String width, String height, String size) {
         this.date = date;
