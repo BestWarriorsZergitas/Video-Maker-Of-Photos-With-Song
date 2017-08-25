@@ -85,7 +85,7 @@ public class VideoUilt {
         try {
             /** Tạo ra video có thời lượng là 5giây **/
             //5s=maxFrame/FRAMES_PER_SECOND
-            maxFrame=lsBitmap.size()*30;
+            maxFrame = lsBitmap.size()* 30;
             for (int i = 0; i < maxFrame; i++) {
 //                // chuẩn bị cho việc vẽ lên surface
                 drainEncoder(false);
@@ -277,7 +277,7 @@ public class VideoUilt {
 //            int height = getWindowManager().getDefaultDisplay().getHeight();
             Rect src = new Rect(0, 0, lsBitmap.get(position).getWidth() - 1, lsBitmap.get(position).getHeight() - 1);
             Rect dest = new Rect(0, 0, VIDEO_WIDTH - 1, VIDEO_HEIGHT - 1);
-            canvas.drawBitmap(lsBitmap.get(position), src, dest, null);
+            canvas.drawBitmap(lsBitmap.get(position), src, src, paint);
 
 //            canvas.drawBitmap(lsBitmap.get(position), 0, 0, paint);
 

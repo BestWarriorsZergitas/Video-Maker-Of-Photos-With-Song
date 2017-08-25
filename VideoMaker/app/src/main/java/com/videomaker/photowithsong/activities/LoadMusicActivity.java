@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.adapters.AdapterMusic;
 import com.videomaker.photowithsong.objects.MusicMP3;
+import com.videomaker.photowithsong.utils.Constant;
 import com.videomaker.photowithsong.utils.SongMusic;
 
 import java.util.ArrayList;
@@ -36,13 +37,17 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
         lsview = (ListView) findViewById(R.id.lsview);
         lnpr = (LinearLayout) findViewById(R.id.lnpr);
         txtok = (TextView) findViewById(R.id.tv_next);
+        lnpr.setVisibility(View.INVISIBLE);
         lsmusic = new ArrayList<>();
-        songMusic = new SongMusic();
+        lsmusic.add(new MusicMP3(false, "Ring.acc", "Author", Constant.PATH_TEMP + "ring.aac"));
+        lsmusic.add(new MusicMP3(false, "Kiss the rain.acc", "Yurima",
+                Constant.PATH_TEMP + "KissTheRain-Yiruma_.aac"));
+//        songMusic = new SongMusic();
         adapterMusic = new AdapterMusic(lsmusic, this.getLayoutInflater());
         lsview.setAdapter(adapterMusic);
         lsview.setOnItemClickListener(this);
         txtok.setOnClickListener(this);
-        new loadMusic().execute();
+//        new loadMusic().execute();
 
     }
 
@@ -64,7 +69,7 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
             mediaPlayer.stop();
         }
         Intent intent = new Intent();
-        if (musicMP3!=null){
+        if (musicMP3 != null) {
             intent.putExtra("music", musicMP3);
         }
         setResult(500, intent);
@@ -92,5 +97,8 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
         mediaPlayer = MediaPlayer.create(this, Uri.parse(musicMP3.getPath()));
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
+//        mediaPlayer = MediaPlayer.create(this, musicMP3.getId());
+//        mediaPlayer.setLooping(true);
+//        mediaPlayer.start();
     }
 }

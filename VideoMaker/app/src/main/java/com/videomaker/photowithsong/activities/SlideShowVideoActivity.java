@@ -10,7 +10,6 @@ import android.media.MediaMuxer;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -23,28 +22,24 @@ import android.widget.VideoView;
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.objects.MusicMP3;
 import com.videomaker.photowithsong.utils.Constant;
+import com.videomaker.photowithsong.utils.FileMover;
 import com.videomaker.photowithsong.utils.VideoUilt;
 
-import org.mp4parser.Container;
-import org.mp4parser.IsoFile;
-import org.mp4parser.muxer.Track;
-import org.mp4parser.muxer.builder.DefaultMp4Builder;
-import org.mp4parser.muxer.container.mp4.MovieCreator;
-
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SlideShowVideoActivity extends AppCompatActivity implements View.OnClickListener {
     private VideoUilt video;
     private VideoView videoView;
     private MediaController mediaController;
-    private TextView txtmusis, txtsong;
+    private TextView txtmusis, txtsong, textsave;
     private ImageView imgcontrolermusic, imgmusic;
     private MusicMP3 musicMP3;
     private LinearLayout lnpro;
@@ -56,9 +51,11 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slide_show);
         init();
+        imgcontrolermusic.setOnClickListener(this);
         creatFolder();
         creatFile("test");
-        imgcontrolermusic.setOnClickListener(this);
+        creatFile("test1");
+        copyfilemusic();
         loadbitmap();
         new AsynMakeVideo().execute(lsBitmap);
 
@@ -73,7 +70,6 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         }
     }
 
-
     public void init() {
         videoView = (VideoView) findViewById(R.id.showvideo);
         txtmusis = (TextView) findViewById(R.id.txtnamemusic);
@@ -81,6 +77,8 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         imgmusic = (ImageView) findViewById(R.id.iconmusic);
         imgcontrolermusic = (ImageView) findViewById(R.id.img_controlmusic);
         lnpro = (LinearLayout) findViewById(R.id.lnprocess);
+        textsave = (TextView) findViewById(R.id.tv_next);
+        textsave.setText("Save");
         mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
@@ -91,22 +89,21 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             }
         });
 
+//        videoView.re
+
+        textsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //show diaglog
+                moveFile(Constant.PATH_TEMP + "test1.mp4", Constant.PATH_VIDEO + "video1.mp4");
+            }
+        });
     }
 
 
     public void startIntentMusic() {
         Intent intent = new Intent(this, LoadMusicActivity.class);
-        startActivityForResult(intent, 100);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
-            if (data != null) {
-                musicMP3 = (MusicMP3) data.getSerializableExtra("music");
-            }
-        }
+        startActivityForResult(intent, 500);
     }
 
     @Override
@@ -126,8 +123,8 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             ArrayList<Bitmap> bitmaps = arrayLists[0];
             video = new VideoUilt(getBaseContext(), bitmaps, Constant.PATH_TEMP + "test.mp4");
             String pavideo = video.makeVideo();
-            addaudiovideo(pavideo, Constant.PATH_TEMP + "ring.aac");
-            return pavideo;
+            addaudiovideo(pavideo, Constant.PATH_TEMP + "KissTheRain-Yiruma_.aac",Constant.PATH_TEMP+"test1.mp4");
+            return Constant.PATH_TEMP+"test1.mp4";
         }
 
         @Override
@@ -141,6 +138,31 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             videoView.setVideoPath(path);
             videoView.start();
         }
+
+    }
+
+    public class AsynAddAudio extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... arrayLists) {
+
+            String pathaudio = arrayLists[0];
+            addaudiovideo(Constant.PATH_TEMP + "test.mp4", pathaudio, Constant.PATH_TEMP + "test1.mp4");
+            return Constant.PATH_TEMP + "test1.mp4";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            lnpro.setVisibility(View.INVISIBLE);
+            showVideo(s);
+        }
+
+        private void showVideo(String path) {
+            videoView.setVideoPath(path);
+            videoView.start();
+        }
+
     }
 
     public static Bitmap getBitmapFromLocalPath(String path, int sampleSize) {
@@ -154,7 +176,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         return null;
     }
 
-    public void addaudiovideo(String pathvideo, String pathaudio) {
+    public void addaudiovideo(String pathvideo, String pathaudio, String output) {
         MediaExtractor videoExtractor = new MediaExtractor();
         try {
             videoExtractor.setDataSource(pathvideo);
@@ -167,7 +189,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                     "Audio Extractor Track Count "
                             + audioExtractor.getTrackCount());
 
-            MediaMuxer muxer = new MediaMuxer(pathvideo,
+            MediaMuxer muxer = new MediaMuxer(output,
                     MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
 
             videoExtractor.selectTrack(0);
@@ -272,5 +294,67 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             e.printStackTrace();
         }
         return filevideo.getPath();
+    }
+
+    private void moveFile(String inputPath, String outputPath) {
+
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            in = new FileInputStream(inputPath);
+            out = new FileOutputStream(outputPath);
+
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            in.close();
+            in = null;
+
+            // write the output file
+            out.flush();
+            out.close();
+            out = null;
+
+            // delete the original file
+            new File(inputPath).delete();
+
+
+        } catch (FileNotFoundException fnfe1) {
+            Log.e("tag", fnfe1.getMessage());
+        } catch (Exception e) {
+            Log.e("tag", e.getMessage());
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 500) {
+            if (data != null) {
+                            lnpro.setVisibility(View.VISIBLE);
+                musicMP3 = (MusicMP3) data.getSerializableExtra("music");
+                txtmusis.setText(musicMP3.getNamemusic());
+                txtsong.setText(musicMP3.getNamesong());
+                new AsynAddAudio().execute(musicMP3.getPath());
+
+            }
+        }
+    }
+
+    String[] libraryAssets = {"ring.aac", "KissTheRain-Yiruma_.aac"};
+
+    public void copyfilemusic() {
+        for (int i = 0; i < libraryAssets.length; i++) {
+            try {
+                InputStream audioinput = this.getAssets().open(libraryAssets[i]);
+                FileMover fm = new FileMover(audioinput, Constant.PATH_TEMP + libraryAssets[i]);
+                fm.moveIt();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
