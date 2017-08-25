@@ -43,13 +43,11 @@ public class VideoUilt {
      **/
     private static final int FRAMES_PER_SECOND = 30;
     private static final int IFRAME_INTERVAL = 5;
-
     /**
      * Khai báo width, height của video, các bạn có thể thay đổi thành video HD tuỳ ý muốn
      **/
-
-    private static final int VIDEO_WIDTH = 640;
-    private static final int VIDEO_HEIGHT = 480;
+    public static int VIDEO_WIDTH = 640;
+    public static int VIDEO_HEIGHT = 480;
 
     // "live" state during recording
     private MediaCodec.BufferInfo mBufferInfo;
@@ -59,7 +57,6 @@ public class VideoUilt {
     private int mTrackIndex;
     private boolean mMuxerStarted;
     private long mFakePts;
-
     private Context context;
     private File output;
     private ArrayList<Bitmap> lsBitmap;
@@ -71,7 +68,7 @@ public class VideoUilt {
     /**
      * Có thể định nghĩa trước số frame, ví dụ muốn tạo video 5giây, số frame = FRAMES_PER_SECOND * 5;
      **/
-    private int maxFrame;
+    public static int maxFrame;
 
     public VideoUilt(Context context, ArrayList<Bitmap> lsBitmap, String path) {
         this.context = context;
@@ -84,32 +81,11 @@ public class VideoUilt {
         }
     }
 
-//    public VideoUilt(Context context) {
-//        this.context = context;
-//        try {
-//            output = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Make Video", "test.mp4");
-//            prepareEncoder(output);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void prepare() {
-//        /** Load hình ảnh lên cho việc zoom ảnh **/
-//        lsBitmap = new ArrayList<>();
-//        lsBitmap.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroundsinhnhat));
-//        lsBitmap.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroundvalentine));
-//        lsBitmap.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.backgroundvalentine1));
-//        lsBitmap.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.nennoel));
-//        lsBitmap.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.nennoel1));
-//        currentZoom = 0.0f;
-//    }
-
     public String makeVideo() {
         try {
             /** Tạo ra video có thời lượng là 5giây **/
             //5s=maxFrame/FRAMES_PER_SECOND
-            maxFrame = 150;
+            maxFrame=lsBitmap.size()*30;
             for (int i = 0; i < maxFrame; i++) {
 //                // chuẩn bị cho việc vẽ lên surface
                 drainEncoder(false);
