@@ -115,9 +115,14 @@ public class ManagerGalary {
     }
 
     private String convertDate(String myDate) {
-        long millisecond = Long.parseLong(myDate);
         // or you already have long value of date, use this instead of milliseconds variable.
-        String dateString = DateFormat.format("dd/MM/yyyy", new Date(millisecond)).toString();
+        String dateString = null;
+        try {
+            long millisecond = Long.parseLong(myDate);
+            dateString = DateFormat.format("dd/MM/yyyy", new Date(millisecond)).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return dateString;
     }
 }
