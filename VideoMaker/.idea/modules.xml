@@ -3,8 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/VideoMaker.iml" filepath="$PROJECT_DIR$/VideoMaker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VideoMaker.iml" filepath="$PROJECT_DIR$/VideoMaker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/dynamicgrid/dynamicgrid.iml" filepath="$PROJECT_DIR$/app/libs/dynamicgrid/dynamicgrid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/libs/dynamicgrid/dynamicgrid.iml" filepath="$PROJECT_DIR$/app/libs/dynamicgrid/dynamicgrid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fotorSDKLibrary/fotorSDKLibrary.iml" filepath="$PROJECT_DIR$/fotorSDKLibrary/fotorSDKLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/fotorSDKLibrary/fotorSDKLibrary.iml" filepath="$PROJECT_DIR$/fotorSDKLibrary/fotorSDKLibrary.iml" />
     </modules>
   </component>
