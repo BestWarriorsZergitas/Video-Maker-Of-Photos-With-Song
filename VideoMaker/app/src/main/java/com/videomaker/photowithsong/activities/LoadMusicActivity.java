@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.adapters.AdapterMusic;
 import com.videomaker.photowithsong.objects.MusicMP3;
-import com.videomaker.photowithsong.utils.Constant;
 import com.videomaker.photowithsong.utils.SongMusic;
 
 import java.util.ArrayList;
@@ -45,9 +44,9 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
         txtok = (TextView) findViewById(R.id.tv_next);
         lnpr.setVisibility(View.INVISIBLE);
         lsmusic = new ArrayList<>();
-        lsmusic.add(new MusicMP3(false, "Ring.acc", "Author", Constant.PATH_TEMP + "ring.aac"));
+        lsmusic.add(new MusicMP3(false, "Ring.acc", "Unknow", getCacheDir() + "/ring.aac"));
         lsmusic.add(new MusicMP3(false, "Kiss the rain.acc", "Yurima",
-                Constant.PATH_TEMP + "KissTheRain-Yiruma_.aac"));
+                getCacheDir() + "/KissTheRain-Yiruma_.aac"));
 //        songMusic = new SongMusic();
         adapterMusic = new AdapterMusic(lsmusic, this.getLayoutInflater());
         lsview.setAdapter(adapterMusic);

@@ -3,6 +3,8 @@ package com.videomaker.photowithsong.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
@@ -10,15 +12,18 @@ import android.media.MediaMuxer;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.videomaker.photowithsong.R;
@@ -54,13 +59,10 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_slide_show);
         init();
         imgcontrolermusic.setOnClickListener(this);
         creatFolder();
-        creatFile("test");
-        creatFile("test1");
         copyfilemusic();
         loadbitmap();
         new AsynMakeVideo().execute(lsBitmap);
@@ -74,6 +76,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         for (int i = 0; i < paths.size(); i++) {
             lsBitmap.add(getBitmapFromLocalPath(paths.get(i), 1));
         }
+        lsBitmap.add(lsBitmap.get(lsBitmap.size() - 1));
 
     }
 
@@ -98,8 +101,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         textsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //show diaglog
-                moveFile(Constant.PATH_TEMP + "test1.mp4", Constant.PATH_VIDEO + "video1.mp4");
+               createDiaglog();
             }
         });
     }
@@ -280,21 +282,34 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         if (!file.exists()) {
             file.mkdirs();
             File filetemp = new File(Constant.PATH_TEMP);
+            if (!filetemp.exists()) {
+                filetemp.mkdirs();
+                Log.d("DEBUG", "filetemp not creat");
+            }
             File filevideo = new File(Constant.PATH_VIDEO);
-            filetemp.mkdirs();
-            filevideo.mkdirs();
+            if (!filevideo.exists()) {
+                filevideo.mkdirs();
+                Log.d("DEBUG", "filevideo notcreate");
+            }
         }
+        creatFile();
 
     }
 
-    public String creatFile(String name) {
-        File filevideo = new File(Constant.PATH_TEMP + name + ".mp4");
-        try {
-            FileOutputStream out = new FileOutputStream(filevideo);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    public void creatFile() {
+        File filevideo = new File(Constant.PATH_TEMP + "test.mp4");
+        File filevideoaudio = new File(Constant.PATH_TEMP + "test1.mp4");
+        if (filevideo.exists() && filevideoaudio.exists()) {
+            Log.d("DEBUG", "file created");
+        } else {
+            try {
+                FileOutputStream out = new FileOutputStream(filevideo);
+                FileOutputStream out1 = new FileOutputStream(filevideoaudio);
+                Log.d("DEBUG", "file created success");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-        return filevideo.getPath();
     }
 
     private void moveFile(String inputPath, String outputPath) {
@@ -347,16 +362,48 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     }
 
     String[] libraryAssets = {"ring.aac", "KissTheRain-Yiruma_.aac"};
+    AlertDialog mdialog;
 
     public void copyfilemusic() {
+        File file = new File(getCacheDir() + "/ring.aac");
+        File file1 = new File(getCacheDir() + "/KissTheRain-Yiruma_.aac");
+        if (file.exists() && file1.exists()) {
+            return;
+        }
         for (int i = 0; i < libraryAssets.length; i++) {
             try {
                 InputStream audioinput = this.getAssets().open(libraryAssets[i]);
-                FileMover fm = new FileMover(audioinput, Constant.PATH_TEMP + libraryAssets[i]);
+                FileMover fm = new FileMover(audioinput, getCacheDir() + "/" + libraryAssets[i]);
                 fm.moveIt();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void createDiaglog() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        View v = getLayoutInflater().inflate(R.layout.diaglog_save_video, null);
+        Button btsave, btcancel;
+        btsave = (Button) v.findViewById(R.id.bt_save);
+        btcancel = (Button) v.findViewById(R.id.bt_cancel);
+        btsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(SlideShowVideoActivity.this, "save file", Toast.LENGTH_SHORT).show();
+                mdialog.dismiss();
+            }
+        });
+        btcancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(SlideShowVideoActivity.this, "huy", Toast.LENGTH_SHORT).show();
+                mdialog.dismiss();
+            }
+        });
+        dialog.setView(v);
+        mdialog = dialog.create();
+        mdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mdialog.show();
     }
 }
