@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
@@ -49,6 +51,10 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_slide_show);
         init();
         imgcontrolermusic.setOnClickListener(this);
@@ -68,6 +74,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         for (int i = 0; i < paths.size(); i++) {
             lsBitmap.add(getBitmapFromLocalPath(paths.get(i), 1));
         }
+
     }
 
     public void init() {
@@ -88,9 +95,6 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                 Log.d("DEBUG", videoView.getDuration() + "");
             }
         });
-
-//        videoView.re
-
         textsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,8 +127,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             ArrayList<Bitmap> bitmaps = arrayLists[0];
             video = new VideoUilt(getBaseContext(), bitmaps, Constant.PATH_TEMP + "test.mp4");
             String pavideo = video.makeVideo();
-            addaudiovideo(pavideo, Constant.PATH_TEMP + "KissTheRain-Yiruma_.aac",Constant.PATH_TEMP+"test1.mp4");
-            return Constant.PATH_TEMP+"test1.mp4";
+            return pavideo;
         }
 
         @Override
@@ -147,8 +150,12 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         protected String doInBackground(String... arrayLists) {
 
             String pathaudio = arrayLists[0];
-            addaudiovideo(Constant.PATH_TEMP + "test.mp4", pathaudio, Constant.PATH_TEMP + "test1.mp4");
-            return Constant.PATH_TEMP + "test1.mp4";
+            if (pathaudio == null) {
+                return null;
+            } else {
+                addaudiovideo(Constant.PATH_TEMP + "test.mp4", pathaudio, Constant.PATH_TEMP + "test1.mp4");
+                return Constant.PATH_TEMP + "test1.mp4";
+            }
         }
 
         @Override
@@ -268,12 +275,6 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
 
     }
 
-    public void settingVideo(int widthVideo, int heightVideo, int duration) {
-        VideoUilt.VIDEO_WIDTH = widthVideo;
-        VideoUilt.VIDEO_HEIGHT = heightVideo;
-        VideoUilt.maxFrame = duration * 30;
-    }
-
     public void creatFolder() {
         File file = new File(Constant.PATH);
         if (!file.exists()) {
@@ -334,8 +335,9 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 500) {
             if (data != null) {
-                            lnpro.setVisibility(View.VISIBLE);
+                lnpro.setVisibility(View.VISIBLE);
                 musicMP3 = (MusicMP3) data.getSerializableExtra("music");
+                Log.d("DEBUG", musicMP3.getPath());
                 txtmusis.setText(musicMP3.getNamemusic());
                 txtsong.setText(musicMP3.getNamesong());
                 new AsynAddAudio().execute(musicMP3.getPath());

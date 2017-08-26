@@ -4,8 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.RectF;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
@@ -17,8 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-
-import static android.R.attr.bitmap;
 
 /**
  * Created by DaiPhongPC on 8/22/2017.
@@ -85,15 +84,15 @@ public class VideoUilt {
         try {
             /** Tạo ra video có thời lượng là 5giây **/
             //5s=maxFrame/FRAMES_PER_SECOND
-            maxFrame = lsBitmap.size()* 30;
+            maxFrame = lsBitmap.size() * 30;
             for (int i = 0; i < maxFrame; i++) {
 //                // chuẩn bị cho việc vẽ lên surface
                 drainEncoder(false);
 //                // Tạo ra từng frame trên surface
                 generateFrame_(i / FRAMES_PER_SECOND);
-
 //                /** Tính toán percent exported, để có thể đưa ra dialog thông báo cho người dùng, cho họ biết còn cần phải chờ bao lâu nữa **/
 //                float percent = 100.0f * i / (float) maxFrame;
+//                }
             }
             drainEncoder(true);
         } finally {
@@ -270,29 +269,39 @@ public class VideoUilt {
 //    }
     private void generateFrame_(int position) {
         /** Khởi tạo canvas để vẽ từng frame cho video **/
+//        Canvas canvas = new Canvas();
         Canvas canvas = mInputSurface.lockCanvas(null);
-        paint.setColor(Color.CYAN);
+        paint.setColor(Color.BLACK);
         try {
-//            int width = getWindowManager().getDefaultDisplay().getWidth();
-//            int height = getWindowManager().getDefaultDisplay().getHeight();
-            Rect src = new Rect(0, 0, lsBitmap.get(position).getWidth() - 1, lsBitmap.get(position).getHeight() - 1);
-            Rect dest = new Rect(0, 0, VIDEO_WIDTH - 1, VIDEO_HEIGHT - 1);
-            canvas.drawBitmap(lsBitmap.get(position), src, src, paint);
-
-//            canvas.drawBitmap(lsBitmap.get(position), 0, 0, paint);
+            canvas.drawColor(Color.BLACK);
+            Bitmap bitmap = makeScaled(lsBitmap.get(position));
+            int cx = (VIDEO_WIDTH - bitmap.getWidth()) / 2;
+            int cy = (VIDEO_HEIGHT - bitmap.getHeight()) / 2;
+            canvas.drawBitmap(bitmap, cx, cy, paint);
 
         } finally {
             mInputSurface.unlockCanvasAndPost(canvas);
         }
     }
 
-    /**
-     * Vì thời gian ở đây được tính toán dựa trên nanosecond,
-     * nên ta sẽ tính toán thời gian của video khi vẽ ở frame thứ i,
-     * thời gian video được tính toán ra milisecond
-     **/
-    private static long computePresentationTimeNsec(int frameIndex) {
-        final long ONE_BILLION = 1000000000;
-        return frameIndex * ONE_BILLION / FRAMES_PER_SECOND;
+    public Bitmap makeScaled(Bitmap src) {
+        int width = src.getWidth();
+        int height = src.getHeight();
+        // 480  889
+        //
+        float scale = (float) VIDEO_HEIGHT / height;
+        float scaledWidth = width * scale;
+        float scaledHeight = height * scale;
+        Matrix m = new Matrix();
+        m.setRectToRect(new RectF(0, 0, src.getWidth(), src.getHeight()), new RectF(0, 0, scaledWidth, scaledHeight), Matrix.ScaleToFit.CENTER);
+        Bitmap output = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), m, true);
+        Canvas xfas = new Canvas(output);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+        paint.setDither(true);
+        xfas.drawBitmap(output, 0, 0, paint);
+
+        return output;
     }
 }
