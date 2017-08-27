@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,7 +42,8 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     private ArrayList<Image> imagesPicked;
     private RecyclerView rvPickedImage;
     private PickedImageAdapter pickedImageAdapter;
-    private TextView tvNext;
+    private TextView tvNext, tvSelected;
+    private Button btClear;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,8 +56,12 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     }
 
     private void initUI() {
+        tvSelected = (TextView) findViewById(R.id.tv_count_selected_img);
         tvNext = (TextView) findViewById(R.id.tv_next);
         tvNext.setOnClickListener(this);
+
+        btClear = (Button) findViewById(R.id.btn_clear);
+        btClear.setOnClickListener(this);
 
         rvPickedImage = (RecyclerView) findViewById(R.id.rv_picked_image);
         rvPickedImage.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -101,6 +107,16 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
                 intent.putExtra(Constant.IMAGE, bundle);
                 startActivity(intent);
                 break;
+            case R.id.btn_clear:
+                for (int i = 0; i < imagesPicked.size(); i++) {
+                    arrImagesAlbum.get(arrImagesAlbum.indexOf(imagesPicked.get(i))).setClicked(false);
+                }
+                imageFragment.notifiData(imagesAlBum);
+                imagesPicked.clear();
+                pickedImageAdapter.notifyDataSetChanged();
+                tvSelected.setText("Selected 0 image(s)");
+
+                break;
             default:
                 break;
         }
@@ -113,6 +129,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
         imagesAlBum.get(position).setClicked(true);
         imageFragment.notifiData(imagesAlBum);
         pickedImageAdapter.notifyDataSetChanged();
+        tvSelected.setText("Selected " + imagesPicked.size() + " image(s)");
         rvPickedImage.smoothScrollToPosition(imagesPicked.size() - 1);
         Log.e("dasdasd", imagesPicked.toString());
 
@@ -138,6 +155,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
         imageFragment.notifiData(imagesAlBum);
         imagesPicked.remove(imagesPicked.get(position));
         pickedImageAdapter.notifyDataSetChanged();
+        tvSelected.setText("Selected " + imagesPicked.size() + " image(s)");
     }
 
     @Override
