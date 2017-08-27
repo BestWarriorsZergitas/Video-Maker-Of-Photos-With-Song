@@ -134,7 +134,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     // Bắt sự kiện ấn hủy
     @Override
     public void onClickCancel(int position) {
-        imagesAlBum.get(imagesAlBum.indexOf(imagesPicked.get(position))).setClicked(false);
+        arrImagesAlbum.get(arrImagesAlbum.indexOf(imagesPicked.get(position))).setClicked(false);
         imageFragment.notifiData(imagesAlBum);
         imagesPicked.remove(imagesPicked.get(position));
         pickedImageAdapter.notifyDataSetChanged();

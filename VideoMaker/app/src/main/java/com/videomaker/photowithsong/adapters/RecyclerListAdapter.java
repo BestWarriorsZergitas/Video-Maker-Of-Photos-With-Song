@@ -84,6 +84,13 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
                 onClickImageEdit.onClickImageEdit(position);
             }
         });
+        holder.ivCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mItems.remove(position);
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -96,9 +103,9 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
     public boolean onItemMove(int fromPosition, int toPosition) {
         Collections.swap(mItems, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
+
         return true;
     }
-
     @Override
     public int getItemCount() {
         return mItems.size();
@@ -115,11 +122,12 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
     public static class ItemViewHolder extends RecyclerView.ViewHolder implements
             ItemTouchHelperViewHolder {
 
-        public ImageView thumbnail;
+        public ImageView thumbnail,ivCancel;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             thumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
+            ivCancel = (ImageView) itemView.findViewById(R.id.iv_cancel);
         }
 
         @Override
