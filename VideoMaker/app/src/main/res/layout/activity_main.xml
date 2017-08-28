@@ -10,12 +10,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Create new" />
+        android:text="@string/create_new" />
     <Button
         android:id="@+id/bt_my_video"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My video"
+        android:text="@string/my_video"
         android:layout_below="@+id/bt_new_video"
         android:layout_centerHorizontal="true" />
 

@@ -29,7 +29,7 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
     private LinearLayout lnpr;
     private MusicMP3 musicMP3;
     private MediaPlayer mediaPlayer;
-    private TextView txtok;
+    private TextView txtok, txttitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,9 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
         lsview = (ListView) findViewById(R.id.lsview);
         lnpr = (LinearLayout) findViewById(R.id.lnpr);
         txtok = (TextView) findViewById(R.id.tv_next);
+        txttitle = (TextView) findViewById(R.id.titleappbar);
+        txtok.setText(getString(R.string.next));
+        txttitle.setText(getString(R.string.music_video));
         lnpr.setVisibility(View.INVISIBLE);
         lsmusic = new ArrayList<>();
         lsmusic.add(new MusicMP3(false, "Ring.acc", "Unknow", getCacheDir() + "/ring.aac"));

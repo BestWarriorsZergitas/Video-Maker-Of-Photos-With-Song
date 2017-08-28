@@ -69,7 +69,7 @@ public class MyVideoActivity extends AppCompatActivity {
         textsave = (TextView) findViewById(R.id.tv_next);
         textsave.setVisibility(View.INVISIBLE);
         titleappbar = (TextView) findViewById(R.id.titleappbar);
-        titleappbar.setText("My Video");
+        titleappbar.setText(getString(R.string.my_video));
         arrVideo = new ArrayList<>();
         recycleView.setLayoutManager(new GridLayoutManager(mContext, 2));
         adapterAblbumVideo = new AdapterAblbumVideo(getBaseContext(), arrVideo);
@@ -94,7 +94,7 @@ public class MyVideoActivity extends AppCompatActivity {
                     new loadVideo().execute();
                     adapterAblbumVideo.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(MyVideoActivity.this, "Nhập tên video", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyVideoActivity.this, getString(R.string.input_name), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -186,7 +186,7 @@ public class MyVideoActivity extends AppCompatActivity {
             out = null;
 
             // delete the original file
-            new File(inputPath).delete();
+//            new File(inputPath).delete();
 
 
         } catch (FileNotFoundException fnfe1) {

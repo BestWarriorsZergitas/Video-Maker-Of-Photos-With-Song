@@ -14,7 +14,7 @@
     <TextView
         android:id="@+id/titleappbar"
         android:layout_width="150dp"
-        android:text="Pick album"
+        android:text="@string/pick_album"
         android:layout_toRightOf="@+id/iv_back"
         android:layout_height="match_parent"
         android:gravity="center_vertical" />
@@ -22,7 +22,7 @@
         android:layout_width="80dp"
         android:layout_alignParentRight="true"
         android:layout_margin="8dp"
-        android:text="Next"
+        android:text="@string/next"
         android:id="@+id/tv_next"
         android:textColor="@android:color/white"
         android:gravity="center"

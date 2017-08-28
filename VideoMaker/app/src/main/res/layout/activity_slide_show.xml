@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="8dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@drawable/ic_music" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -58,7 +58,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Tên bài hát"
+                        android:text=""
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="top"
-                        android:text="ca sĩ"
+                        android:text=""
                         android:textSize="20sp" />
                 </LinearLayout>
 
@@ -78,7 +78,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="16dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@drawable/ic_add"
+                    />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -99,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Đang xử lý"
+            android:text="@string/pro"
             android:textColor="#fff"
             android:textSize="20sp" />
     </LinearLayout>

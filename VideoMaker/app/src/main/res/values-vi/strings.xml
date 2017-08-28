@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Làm video từ ảnh</string>
+    <string name="create_new">Tạo mới video</string>
+    <string name="my_video">Video của tôi</string>
+    <string name="pick_album">Thư viện ảnh</string>
+    <string name="next">Tiếp</string>
+    <string name="swap_and_edit">Chỉnh sửa</string>
+    <string name="clear">Xóa</string>
+    <string name="selected_0_image_s">Đã chọn 0 ảnh</string>
+    <string name="pro">Đang xử lý...</string>
+    <string name="save_video">Lưu Video</string>
+    <string name="input_name">nhập tên</string>
+    <string name="save">Lưu</string>
+    <string name="cancel">Hủy</string>
+    <string name="selected">Đã chọn</string>
+    <string name="image">ảnh</string>
+    <string name="slide_video">Trình video</string>
+    <string name="music_video">Nhạc nền</string>
+</resources>

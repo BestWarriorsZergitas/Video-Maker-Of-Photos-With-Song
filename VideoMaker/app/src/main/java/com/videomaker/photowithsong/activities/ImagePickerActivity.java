@@ -114,7 +114,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
                 imageFragment.notifiData(imagesAlBum);
                 imagesPicked.clear();
                 pickedImageAdapter.notifyDataSetChanged();
-                tvSelected.setText("Selected 0 image(s)");
+                tvSelected.setText(getString(R.string.selected_0_image_s));
 
                 break;
             default:
@@ -129,7 +129,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
         imagesAlBum.get(position).setClicked(true);
         imageFragment.notifiData(imagesAlBum);
         pickedImageAdapter.notifyDataSetChanged();
-        tvSelected.setText("Selected " + imagesPicked.size() + " image(s)");
+        tvSelected.setText(getString(R.string.selected) + imagesPicked.size() + getString(R.string.image));
         rvPickedImage.smoothScrollToPosition(imagesPicked.size() - 1);
         Log.e("dasdasd", imagesPicked.toString());
 
@@ -155,7 +155,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
         imageFragment.notifiData(imagesAlBum);
         imagesPicked.remove(imagesPicked.get(position));
         pickedImageAdapter.notifyDataSetChanged();
-        tvSelected.setText("Selected " + imagesPicked.size() + " image(s)");
+        tvSelected.setText(getString(R.string.selected) + imagesPicked.size() + getString(R.string.image));
     }
 
     @Override

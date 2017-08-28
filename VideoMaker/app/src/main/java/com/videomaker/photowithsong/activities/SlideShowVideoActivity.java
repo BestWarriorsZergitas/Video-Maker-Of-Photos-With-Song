@@ -42,7 +42,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     private VideoUilt video;
     private VideoView videoView;
     private MediaController mediaController;
-    private TextView txtmusis, txtsong, textsave;
+    private TextView txtmusis, txtsong, textsave,txttitle;
     private ImageView imgcontrolermusic, imgmusic;
     private MusicMP3 musicMP3;
     private LinearLayout lnpro;
@@ -87,12 +87,14 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     public void init() {
         videoView = (VideoView) findViewById(R.id.showvideo);
         txtmusis = (TextView) findViewById(R.id.txtnamemusic);
+        txttitle = (TextView) findViewById(R.id.titleappbar);
         txtsong = (TextView) findViewById(R.id.txtsong);
         imgmusic = (ImageView) findViewById(R.id.iconmusic);
         imgcontrolermusic = (ImageView) findViewById(R.id.img_controlmusic);
         lnpro = (LinearLayout) findViewById(R.id.lnprocess);
         textsave = (TextView) findViewById(R.id.tv_next);
-        textsave.setText("Save");
+        textsave.setText(getString(R.string.save));
+        txttitle.setText(getString(R.string.slide_video));
         mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
@@ -340,10 +342,6 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             out.flush();
             out.close();
             out = null;
-
-            // delete the original file
-            new File(inputPath).delete();
-
 
         } catch (FileNotFoundException fnfe1) {
             Log.e("tag", fnfe1.getMessage());
