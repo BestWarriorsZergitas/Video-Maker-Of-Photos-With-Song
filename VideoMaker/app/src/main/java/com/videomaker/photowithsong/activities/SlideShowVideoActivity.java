@@ -27,6 +27,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.videomaker.photowithsong.R;
+import com.videomaker.photowithsong.objects.Image;
 import com.videomaker.photowithsong.objects.MusicMP3;
 import com.videomaker.photowithsong.utils.Constant;
 import com.videomaker.photowithsong.utils.FileMover;
@@ -50,6 +51,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     private ImageView imgcontrolermusic, imgmusic;
     private MusicMP3 musicMP3;
     private LinearLayout lnpro;
+    private ImageView back;
     private ArrayList<Bitmap> lsBitmap;
     private ArrayList<String> paths;
 
@@ -62,6 +64,13 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_slide_show);
         init();
         imgcontrolermusic.setOnClickListener(this);
+        back=(ImageView)findViewById(R.id.iv_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         creatFolder();
         copyfilemusic();
         loadbitmap();
@@ -392,6 +401,9 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             public void onClick(View view) {
                 Toast.makeText(SlideShowVideoActivity.this, "save file", Toast.LENGTH_SHORT).show();
                 mdialog.dismiss();
+                Intent intent=new Intent(SlideShowVideoActivity.this,MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
         btcancel.setOnClickListener(new View.OnClickListener() {

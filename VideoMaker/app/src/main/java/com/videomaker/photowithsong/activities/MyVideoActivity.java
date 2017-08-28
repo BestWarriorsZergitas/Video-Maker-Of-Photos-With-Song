@@ -11,9 +11,8 @@ import com.videomaker.photowithsong.objects.MyVideo;
 
 import java.util.ArrayList;
 
-import static it.sephiroth.android.library.exif2.ExifInterface.ComponentsConfiguration.R;
 
-public class My_Video_Activity extends AppCompatActivity {
+public class MyVideoActivity extends AppCompatActivity {
     private RecyclerView recycleView;
     private AdapterAblbumVideo adapterAblbumVideo;
     private ArrayList<MyVideo> arrVideo= new ArrayList<>();
@@ -21,7 +20,7 @@ public class My_Video_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my__video_);
+        setContentView(R.layout.activity_my_video);
         init();
         printNamesToLogCat(this);
     }

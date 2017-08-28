@@ -24,15 +24,15 @@
 
 
     <Button
-        android:id="@+id/bt_new_video"
+        android:id="@+id/bt_my_video"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bt_create_new"
-        android:layout_centerHorizontal="true"
-        android:text="My video" />
+        android:text="My video"
+        android:layout_below="@+id/bt_new_video"
+        android:layout_centerHorizontal="true" />
 
     <Button
-        android:id="@+id/bt_create_new"
+        android:id="@+id/bt_new_video"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

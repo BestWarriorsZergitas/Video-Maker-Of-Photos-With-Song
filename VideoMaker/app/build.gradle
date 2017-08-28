@@ -17,6 +17,7 @@ android {
         renderscriptTargetApi 23
         renderscriptSupportModeEnabled true
         manifestPlaceholders = [appPackageName: "com.videomaker.photowithsong"]
+        multiDexEnabled = true
     }
     buildTypes {
         release {
