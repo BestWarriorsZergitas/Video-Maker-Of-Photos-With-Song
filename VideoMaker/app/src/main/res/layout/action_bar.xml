@@ -12,6 +12,7 @@
         android:layout_height="match_parent" />
 
     <TextView
+        android:id="@+id/titleappbar"
         android:layout_width="150dp"
         android:text="Pick album"
         android:layout_toRightOf="@+id/iv_back"

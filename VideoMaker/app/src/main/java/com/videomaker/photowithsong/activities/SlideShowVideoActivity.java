@@ -3,8 +3,6 @@ package com.videomaker.photowithsong.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
@@ -18,16 +16,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.videomaker.photowithsong.R;
-import com.videomaker.photowithsong.objects.Image;
 import com.videomaker.photowithsong.objects.MusicMP3;
 import com.videomaker.photowithsong.utils.Constant;
 import com.videomaker.photowithsong.utils.FileMover;
@@ -64,7 +59,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_slide_show);
         init();
         imgcontrolermusic.setOnClickListener(this);
-        back=(ImageView)findViewById(R.id.iv_back);
+        back = (ImageView) findViewById(R.id.iv_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +105,10 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         textsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               createDiaglog();
+
+                Intent intent = new Intent(SlideShowVideoActivity.this, MyVideoActivity.class);
+                intent.putExtra("DATA", "check");
+                startActivity(intent);
             }
         });
     }
@@ -138,6 +136,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             ArrayList<Bitmap> bitmaps = arrayLists[0];
             video = new VideoUilt(getBaseContext(), bitmaps, Constant.PATH_TEMP + "test.mp4");
             String pavideo = video.makeVideo();
+            coppyFile(pavideo, Constant.PATH_TEMP + "test1.mp4");
             return pavideo;
         }
 
@@ -321,7 +320,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         }
     }
 
-    private void moveFile(String inputPath, String outputPath) {
+    private void coppyFile(String inputPath, String outputPath) {
 
         InputStream in = null;
         OutputStream out = null;
@@ -388,34 +387,5 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                 e.printStackTrace();
             }
         }
-    }
-
-    private void createDiaglog() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        View v = getLayoutInflater().inflate(R.layout.diaglog_save_video, null);
-        Button btsave, btcancel;
-        btsave = (Button) v.findViewById(R.id.bt_save);
-        btcancel = (Button) v.findViewById(R.id.bt_cancel);
-        btsave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(SlideShowVideoActivity.this, "save file", Toast.LENGTH_SHORT).show();
-                mdialog.dismiss();
-                Intent intent=new Intent(SlideShowVideoActivity.this,MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-        btcancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(SlideShowVideoActivity.this, "huy", Toast.LENGTH_SHORT).show();
-                mdialog.dismiss();
-            }
-        });
-        dialog.setView(v);
-        mdialog = dialog.create();
-        mdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mdialog.show();
     }
 }

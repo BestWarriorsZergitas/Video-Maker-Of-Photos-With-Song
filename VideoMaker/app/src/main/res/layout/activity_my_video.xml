@@ -4,10 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.videomaker.photowithsong.activities.My_Video_Activity">
+    android:orientation="vertical"
+    tools:context="com.videomaker.photowithsong.activities.MyVideoActivity">
+
+    <include layout="@layout/action_bar" />
+
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
         android:id="@+id/rv_fr_albumvideo"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>

@@ -18,13 +18,13 @@
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.SwapAndEditActivity" />
         <activity android:name=".activities.SlideShowVideoActivity" />
         <activity android:name=".activities.LoadMusicActivity" />
+        <activity android:name=".activities.MyVideoActivity"/>
     </application>
 
 </manifest>

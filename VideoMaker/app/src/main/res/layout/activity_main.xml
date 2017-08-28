@@ -3,26 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context="com.videomaker.photowithsong.activities.MainActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/RecordButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Record Button" />
-        </LinearLayout>
-    </LinearLayout>
-
-
+    <Button
+        android:id="@+id/bt_new_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Create new" />
     <Button
         android:id="@+id/bt_my_video"
         android:layout_width="wrap_content"
@@ -30,12 +18,5 @@
         android:text="My video"
         android:layout_below="@+id/bt_new_video"
         android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/bt_new_video"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Create new" />
 
 </RelativeLayout>

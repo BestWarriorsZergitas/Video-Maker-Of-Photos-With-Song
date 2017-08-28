@@ -5,12 +5,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.videomaker.photowithsong.R;
+import com.videomaker.photowithsong.utils.Constant;
 import com.videomaker.photowithsong.utils.Utils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 public class MainActivity extends AppCompatActivity {
     private static final String[] PERMISSION =
@@ -22,27 +29,86 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (Utils.checkPermission(PERMISSION, MainActivity.this) == PackageManager.PERMISSION_GRANTED) {
-
-            } else {
-                MainActivity.this.requestPermissions(PERMISSION, 1);
-            }
-        }
         btCreateVideo = (Button) findViewById(R.id.bt_new_video);
         btMyVideo = (Button) findViewById(R.id.bt_my_video);
+        turnPermiss();
+    }
 
+    public void init() {
         btCreateVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ImagePickerActivity.class));
             }
         });
-//        btMyVideo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this,MyVideo.class));
-//            }
-//        });
+        btMyVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MyVideoActivity.class);
+                intent.putExtra("DATA", "uncheck");
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void turnPermiss() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Utils.checkPermission(PERMISSION, MainActivity.this) == PackageManager.PERMISSION_GRANTED) {
+                creatFolder();
+                init();
+            } else {
+                MainActivity.this.requestPermissions(PERMISSION, 1);
+            }
+        } else {
+            creatFolder();
+            init();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+            if (grantResults.length > 0) {
+                creatFolder();
+                init();
+            }
+        }
+
+    }
+
+    public void creatFolder() {
+        File file = new File(Constant.PATH);
+        if (!file.exists()) {
+            file.mkdirs();
+            File filetemp = new File(Constant.PATH_TEMP);
+            if (!filetemp.exists()) {
+                filetemp.mkdirs();
+                Log.d("DEBUG", "filetemp not creat");
+            }
+            File filevideo = new File(Constant.PATH_VIDEO);
+            if (!filevideo.exists()) {
+                filevideo.mkdirs();
+                Log.d("DEBUG", "filevideo notcreate");
+            }
+        }
+        creatFile();
+
+    }
+
+    public void creatFile() {
+        File filevideo = new File(Constant.PATH_TEMP + "test.mp4");
+        File filevideoaudio = new File(Constant.PATH_TEMP + "test1.mp4");
+        if (filevideo.exists() && filevideoaudio.exists()) {
+            Log.d("DEBUG", "file created");
+        } else {
+            try {
+                FileOutputStream out = new FileOutputStream(filevideo);
+                FileOutputStream out1 = new FileOutputStream(filevideoaudio);
+                Log.d("DEBUG", "file created success");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
