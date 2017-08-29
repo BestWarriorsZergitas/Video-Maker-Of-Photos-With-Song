@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         btMyVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Intent(MainActivity.this, MyVideoActivity.class);
+                startActivity(new Intent(MainActivity.this, MyVideoActivity.class));
             }
         });
     }

@@ -112,7 +112,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             @Override
             public void onClick(View view) {
                 createDiaglog();
-                finish();
+
             }
         });
     }
@@ -387,7 +387,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                     Intent intent = new Intent(SlideShowVideoActivity.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-
+                    finish();
                 } else {
                     Toast.makeText(SlideShowVideoActivity.this, getString(R.string.input_name), Toast.LENGTH_SHORT).show();
                 }
