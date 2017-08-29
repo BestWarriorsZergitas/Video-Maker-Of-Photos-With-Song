@@ -3,6 +3,8 @@ package com.videomaker.photowithsong.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
@@ -16,16 +18,18 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.objects.MusicMP3;
 import com.videomaker.photowithsong.utils.Constant;
-import com.videomaker.photowithsong.utils.FileMover;
 import com.videomaker.photowithsong.utils.VideoUilt;
 
 import java.io.File;
@@ -42,13 +46,14 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     private VideoUilt video;
     private VideoView videoView;
     private MediaController mediaController;
-    private TextView txtmusis, txtsong, textsave,txttitle;
+    private TextView txtmusis, txtsong, textsave, txttitle;
     private ImageView imgcontrolermusic, imgmusic;
     private MusicMP3 musicMP3;
     private LinearLayout lnpro;
     private ImageView back;
     private ArrayList<Bitmap> lsBitmap;
     private ArrayList<String> paths;
+    private AlertDialog mdialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +72,6 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             }
         });
         creatFolder();
-        copyfilemusic();
         loadbitmap();
         new AsynMakeVideo().execute(lsBitmap);
 
@@ -107,10 +111,8 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         textsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(SlideShowVideoActivity.this, MyVideoActivity.class);
-                intent.putExtra("DATA", "check");
-                startActivity(intent);
+                createDiaglog();
+                finish();
             }
         });
     }
@@ -367,23 +369,73 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         }
     }
 
-    String[] libraryAssets = {"ring.aac", "KissTheRain-Yiruma_.aac"};
-    AlertDialog mdialog;
 
-    public void copyfilemusic() {
-        File file = new File(getCacheDir() + "/ring.aac");
-        File file1 = new File(getCacheDir() + "/KissTheRain-Yiruma_.aac");
-        if (file.exists() && file1.exists()) {
-            return;
-        }
-        for (int i = 0; i < libraryAssets.length; i++) {
-            try {
-                InputStream audioinput = this.getAssets().open(libraryAssets[i]);
-                FileMover fm = new FileMover(audioinput, getCacheDir() + "/" + libraryAssets[i]);
-                fm.moveIt();
-            } catch (IOException e) {
-                e.printStackTrace();
+    private void createDiaglog() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        View v = getLayoutInflater().inflate(R.layout.diaglog_save_video, null);
+        Button btsave, btcancel;
+        EditText edtxt;
+        edtxt = (EditText) v.findViewById(R.id.edit_save);
+        btsave = (Button) v.findViewById(R.id.bt_save);
+        btcancel = (Button) v.findViewById(R.id.bt_cancel);
+        btsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (edtxt != null) {
+                    moveFile(Constant.PATH_TEMP + "test1.mp4", Constant.PATH_VIDEO + edtxt.getText().toString() + ".mp4");
+                    mdialog.dismiss();
+                    Intent intent = new Intent(SlideShowVideoActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+
+                } else {
+                    Toast.makeText(SlideShowVideoActivity.this, getString(R.string.input_name), Toast.LENGTH_SHORT).show();
+                }
             }
+        });
+        btcancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(SlideShowVideoActivity.this, "huy", Toast.LENGTH_SHORT).show();
+                mdialog.dismiss();
+            }
+        });
+        dialog.setView(v);
+        mdialog = dialog.create();
+        mdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mdialog.show();
+    }
+
+    private void moveFile(String inputPath, String outputPath) {
+
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            in = new FileInputStream(inputPath);
+            out = new FileOutputStream(outputPath);
+
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            in.close();
+            in = null;
+
+            // write the output file
+            out.flush();
+            out.close();
+            out = null;
+
+            // delete the original file
+            new File(inputPath).delete();
+
+
+        } catch (FileNotFoundException fnfe1) {
+            Log.e("tag", fnfe1.getMessage());
+        } catch (Exception e) {
+            Log.e("tag", e.getMessage());
         }
+
     }
 }

@@ -47,8 +47,13 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
         txttitle.setText(getString(R.string.music_video));
         lnpr.setVisibility(View.INVISIBLE);
         lsmusic = new ArrayList<>();
-        lsmusic.add(new MusicMP3(false, "Ring.acc", "Unknow", getCacheDir() + "/ring.aac"));
-        lsmusic.add(new MusicMP3(false, "Kiss the rain.acc", "Yurima",
+        lsmusic.add(new MusicMP3(false, "NhacNenGiangSinh1", "Unknow", getCacheDir() + "/NhacNenGiangSinh01.aac"));
+        lsmusic.add(new MusicMP3(false, "NhacNenGiangSinh2", "Unknow", getCacheDir() + "/NhacNenGiangSinh02.aac"));
+        lsmusic.add(new MusicMP3(false, "NhacNenTinhYeu1", "Unknow", getCacheDir() + "/NhacNenTinhYeu01.aac"));
+        lsmusic.add(new MusicMP3(false, "NhacNenTinhYeu2", "Unknow", getCacheDir() + "/NhacNenTinhYeu02.aac"));
+        lsmusic.add(new MusicMP3(false, "NhacNenHappyNewYear", "Unknow", getCacheDir() + "/NhacNenHappyNewYear01.aac"));
+        lsmusic.add(new MusicMP3(false, "NhacNenSinhNhat", "Unknow", getCacheDir() + "/NhacNenSinhNhat01.aac"));
+        lsmusic.add(new MusicMP3(false, "Kiss the rain", "Yurima",
                 getCacheDir() + "/KissTheRain-Yiruma_.aac"));
 //        songMusic = new SongMusic();
         adapterMusic = new AdapterMusic(lsmusic, this.getLayoutInflater());
@@ -102,11 +107,13 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
     }
 
     public void playMusic() {
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+        }
         mediaPlayer = MediaPlayer.create(this, Uri.parse(musicMP3.getPath()));
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
-//        mediaPlayer = MediaPlayer.create(this, musicMP3.getId());
-//        mediaPlayer.setLooping(true);
-//        mediaPlayer.start();
     }
 }

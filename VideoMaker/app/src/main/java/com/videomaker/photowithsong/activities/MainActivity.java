@@ -13,11 +13,15 @@ import android.widget.Button;
 
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.utils.Constant;
+import com.videomaker.photowithsong.utils.FileMover;
 import com.videomaker.photowithsong.utils.Utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String[] PERMISSION =
@@ -44,9 +48,7 @@ public class MainActivity extends AppCompatActivity {
         btMyVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MyVideoActivity.class);
-                intent.putExtra("DATA", "uncheck");
-                startActivity(intent);
+                new Intent(MainActivity.this, MyVideoActivity.class);
             }
         });
     }
@@ -55,12 +57,14 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (Utils.checkPermission(PERMISSION, MainActivity.this) == PackageManager.PERMISSION_GRANTED) {
                 creatFolder();
+                copyfilemusic();
                 init();
             } else {
                 MainActivity.this.requestPermissions(PERMISSION, 1);
             }
         } else {
             creatFolder();
+            copyfilemusic();
             init();
         }
     }
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (grantResults.length > 0) {
                 creatFolder();
+                copyfilemusic();
                 init();
             }
         }
@@ -110,5 +115,40 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    String[] libraryAssets = {"NhacNenGiangSinh01.aac",
+            "NhacNenGiangSinh02.aac",
+            "NhacNenSinhNhat01.aac",
+            "NhacNenTinhYeu01.aac",
+            "NhacNenTinhYeu02.aac",
+            "NhacNenHappyNewYear01.aac",
+            "KissTheRain-Yiruma_.aac"};
+
+
+    public void copyfilemusic() {
+        ArrayList<File> file = new ArrayList<>();
+        file.add(new File(getCacheDir() + "/NhacNenGiangSinh01.aac"));
+        file.add(new File(getCacheDir() + "/NhacNenGiangSinh02.aac"));
+        file.add(new File(getCacheDir() + "/NhacNenSinhNhat01.aac"));
+        file.add(new File(getCacheDir() + "/NhacNenTinhYeu01.aac"));
+        file.add(new File(getCacheDir() + "/NhacNenTinhYeu02.aac"));
+        file.add(new File(getCacheDir() + "/NhacNenHappyNewYear01.aac"));
+        file.add(new File(getCacheDir() + "/KissTheRain-Yiruma_.aac"));
+        for (File f : file) {
+            if (!f.exists()) {
+                for (int i = 0; i < libraryAssets.length; i++) {
+                    try {
+                        InputStream audioinput = this.getAssets().open(libraryAssets[i]);
+                        FileMover fm = new FileMover(audioinput, getCacheDir() + "/" + libraryAssets[i]);
+                        fm.moveIt();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                return;
+            }
+        }
+
     }
 }
