@@ -60,9 +60,9 @@ public class AdapterMusic extends BaseAdapter {
         imgcheck = (ImageView) view.findViewById(R.id.imgcheck);
         MusicMP3 musicMP3 = getItem(i);
         if (musicMP3.isCheck()) {
-            imgcheck.setImageResource(R.mipmap.ic_launcher);
+            imgcheck.setImageResource(R.drawable.ic_music);
         } else {
-            imgcheck.setImageResource(R.mipmap.ic_launcher_round);
+            imgcheck.setImageResource(R.drawable.ic_music);
         }
         txtnamemusic.setText(musicMP3.getNamemusic());
         return view;

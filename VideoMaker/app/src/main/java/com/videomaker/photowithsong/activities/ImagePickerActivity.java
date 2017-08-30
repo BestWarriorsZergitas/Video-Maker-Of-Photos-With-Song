@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,13 +36,13 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     private ManagerGalary managerGalary;
     private AlbumFragment albumFragment;
     private ImageFragment imageFragment;
-    private ImageView ivBack;
+    private ImageView ivBack, ivNext;
     private ArrayList<Image> imagesAlBum;
     private ArrayList<Image> imagesPicked;
     private RecyclerView rvPickedImage;
     private PickedImageAdapter pickedImageAdapter;
     private TextView tvNext, tvSelected;
-    private Button btClear;
+    private ImageView btClear;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +59,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
         tvNext = (TextView) findViewById(R.id.tv_next);
         tvNext.setOnClickListener(this);
 
-        btClear = (Button) findViewById(R.id.btn_clear);
+        btClear = (ImageView) findViewById(R.id.btn_clear);
         btClear.setOnClickListener(this);
 
         rvPickedImage = (RecyclerView) findViewById(R.id.rv_picked_image);
@@ -85,21 +84,30 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
         t.replace(R.id.frame_image_picker, albumFragment);
         t.commit();
         ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivNext = (ImageView) findViewById(R.id.iv_next);
         ivBack.setOnClickListener(this);
+        ivNext.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
-                if (imageFragment.isVisible()) {
-                    FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-                    t.replace(R.id.frame_image_picker, albumFragment);
-                    t.commit();
-                } else {
-                    super.onBackPressed();
+                try {
+                    if (imageFragment.isVisible() && imageFragment != null) {
+                        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+                        t.replace(R.id.frame_image_picker, albumFragment);
+                        t.commit();
+                    } else {
+                        //                    super.onBackPressed();
+                        finish();
+                    }
+                } catch (Exception e) {
+                    finish();
+                    e.printStackTrace();
                 }
                 break;
+            case R.id.iv_next:
             case R.id.tv_next:
                 Intent intent = new Intent(this, SwapAndEditActivity.class);
                 Bundle bundle = new Bundle();
@@ -129,7 +137,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
         imagesAlBum.get(position).setClicked(true);
         imageFragment.notifiData(imagesAlBum);
         pickedImageAdapter.notifyDataSetChanged();
-        tvSelected.setText(getString(R.string.selected) + imagesPicked.size() + getString(R.string.image));
+        tvSelected.setText(getString(R.string.selected) + " " + imagesPicked.size() + " " + getString(R.string.image));
         rvPickedImage.smoothScrollToPosition(imagesPicked.size() - 1);
         Log.e("dasdasd", imagesPicked.toString());
 
@@ -138,6 +146,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     // Bắt sự kiện ấn album
     @Override
     public void onClickAlbum(int position) {
+        ((TextView) findViewById(R.id.titleappbar)).setText(getString(R.string.pick_image));
         imagesAlBum = albumFragment.getArrAlbum().get(position).getArrImage();
         imageFragment = new ImageFragment();
         imageFragment.setImagesAlbum(imagesAlBum);
@@ -161,11 +170,13 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     @Override
     public void onBackPressed() {
         if (imageFragment.isVisible()) {
+            ((TextView) findViewById(R.id.titleappbar)).setText(getString(R.string.pick_album));
             FragmentTransaction t = getSupportFragmentManager().beginTransaction();
             t.replace(R.id.frame_image_picker, albumFragment);
             t.commit();
         } else {
-            super.onBackPressed();
+//            super.onBackPressed();
+            finish();
         }
     }
 }

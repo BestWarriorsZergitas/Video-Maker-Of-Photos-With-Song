@@ -3,38 +3,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <include layout="@layout/action_bar"/>
+
+    <include layout="@layout/action_bar" />
 
     <FrameLayout
+
+        android:id="@+id/frame_image_picker"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/frame_image_picker"
-        android:layout_weight="1">
-    </FrameLayout>
+        android:layout_weight="1"></FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="150dp">
+        android:layout_height="150dp"
+        android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="60dp">
+
             <TextView
-                android:layout_width="200dp"
-                android:gravity="center"
                 android:id="@+id/tv_count_selected_img"
-                android:text="@string/selected_0_image_s"
-                android:layout_height="match_parent" />
-            <Button
-                android:layout_width="80dp"
-                android:text="@string/clear"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/selected_0_image_s" />
+
+            <ImageView
                 android:id="@+id/btn_clear"
-                android:layout_marginRight="20dp"
+                android:layout_width="50dp"
+                android:src="@drawable/ic_clear"
+                android:layout_height="match_parent"
+
                 android:layout_alignParentRight="true"
-                android:layout_height="match_parent" />
+                android:layout_marginRight="20dp"
+                android:text="@string/clear" />
         </RelativeLayout>
+
         <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
             android:id="@+id/rv_picked_image"
+
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>

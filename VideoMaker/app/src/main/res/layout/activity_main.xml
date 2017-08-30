@@ -1,22 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:gravity="center"
-    tools:context="com.videomaker.photowithsong.activities.MainActivity">
-    <Button
-        android:id="@+id/bt_new_video"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/create_new" />
-    <Button
-        android:id="@+id/bt_my_video"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/my_video"
-        android:layout_below="@+id/bt_new_video"
-        android:layout_centerHorizontal="true" />
+    android:orientation="vertical"
+    android:weightSum="5">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/icon_makervideo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
+
+            <com.videomaker.photowithsong.CustomTextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|bottom"
+                android:text="@string/video_maker"
+                android:textColor="#fff"
+                android:textSize="30sp" />
+
+            <com.videomaker.photowithsong.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:gravity="center_horizontal|top"
+                android:text="of photo and music"
+                android:textColor="#ead8f2"
+                android:textSize="22sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/bt_new_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_creat"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/selector_creat_video" />
+
+            <com.videomaker.photowithsong.CustomTextView
+                android:id="@+id/customTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/create_new"
+                android:textColor="#fff"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bt_my_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_my"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/selector_my_video" />
+
+            <com.videomaker.photowithsong.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/my_video"
+                android:textColor="#fff"
+                android:textSize="22sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

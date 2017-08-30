@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.videomaker.photowithsong.activities.MyVideoActivity">
-
     <include layout="@layout/action_bar" />
 
     <android.support.v7.widget.RecyclerView

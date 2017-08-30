@@ -6,18 +6,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imgcheck"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_music" />
 
         <TextView
+            android:textColor="#111"
             android:id="@+id/txtnamems"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

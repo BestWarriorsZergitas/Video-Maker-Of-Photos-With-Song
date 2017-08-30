@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,7 +29,7 @@ import com.videomaker.photowithsong.utils.Constant;
 import java.io.File;
 import java.util.ArrayList;
 
-public class SwapAndEditActivity extends AppCompatActivity implements OnStartDragListener, RecyclerListAdapter.OnClickImageEdit {
+public class SwapAndEditActivity extends AppCompatActivity implements View.OnClickListener, OnStartDragListener, RecyclerListAdapter.OnClickImageEdit {
 
     public static int CAMERA_PREVIEW_RESULT = 1;
     private ArrayList<Image> imageList;
@@ -40,7 +39,7 @@ public class SwapAndEditActivity extends AppCompatActivity implements OnStartDra
     private ItemTouchHelper mItemTouchHelper;
     private TextView tvNext;
     private Image imageClick;
-    private ImageView ivBack;
+    private ImageView ivBack, ivNext;
     private int position;
 
     public static Bitmap getBitmapFromLocalPath(String path, int sampleSize) {
@@ -76,24 +75,15 @@ public class SwapAndEditActivity extends AppCompatActivity implements OnStartDra
         mItemTouchHelper.attachToRecyclerView(recyclerView);
 
         ivBack = (ImageView) findViewById(R.id.iv_back);
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        ivNext = (ImageView) findViewById(R.id.iv_next);
+        ivNext.setOnClickListener(this);
+        ivBack.setOnClickListener(this);
 
         tvNext = (TextView) findViewById(R.id.tv_next);
         tvNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 paths= new ArrayList<String>();
-                for (int i = 0; i < imageList.size(); i++) {
-                    paths.add(imageList.get(i).getPath());
-                }
-                Intent data=new Intent(SwapAndEditActivity.this,SlideShowVideoActivity.class);
-                data.putExtra(Constant.IMAGE_ARR,paths);
-                startActivity(data);
+
             }
         });
 
@@ -148,5 +138,16 @@ public class SwapAndEditActivity extends AppCompatActivity implements OnStartDra
                 cursor.close();
             }
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        paths = new ArrayList<String>();
+        for (int i = 0; i < imageList.size(); i++) {
+            paths.add(imageList.get(i).getPath());
+        }
+        Intent data = new Intent(SwapAndEditActivity.this, SlideShowVideoActivity.class);
+        data.putExtra(Constant.IMAGE_ARR, paths);
+        startActivity(data);
     }
 }

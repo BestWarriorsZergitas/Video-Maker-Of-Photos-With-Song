@@ -9,7 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.utils.Constant;
@@ -23,28 +24,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String[] PERMISSION =
             {Manifest.permission.READ_EXTERNAL_STORAGE
                     , Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private Button btCreateVideo, btMyVideo;
+    private LinearLayout btCreateVideo, btMyVideo;
+    private ImageView iv_creat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btCreateVideo = (Button) findViewById(R.id.bt_new_video);
-        btMyVideo = (Button) findViewById(R.id.bt_my_video);
+        btCreateVideo = (LinearLayout) findViewById(R.id.bt_new_video);
+        btMyVideo = (LinearLayout) findViewById(R.id.bt_my_video);
         turnPermiss();
     }
 
     public void init() {
-        btCreateVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ImagePickerActivity.class));
-            }
-        });
+        btCreateVideo.setOnClickListener(this);
         btMyVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,9 +143,21 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                Log.d("DEBUG", "tep chua ton tai");
                 return;
             }
         }
 
+        Log.d("DEBUG", "tep da ton tai");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_new_video:
+            case R.id.iv_creat: {
+                startActivity(new Intent(MainActivity.this, ImagePickerActivity.class));
+            }
+        }
     }
 }

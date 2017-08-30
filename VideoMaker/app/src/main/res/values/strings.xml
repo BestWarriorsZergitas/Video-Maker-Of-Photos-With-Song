@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Video Maker Of Photos With Song</string>
-    <string name="create_new">Create new video</string>
+    <string name="create_new">Create video</string>
     <string name="my_video">My video</string>
     <string name="pick_album">Pick album</string>
     <string name="next">Next</string>
@@ -12,8 +12,10 @@
     <string name="input_name">Input name</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
-    <string name="selected">Selected</string>
-    <string name="image">image(s)</string>
+    <string name="selected">Selected </string>
+    <string name="image"> image(s)</string>
     <string name="slide_video">Slide Video</string>
     <string name="music_video">Music Video</string>
+    <string name="video_maker">Video Maker</string>
+    <string name="pick_image">Pick Image</string>
 </resources>

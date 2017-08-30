@@ -25,7 +25,7 @@
                 android:scaleType="centerCrop" />
             <ImageView
                 android:layout_width="20dp"
-                android:src="@drawable/ic_cancel"
+                android:src="@drawable/ic_delete"
                 android:id="@+id/iv_cancel"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"

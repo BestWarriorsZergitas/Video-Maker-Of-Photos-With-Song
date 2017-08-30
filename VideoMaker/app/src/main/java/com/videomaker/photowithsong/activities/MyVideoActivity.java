@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.videomaker.photowithsong.R;
@@ -26,6 +27,7 @@ public class MyVideoActivity extends AppCompatActivity {
     private AdapterAblbumVideo adapterAblbumVideo;
     private ArrayList<MyVideo> arrVideo = new ArrayList<>();
     private TextView textsave, titleappbar;
+    private ImageView ivBack,ivNext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +44,20 @@ public class MyVideoActivity extends AppCompatActivity {
         textsave = (TextView) findViewById(R.id.tv_next);
         textsave.setVisibility(View.INVISIBLE);
         titleappbar = (TextView) findViewById(R.id.titleappbar);
+        ivBack= (ImageView) findViewById(R.id.iv_back);
+        ivNext= (ImageView) findViewById(R.id.iv_next);
+        ivNext.setVisibility(View.INVISIBLE);
         titleappbar.setText(getString(R.string.my_video));
         arrVideo = new ArrayList<>();
         recycleView.setLayoutManager(new GridLayoutManager(getBaseContext(), 2));
         adapterAblbumVideo = new AdapterAblbumVideo(getBaseContext(), arrVideo);
         recycleView.setAdapter(adapterAblbumVideo);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    finish();
+                }
+        });
 
     }
 

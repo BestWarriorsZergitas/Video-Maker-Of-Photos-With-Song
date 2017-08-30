@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="#fff"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/save_video"
+        android:textColor="#111"
         android:textSize="28sp" />
 
     <TextView
@@ -19,30 +20,43 @@
         android:textColor="#ccc" />
 
     <EditText
-        android:hint="@string/input_name"
         android:id="@+id/edit_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:hint="@string/input_name" />
 
     <LinearLayout
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_gravity="center"
+        android:weightSum="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:gravity="center|right"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
             android:id="@+id/bt_save"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/save" />
+            android:background="@drawable/selector_buton"
+            android:text="@string/save"
+            android:textColor="#fff"
+            android:textSize="20sp" />
 
-        <Button
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
             android:id="@+id/bt_cancel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            android:text="@string/cancel" />
+            android:layout_marginLeft="24dp"
+            android:background="@drawable/selector_buton_cancel"
+            android:text="@string/cancel"
+            android:textSize="20sp" />
     </LinearLayout>
 </LinearLayout>

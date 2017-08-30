@@ -18,7 +18,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -373,11 +372,11 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     private void createDiaglog() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         View v = getLayoutInflater().inflate(R.layout.diaglog_save_video, null);
-        Button btsave, btcancel;
+        TextView btsave, btcancel;
         EditText edtxt;
         edtxt = (EditText) v.findViewById(R.id.edit_save);
-        btsave = (Button) v.findViewById(R.id.bt_save);
-        btcancel = (Button) v.findViewById(R.id.bt_cancel);
+        btsave = (TextView) v.findViewById(R.id.bt_save);
+        btcancel = (TextView) v.findViewById(R.id.bt_cancel);
         btsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
