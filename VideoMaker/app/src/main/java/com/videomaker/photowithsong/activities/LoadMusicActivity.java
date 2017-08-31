@@ -54,12 +54,12 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
         lnpr.setVisibility(View.INVISIBLE);
         lsmusic = new ArrayList<>();
         matrix = new Matrix();
-        lsmusic.add(new MusicMP3(false, "NhacNenGiangSinh1", "Unknow", getCacheDir() + "/NhacNenGiangSinh01.aac"));
-        lsmusic.add(new MusicMP3(false, "NhacNenGiangSinh2", "Unknow", getCacheDir() + "/NhacNenGiangSinh02.aac"));
-        lsmusic.add(new MusicMP3(false, "NhacNenTinhYeu1", "Unknow", getCacheDir() + "/NhacNenTinhYeu01.aac"));
-        lsmusic.add(new MusicMP3(false, "NhacNenTinhYeu2", "Unknow", getCacheDir() + "/NhacNenTinhYeu02.aac"));
-        lsmusic.add(new MusicMP3(false, "NhacNenHappyNewYear", "Unknow", getCacheDir() + "/NhacNenHappyNewYear01.aac"));
-        lsmusic.add(new MusicMP3(false, "NhacNenSinhNhat", "Unknow", getCacheDir() + "/NhacNenSinhNhat01.aac"));
+        lsmusic.add(new MusicMP3(false, "Christmas-1", "Unknow", getCacheDir() + "/NhacNenGiangSinh01.aac"));
+        lsmusic.add(new MusicMP3(false, "Christmas-2", "Unknow", getCacheDir() + "/NhacNenGiangSinh02.aac"));
+        lsmusic.add(new MusicMP3(false, "Love-1", "Unknow", getCacheDir() + "/NhacNenTinhYeu01.aac"));
+        lsmusic.add(new MusicMP3(false, "Love-2", "Unknow", getCacheDir() + "/NhacNenTinhYeu02.aac"));
+        lsmusic.add(new MusicMP3(false, "Happy New Year", "Unknow", getCacheDir() + "/NhacNenHappyNewYear01.aac"));
+        lsmusic.add(new MusicMP3(false, "Birthday", "Unknow", getCacheDir() + "/NhacNenSinhNhat01.aac"));
         lsmusic.add(new MusicMP3(false, "Kiss the rain", "Yurima",
                 getCacheDir() + "/KissTheRain-Yiruma_.aac"));
 //        songMusic = new SongMusic();

@@ -16,4 +16,5 @@
     <string name="image">ảnh</string>
     <string name="slide_video">Trình video</string>
     <string name="music_video">Nhạc nền</string>
+    <string name="pick_image">Chọn ảnh</string>
 </resources>

@@ -29,7 +29,7 @@ import android.widget.VideoView;
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.objects.MusicMP3;
 import com.videomaker.photowithsong.utils.Constant;
-import com.videomaker.photowithsong.utils.VideoUilt;
+import com.videomaker.photowithsong.utils.VideoUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,7 +42,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 public class SlideShowVideoActivity extends AppCompatActivity implements View.OnClickListener {
-    private VideoUilt video;
+    private VideoUtils video;
     private VideoView videoView;
     private MediaController mediaController;
     private TextView txtmusis, txtsong, textsave, txttitle;
@@ -140,7 +140,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         @Override
         protected String doInBackground(ArrayList<String>... arrayLists) {
             ArrayList<String> bitmaps = arrayLists[0];
-            video = new VideoUilt(getBaseContext(), bitmaps, Constant.PATH_TEMP + "test.mp4");
+            video = new VideoUtils(getBaseContext(), bitmaps, Constant.PATH_TEMP + "test.mp4");
             String pavideo = video.makeVideo_();
             coppyFile(pavideo, Constant.PATH_TEMP + "test1.mp4");
             return pavideo;

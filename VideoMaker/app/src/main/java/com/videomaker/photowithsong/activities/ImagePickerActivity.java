@@ -172,7 +172,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
 
     @Override
     public void onBackPressed() {
-        if (imageFragment.isVisible()) {
+        if (imageFragment.isVisible() && imageFragment != null) {
             ((TextView) findViewById(R.id.titleappbar)).setText(getString(R.string.pick_album));
             FragmentTransaction t = getSupportFragmentManager().beginTransaction();
             t.replace(R.id.frame_image_picker, albumFragment);
