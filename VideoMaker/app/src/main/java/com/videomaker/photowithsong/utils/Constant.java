@@ -1,5 +1,7 @@
 package com.videomaker.photowithsong.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 /**
@@ -18,5 +20,16 @@ public class Constant {
     }
 
     public class SharedPreferences {
+    }
+
+    public static Bitmap getBitmapFromLocalPath(String path, int sampleSize) {
+        try {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = sampleSize;
+            return BitmapFactory.decodeFile(path, options);
+        } catch (Exception e) {
+            //  Logger.e(e.toString());
+        }
+        return null;
     }
 }

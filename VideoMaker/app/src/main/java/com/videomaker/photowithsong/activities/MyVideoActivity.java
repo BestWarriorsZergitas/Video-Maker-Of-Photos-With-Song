@@ -58,6 +58,12 @@ public class MyVideoActivity extends AppCompatActivity {
                     finish();
                 }
         });
+        titleappbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 

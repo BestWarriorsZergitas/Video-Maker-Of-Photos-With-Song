@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
+    <com.videomaker.photowithsong.utils.CustomTextViewSanFranciscoBold
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/save_video"
@@ -27,35 +27,35 @@
         android:hint="@string/input_name" />
 
     <LinearLayout
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_gravity="center"
-        android:weightSum="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-        <TextView
-            android:gravity="center"
-            android:layout_weight="1"
+        <com.videomaker.photowithsong.utils.CustomTextViewSanFranciscoMediem
             android:id="@+id/bt_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@drawable/selector_buton"
+            android:gravity="center"
             android:text="@string/save"
             android:textColor="#fff"
             android:textSize="20sp" />
 
-        <TextView
-            android:gravity="center"
-            android:layout_weight="1"
+        <com.videomaker.photowithsong.utils.CustomTextViewSanFranciscoMediem
             android:id="@+id/bt_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
+            android:layout_weight="1"
             android:background="@drawable/selector_buton_cancel"
+            android:gravity="center"
             android:text="@string/cancel"
             android:textSize="20sp" />
     </LinearLayout>

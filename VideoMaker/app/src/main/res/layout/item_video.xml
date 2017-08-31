@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.videomaker.photowithsong.utils.CustomTextViewSanFranciscoBold
                         android:id="@+id/titlevideo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                         android:textColor="@android:color/black"
                         android:textSize="15sp" />
 
-                    <TextView
+                    <com.videomaker.photowithsong.utils.CustomTextViewSanFranciscoLight
                         android:id="@+id/counttime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -41,7 +41,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     private ArrayList<Image> imagesPicked;
     private RecyclerView rvPickedImage;
     private PickedImageAdapter pickedImageAdapter;
-    private TextView tvNext, tvSelected;
+    private TextView tvNext, tvSelected, tvTitle;
     private ImageView btClear;
 
     @Override
@@ -57,8 +57,13 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     private void initUI() {
         tvSelected = (TextView) findViewById(R.id.tv_count_selected_img);
         tvNext = (TextView) findViewById(R.id.tv_next);
+        tvTitle = (TextView) findViewById(R.id.titleappbar);
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivNext = (ImageView) findViewById(R.id.iv_next);
+        ivBack.setOnClickListener(this);
+        ivNext.setOnClickListener(this);
         tvNext.setOnClickListener(this);
-
+        tvTitle.setOnClickListener(this);
         btClear = (ImageView) findViewById(R.id.btn_clear);
         btClear.setOnClickListener(this);
 
@@ -83,15 +88,13 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.frame_image_picker, albumFragment);
         t.commit();
-        ivBack = (ImageView) findViewById(R.id.iv_back);
-        ivNext = (ImageView) findViewById(R.id.iv_next);
-        ivBack.setOnClickListener(this);
-        ivNext.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.titleappbar:
             case R.id.iv_back:
                 try {
                     if (imageFragment.isVisible() && imageFragment != null) {

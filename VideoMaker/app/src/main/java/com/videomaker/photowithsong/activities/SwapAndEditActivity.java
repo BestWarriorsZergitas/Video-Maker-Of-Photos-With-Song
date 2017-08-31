@@ -37,7 +37,7 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
     private RecyclerView recyclerView;
     private RecyclerListAdapter adapter;
     private ItemTouchHelper mItemTouchHelper;
-    private TextView tvNext;
+    private TextView tvNext, tvtitle;
     private Image imageClick;
     private ImageView ivBack, ivNext;
     private int position;
@@ -61,6 +61,11 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_swap_and_edit);
+
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivNext = (ImageView) findViewById(R.id.iv_next);
+        tvNext = (TextView) findViewById(R.id.tv_next);
+        tvtitle= (TextView) findViewById(R.id.titleappbar);
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra(Constant.IMAGE);
         imageList = bundle.getParcelableArrayList(Constant.IMAGE);
@@ -74,18 +79,10 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
 
-        ivBack = (ImageView) findViewById(R.id.iv_back);
-        ivNext = (ImageView) findViewById(R.id.iv_next);
         ivNext.setOnClickListener(this);
         ivBack.setOnClickListener(this);
-
-        tvNext = (TextView) findViewById(R.id.tv_next);
-        tvNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        tvNext.setOnClickListener(this);
+        tvtitle.setOnClickListener(this);
 
     }
 
@@ -142,12 +139,25 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        paths = new ArrayList<String>();
-        for (int i = 0; i < imageList.size(); i++) {
-            paths.add(imageList.get(i).getPath());
+        switch (v.getId()) {
+            case R.id.titleappbar:
+            case R.id.iv_back: {
+                finish();
+                break;
+            }
+            case R.id.iv_next:
+            case R.id.tv_next: {
+                paths = new ArrayList<String>();
+                for (int i = 0; i < imageList.size(); i++) {
+                    paths.add(imageList.get(i).getPath());
+                }
+                Intent data = new Intent(SwapAndEditActivity.this, SlideShowVideoActivity.class);
+                data.putExtra(Constant.IMAGE_ARR, paths);
+                startActivity(data);
+                break;
+            }
+
         }
-        Intent data = new Intent(SwapAndEditActivity.this, SlideShowVideoActivity.class);
-        data.putExtra(Constant.IMAGE_ARR, paths);
-        startActivity(data);
+
     }
 }

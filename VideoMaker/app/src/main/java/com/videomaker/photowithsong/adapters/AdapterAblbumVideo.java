@@ -71,7 +71,7 @@ public class AdapterAblbumVideo extends RecyclerView.Adapter<AdapterAblbumVideo.
         int hour = (int) (duration / 3600000);
         int minus = (int) (duration % 3600000) / 60000;
         int sec = (int) (duration - (hour * 3600000 + 60000 * minus)) / 1000;
-        String time = hour + "h:" + minus + "m:" + sec + "s";
+        String time = hour + ":" + minus + ":" + sec;
         holder.timevideo.setText(time);
         holder.prviewvideo.setOnClickListener(new View.OnClickListener() {
             @Override

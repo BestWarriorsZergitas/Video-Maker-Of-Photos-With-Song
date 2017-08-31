@@ -1,4 +1,4 @@
-package com.videomaker.photowithsong;
+package com.videomaker.photowithsong.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;

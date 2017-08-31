@@ -49,7 +49,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     private ImageView imgcontrolermusic, imgmusic;
     private MusicMP3 musicMP3;
     private LinearLayout lnpro;
-    private ImageView back;
+    private ImageView back, next;
     private ArrayList<Bitmap> lsBitmap;
     private ArrayList<String> paths;
     private AlertDialog mdialog;
@@ -62,17 +62,10 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_slide_show);
         init();
-        imgcontrolermusic.setOnClickListener(this);
-        back = (ImageView) findViewById(R.id.iv_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
         creatFolder();
         loadbitmap();
-        new AsynMakeVideo().execute(lsBitmap);
+        new AsynMakeVideo().execute(paths);
 
     }
 
@@ -88,6 +81,8 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     }
 
     public void init() {
+        back = (ImageView) findViewById(R.id.iv_back);
+        next = (ImageView) findViewById(R.id.iv_next);
         videoView = (VideoView) findViewById(R.id.showvideo);
         txtmusis = (TextView) findViewById(R.id.txtnamemusic);
         txttitle = (TextView) findViewById(R.id.titleappbar);
@@ -98,6 +93,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         textsave = (TextView) findViewById(R.id.tv_next);
         textsave.setText(getString(R.string.save));
         txttitle.setText(getString(R.string.slide_video));
+        imgcontrolermusic.setOnClickListener(this);
         mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
@@ -107,13 +103,11 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                 Log.d("DEBUG", videoView.getDuration() + "");
             }
         });
-        textsave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createDiaglog();
+        back.setOnClickListener(this);
+        next.setOnClickListener(this);
+        txttitle.setOnClickListener(this);
+        textsave.setOnClickListener(this);
 
-            }
-        });
     }
 
 
@@ -129,16 +123,25 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                 startIntentMusic();
                 break;
             }
+            case R.id.iv_back:
+            case R.id.titleappbar: {
+                finish();
+                break;
+            }
+            case R.id.iv_next:
+            case R.id.tv_next: {
+                createDiaglog();
+            }
         }
     }
 
-    public class AsynMakeVideo extends AsyncTask<ArrayList<Bitmap>, Void, String> {
+    public class AsynMakeVideo extends AsyncTask<ArrayList<String>, Void, String> {
 
         @Override
-        protected String doInBackground(ArrayList<Bitmap>... arrayLists) {
-            ArrayList<Bitmap> bitmaps = arrayLists[0];
+        protected String doInBackground(ArrayList<String>... arrayLists) {
+            ArrayList<String> bitmaps = arrayLists[0];
             video = new VideoUilt(getBaseContext(), bitmaps, Constant.PATH_TEMP + "test.mp4");
-            String pavideo = video.makeVideo();
+            String pavideo = video.makeVideo_();
             coppyFile(pavideo, Constant.PATH_TEMP + "test1.mp4");
             return pavideo;
         }
@@ -226,7 +229,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             boolean sawEOS = false;
             int frameCount = 0;
             int offset = 100;
-            int sampleSize = 256 * 1024;
+            int sampleSize = 1024 * 1024;
             ByteBuffer videoBuf = ByteBuffer.allocate(sampleSize);
             ByteBuffer audioBuf = ByteBuffer.allocate(sampleSize);
             MediaCodec.BufferInfo videoBufferInfo = new MediaCodec.BufferInfo();
@@ -240,12 +243,11 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             while (!sawEOS) {
                 videoBufferInfo.offset = offset;
                 audioBufferInfo.offset = offset;
-
                 videoBufferInfo.size = videoExtractor.readSampleData(videoBuf,
                         offset);
                 audioBufferInfo.size = audioExtractor.readSampleData(audioBuf,
                         offset);
-
+                int i = 0;
                 if (videoBufferInfo.size < 0 || audioBufferInfo.size < 0) {
                     Log.d("DEBUG", "saw input EOS.");
                     sawEOS = true;
@@ -275,6 +277,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                     }
 
                     frameCount++;
+                    Log.d("DEBUG", "franecount " + frameCount);
 
 
                 }

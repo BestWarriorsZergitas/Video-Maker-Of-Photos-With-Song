@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#e5e4e5"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -31,6 +32,7 @@
             </FrameLayout>
 
             <LinearLayout
+                android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -53,23 +55,26 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.videomaker.photowithsong.utils.CustomTextViewSanFranciscoBold
+                        android:lines="1"
                         android:id="@+id/txtnamemusic"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:text=""
-                        android:textSize="22sp"
+                        android:textColor="#111"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <TextView
+                    <com.videomaker.photowithsong.utils.CustomTextViewSanFranciscoMediem
+                        android:lines="1"
                         android:id="@+id/txtsong"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="top"
                         android:text=""
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <ImageView

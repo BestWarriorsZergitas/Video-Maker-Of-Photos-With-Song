@@ -2,6 +2,7 @@ package com.videomaker.photowithsong.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -13,6 +14,8 @@ import android.media.MediaFormat;
 import android.media.MediaMuxer;
 import android.util.Log;
 import android.view.Surface;
+
+import com.videomaker.photowithsong.R;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,6 +62,7 @@ public class VideoUilt {
     private Context context;
     private File output;
     private ArrayList<Bitmap> lsBitmap;
+    private ArrayList<String> lsPathBitmap;
     /**
      * Vì ở đây ta sử dụng bitmap để vẽ, vì vậy cần có thuộc tính FILTER_BITMAP_FLAG để khi zoom ảnh không bị vỡ hoặc nhoè ảnh
      **/
@@ -69,9 +73,9 @@ public class VideoUilt {
      **/
     public static int maxFrame;
 
-    public VideoUilt(Context context, ArrayList<Bitmap> lsBitmap, String path) {
+    public VideoUilt(Context context, ArrayList<String> lsPathBitmap, String path) {
         this.context = context;
-        this.lsBitmap = lsBitmap;
+        this.lsPathBitmap = lsPathBitmap;
         try {
             output = new File(path);
             prepareEncoder(output);
@@ -80,16 +84,23 @@ public class VideoUilt {
         }
     }
 
-    public String makeVideo() {
+    public String makeVideo_() {
         try {
             /** Tạo ra video có thời lượng là 5giây **/
             //5s=maxFrame/FRAMES_PER_SECOND
-            maxFrame = lsBitmap.size() * 30;
+            maxFrame = (lsPathBitmap.size() + 1) * 30;
             for (int i = 0; i < maxFrame; i++) {
 //                // chuẩn bị cho việc vẽ lên surface
                 drainEncoder(false);
+
 //                // Tạo ra từng frame trên surface
-                generateFrame_(i / FRAMES_PER_SECOND);
+                if (i / FRAMES_PER_SECOND == lsPathBitmap.size()) {
+                    Bitmap bitmap = makeScaled(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_black));
+                    generateFrame_B(bitmap);
+                } else {
+                    Bitmap bitmap = makeScaled(Constant.getBitmapFromLocalPath(lsPathBitmap.get(i / FRAMES_PER_SECOND), 1));
+                    generateFrame_B(bitmap);
+                }
 //                /** Tính toán percent exported, để có thể đưa ra dialog thông báo cho người dùng, cho họ biết còn cần phải chờ bao lâu nữa **/
 //                float percent = 100.0f * i / (float) maxFrame;
 //                }
@@ -98,7 +109,6 @@ public class VideoUilt {
         } finally {
             releaseEncoder();
         }
-
         return output.getAbsolutePath();
     }
 
@@ -242,39 +252,13 @@ public class VideoUilt {
             }
         }
     }
-
-    /**
-     * Vẽ từng frame theo thời gian,
-     * ví dụ ở giây 1 vẽ ảnh với zoom 1.1f,
-     * giây 2 vẽ ảnh zoom với 1.2f
-     **/
-//    private void generateFrame(int frameNum) {
-//        /** Khởi tạo canvas để vẽ từng frame cho video **/
-//        Canvas canvas = mInputSurface.lockCanvas(null);
-//        try {
-//            /** Trong 5 giây ta sẽ vẽ hình ảnh zoom từ 1.0 -> 1.3 **/
-//            /** Như vậy ta sẽ phải tính toán trong thời gian thứ i hình ảnh đang zoom ở mức bao nhiêu **/
-////            long currentDuration = computePresentationTimeNsec(frameNum);
-////            float currentZoom = 1.0f + currentDuration * (1.3f - 1.0f) / 5000.0f;
-//
-//            Matrix matrix = new Matrix();
-//            matrix.setScale(currentZoom, currentZoom);
-////            Rect rt=new Rect(0,0,0,0);
-//            canvas.drawBitmap(lsBitmap.get(0), matrix, paint);
-////            canvas.drawBitmap(bitmap,0,0,paint);
-//
-//        } finally {
-//            mInputSurface.unlockCanvasAndPost(canvas);
-//        }
-//    }
-    private void generateFrame_(int position) {
+    private void generateFrame_B(Bitmap bitmap) {
         /** Khởi tạo canvas để vẽ từng frame cho video **/
 //        Canvas canvas = new Canvas();
         Canvas canvas = mInputSurface.lockCanvas(null);
         paint.setColor(Color.BLACK);
         try {
             canvas.drawColor(Color.BLACK);
-            Bitmap bitmap = makeScaled(lsBitmap.get(position));
             int cx = (VIDEO_WIDTH - bitmap.getWidth()) / 2;
             int cy = (VIDEO_HEIGHT - bitmap.getHeight()) / 2;
             canvas.drawBitmap(bitmap, cx, cy, paint);

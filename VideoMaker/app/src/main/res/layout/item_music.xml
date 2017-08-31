@@ -17,7 +17,7 @@
             android:layout_height="30dp"
             android:src="@drawable/ic_music" />
 
-        <TextView
+        <com.videomaker.photowithsong.utils.CustomTextViewSanFranciscoMediem
             android:textColor="#111"
             android:id="@+id/txtnamems"
             android:layout_width="match_parent"

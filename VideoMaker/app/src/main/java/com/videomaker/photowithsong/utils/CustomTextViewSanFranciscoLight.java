@@ -1,4 +1,4 @@
-package com.videomaker.photowithsong;
+package com.videomaker.photowithsong.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -9,24 +9,24 @@ import android.widget.TextView;
  * Created by DaiPhongPC on 8/30/2017.
  */
 
-public class CustomTextView extends TextView {
-    public CustomTextView(Context context) {
+public class CustomTextViewSanFranciscoLight extends TextView {
+    public CustomTextViewSanFranciscoLight(Context context) {
         super(context);
         applyCustomFont(context);
     }
 
-    public CustomTextView(Context context, AttributeSet attrs) {
+    public CustomTextViewSanFranciscoLight(Context context, AttributeSet attrs) {
         super(context, attrs);
         applyCustomFont(context);
     }
 
-    public CustomTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomTextViewSanFranciscoLight(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         applyCustomFont(context);
     }
 
     private void applyCustomFont(Context context) {
-        Typeface customFont = FontCache.getTypeface("SVN-Anastasia.ttf", context);
+        Typeface customFont = FontCache.getTypeface("SanFranciscoLight.ttf", context);
         setTypeface(customFont);
     }
 }

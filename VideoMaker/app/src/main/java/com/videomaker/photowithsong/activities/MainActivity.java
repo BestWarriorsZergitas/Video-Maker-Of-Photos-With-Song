@@ -9,7 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.videomaker.photowithsong.R;
@@ -29,11 +30,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {Manifest.permission.READ_EXTERNAL_STORAGE
                     , Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private LinearLayout btCreateVideo, btMyVideo;
-    private ImageView iv_creat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         btCreateVideo = (LinearLayout) findViewById(R.id.bt_new_video);
         btMyVideo = (LinearLayout) findViewById(R.id.bt_my_video);

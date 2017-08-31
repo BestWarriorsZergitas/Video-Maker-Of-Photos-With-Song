@@ -25,7 +25,7 @@
             android:layout_marginTop="8dp"
             android:orientation="vertical">
 
-            <com.videomaker.photowithsong.CustomTextView
+            <com.videomaker.photowithsong.utils.CustomTextView
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                 android:textColor="#fff"
                 android:textSize="30sp" />
 
-            <com.videomaker.photowithsong.CustomTextView
+            <com.videomaker.photowithsong.utils.CustomTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
@@ -66,7 +66,7 @@
                 android:layout_height="80dp"
                 android:src="@drawable/selector_creat_video" />
 
-            <com.videomaker.photowithsong.CustomTextView
+            <com.videomaker.photowithsong.utils.CustomTextView
                 android:id="@+id/customTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 android:layout_height="80dp"
                 android:src="@drawable/selector_my_video" />
 
-            <com.videomaker.photowithsong.CustomTextView
+            <com.videomaker.photowithsong.utils.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

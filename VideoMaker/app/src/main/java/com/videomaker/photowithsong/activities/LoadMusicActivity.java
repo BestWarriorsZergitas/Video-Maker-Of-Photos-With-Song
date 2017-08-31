@@ -1,6 +1,7 @@
 package com.videomaker.photowithsong.activities;
 
 import android.content.Intent;
+import android.graphics.Matrix;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,6 +32,8 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
     private MusicMP3 musicMP3;
     private MediaPlayer mediaPlayer;
     private TextView txtok, txttitle;
+    private ImageView ivBack, ivNext;
+    private Matrix matrix;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +47,13 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
         lnpr = (LinearLayout) findViewById(R.id.lnpr);
         txtok = (TextView) findViewById(R.id.tv_next);
         txttitle = (TextView) findViewById(R.id.titleappbar);
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivNext = (ImageView) findViewById(R.id.iv_next);
         txtok.setText(getString(R.string.next));
         txttitle.setText(getString(R.string.music_video));
         lnpr.setVisibility(View.INVISIBLE);
         lsmusic = new ArrayList<>();
+        matrix = new Matrix();
         lsmusic.add(new MusicMP3(false, "NhacNenGiangSinh1", "Unknow", getCacheDir() + "/NhacNenGiangSinh01.aac"));
         lsmusic.add(new MusicMP3(false, "NhacNenGiangSinh2", "Unknow", getCacheDir() + "/NhacNenGiangSinh02.aac"));
         lsmusic.add(new MusicMP3(false, "NhacNenTinhYeu1", "Unknow", getCacheDir() + "/NhacNenTinhYeu01.aac"));
@@ -60,9 +67,13 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
         lsview.setAdapter(adapterMusic);
         lsview.setOnItemClickListener(this);
         txtok.setOnClickListener(this);
+        ivBack.setOnClickListener(this);
+        ivNext.setOnClickListener(this);
+        txttitle.setOnClickListener(this);
 //        new loadMusic().execute();
 
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -78,15 +89,36 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onClick(View view) {
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
+        switch (view.getId()) {
+            case R.id.tv_next:
+            case R.id.iv_next: {
+                if (mediaPlayer != null) {
+                    if (mediaPlayer.isPlaying()) {
+                        mediaPlayer.stop();
+                    }
+                }
+                Intent intent = new Intent();
+                if (musicMP3 != null) {
+                    intent.putExtra("music", musicMP3);
+                }
+                setResult(500, intent);
+                finish();
+                break;
+            }
+            case R.id.titleappbar:
+            case R.id.iv_back: {
+                if (mediaPlayer != null) {
+                    if (mediaPlayer.isPlaying()) {
+                        mediaPlayer.stop();
+                    }
+                }
+                Intent intent = new Intent();
+                setResult(500, intent);
+                finish();
+                break;
+            }
         }
-        Intent intent = new Intent();
-        if (musicMP3 != null) {
-            intent.putExtra("music", musicMP3);
-        }
-        setResult(500, intent);
-        finish();
+
     }
 
     public class loadMusic extends AsyncTask<Void, Void, ArrayList<MusicMP3>> {
