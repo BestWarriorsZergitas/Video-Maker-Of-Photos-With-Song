@@ -24,6 +24,7 @@ import com.videomaker.photowithsong.adapters.RecyclerListAdapter;
 import com.videomaker.photowithsong.helper.OnStartDragListener;
 import com.videomaker.photowithsong.helper.SimpleItemTouchHelperCallback;
 import com.videomaker.photowithsong.objects.Image;
+import com.videomaker.photowithsong.utils.AnimationTranslate;
 import com.videomaker.photowithsong.utils.Constant;
 
 import java.io.File;
@@ -143,6 +144,7 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
             case R.id.titleappbar:
             case R.id.iv_back: {
                 finish();
+//                AnimationTranslate.previewAnimation(SwapAndEditActivity.this);
                 break;
             }
             case R.id.iv_next:
@@ -154,6 +156,7 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
                 Intent data = new Intent(SwapAndEditActivity.this, SlideShowVideoActivity.class);
                 data.putExtra(Constant.IMAGE_ARR, paths);
                 startActivity(data);
+                AnimationTranslate.nextAnimation(SwapAndEditActivity.this);
                 break;
             }
 

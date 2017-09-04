@@ -70,7 +70,6 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
         ivBack.setOnClickListener(this);
         ivNext.setOnClickListener(this);
         txttitle.setOnClickListener(this);
-//        new loadMusic().execute();
 
     }
 

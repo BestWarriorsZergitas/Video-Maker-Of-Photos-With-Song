@@ -2,7 +2,6 @@ package com.videomaker.photowithsong.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -15,7 +14,7 @@ import android.media.MediaMuxer;
 import android.util.Log;
 import android.view.Surface;
 
-import com.videomaker.photowithsong.R;
+import com.videomaker.photowithsong.helper.OnUpdateProcessingVideo;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class VideoUtils {
      * càng lớn sẽ càng mượt nhưng mắt thường khó cảm nhận được hết,
      * với các video HD  hiện tại trên Youtube đang ở mức 28
      **/
-    private static final int FRAMES_PER_SECOND = 30;
+    public static final int FRAMES_PER_SECOND = 30;
     private static final int IFRAME_INTERVAL = 5;
     /**
      * Khai báo width, height của video, các bạn có thể thay đổi thành video HD tuỳ ý muốn
@@ -73,6 +72,8 @@ public class VideoUtils {
      **/
     public static int maxFrame;
 
+    public OnUpdateProcessingVideo onUpdateProcessingVideo = null;
+
     public VideoUtils(Context context, ArrayList<String> lsPathBitmap, String path) {
         this.context = context;
         this.lsPathBitmap = lsPathBitmap;
@@ -88,22 +89,17 @@ public class VideoUtils {
         try {
             /** Tạo ra video có thời lượng là 5giây **/
             //5s=maxFrame/FRAMES_PER_SECOND
-            maxFrame = (lsPathBitmap.size() + 1) * 30;
+            maxFrame = (lsPathBitmap.size()) * 30;
             for (int i = 0; i < maxFrame; i++) {
 //                // chuẩn bị cho việc vẽ lên surface
                 drainEncoder(false);
+                Bitmap bitmap = makeScaled(Constant.getBitmapFromLocalPath(lsPathBitmap.get(i / FRAMES_PER_SECOND), 1));
+                generateFrame_B(bitmap);
 
-//                // Tạo ra từng frame trên surface
-                if (i / FRAMES_PER_SECOND == lsPathBitmap.size()) {
-                    Bitmap bitmap = makeScaled(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_black));
-                    generateFrame_B(bitmap);
-                } else {
-                    Bitmap bitmap = makeScaled(Constant.getBitmapFromLocalPath(lsPathBitmap.get(i / FRAMES_PER_SECOND), 1));
-                    generateFrame_B(bitmap);
-                }
 //                /** Tính toán percent exported, để có thể đưa ra dialog thông báo cho người dùng, cho họ biết còn cần phải chờ bao lâu nữa **/
-//                float percent = 100.0f * i / (float) maxFrame;
-//                }
+                float percent = 100.0f * i / (float) maxFrame;
+//                onUpdateProcessingVideo.uploadIUVideo(percent);
+                Log.d("DEBUG", "uploading " + percent);
             }
             drainEncoder(true);
         } finally {
@@ -252,6 +248,7 @@ public class VideoUtils {
             }
         }
     }
+
     private void generateFrame_B(Bitmap bitmap) {
         /** Khởi tạo canvas để vẽ từng frame cho video **/
 //        Canvas canvas = new Canvas();

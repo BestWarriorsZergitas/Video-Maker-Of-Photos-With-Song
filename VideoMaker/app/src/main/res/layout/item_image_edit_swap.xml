@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="2dp"
+        android:background="@drawable/selector_card"
         android:elevation="3dp"
         card_view:cardUseCompatPadding="true"
         card_view:cardCornerRadius="5dp">
@@ -17,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
+                android:layout_margin="3dp"
                 android:id="@+id/thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"

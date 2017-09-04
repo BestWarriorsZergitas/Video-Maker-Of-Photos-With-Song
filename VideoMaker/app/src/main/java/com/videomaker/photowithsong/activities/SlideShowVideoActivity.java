@@ -1,8 +1,6 @@
 package com.videomaker.photowithsong.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaCodec;
@@ -27,9 +25,16 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.videomaker.photowithsong.R;
+import com.videomaker.photowithsong.helper.OnUpdateProcessingVideo;
 import com.videomaker.photowithsong.objects.MusicMP3;
+import com.videomaker.photowithsong.soundfile.SoundFile;
+import com.videomaker.photowithsong.utils.AnimationTranslate;
 import com.videomaker.photowithsong.utils.Constant;
+
+import com.videomaker.photowithsong.utils.CroppAudio;
+
 import com.videomaker.photowithsong.utils.VideoUtils;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,16 +46,15 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-public class SlideShowVideoActivity extends AppCompatActivity implements View.OnClickListener {
+public class SlideShowVideoActivity extends AppCompatActivity implements View.OnClickListener, OnUpdateProcessingVideo {
     private VideoUtils video;
     private VideoView videoView;
     private MediaController mediaController;
-    private TextView txtmusis, txtsong, textsave, txttitle;
+    private TextView txtmusis, txtsong, textsave, txttitle, tvupload;
     private ImageView imgcontrolermusic, imgmusic;
     private MusicMP3 musicMP3;
     private LinearLayout lnpro;
     private ImageView back, next;
-    private ArrayList<Bitmap> lsBitmap;
     private ArrayList<String> paths;
     private AlertDialog mdialog;
 
@@ -62,9 +66,10 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_slide_show);
         init();
-
+        Log.d("DEBUG", "process " + lnpro.isShown());
         creatFolder();
         loadbitmap();
+        showDiaglog();
         new AsynMakeVideo().execute(paths);
 
     }
@@ -72,11 +77,6 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     public void loadbitmap() {
         Intent data = getIntent();
         paths = data.getStringArrayListExtra(Constant.IMAGE_ARR);
-        lsBitmap = new ArrayList<>();
-        for (int i = 0; i < paths.size(); i++) {
-            lsBitmap.add(getBitmapFromLocalPath(paths.get(i), 1));
-        }
-        lsBitmap.add(lsBitmap.get(lsBitmap.size() - 1));
 
     }
 
@@ -84,6 +84,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         back = (ImageView) findViewById(R.id.iv_back);
         next = (ImageView) findViewById(R.id.iv_next);
         videoView = (VideoView) findViewById(R.id.showvideo);
+        tvupload = (TextView) findViewById(R.id.tv_upload);
         txtmusis = (TextView) findViewById(R.id.txtnamemusic);
         txttitle = (TextView) findViewById(R.id.titleappbar);
         txtsong = (TextView) findViewById(R.id.txtsong);
@@ -121,6 +122,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         switch (view.getId()) {
             case R.id.img_controlmusic: {
                 startIntentMusic();
+                AnimationTranslate.nextAnimation(SlideShowVideoActivity.this);
                 break;
             }
             case R.id.iv_back:
@@ -135,12 +137,18 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         }
     }
 
+    @Override
+    public void uploadIUVideo(float pt) {
+        tvupload.setText("Processing " + pt);
+    }
+
     public class AsynMakeVideo extends AsyncTask<ArrayList<String>, Void, String> {
 
         @Override
         protected String doInBackground(ArrayList<String>... arrayLists) {
             ArrayList<String> bitmaps = arrayLists[0];
             video = new VideoUtils(getBaseContext(), bitmaps, Constant.PATH_TEMP + "test.mp4");
+            video.onUpdateProcessingVideo = SlideShowVideoActivity.this;
             String pavideo = video.makeVideo_();
             coppyFile(pavideo, Constant.PATH_TEMP + "test1.mp4");
             return pavideo;
@@ -150,6 +158,8 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             lnpro.setVisibility(View.INVISIBLE);
+            Log.d("DEBUG", "process " + lnpro.isShown());
+            showDiaglog();
             showVideo(s);
         }
 
@@ -169,8 +179,21 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             if (pathaudio == null) {
                 return null;
             } else {
-                addaudiovideo(Constant.PATH_TEMP + "test.mp4", pathaudio, Constant.PATH_TEMP + "test1.mp4");
-                return Constant.PATH_TEMP + "test1.mp4";
+                try {
+                    File fileaudio = new File(Constant.PATH_TEMP + "audio.aac");
+                    FileOutputStream outAudio = new FileOutputStream(new File(Constant.PATH_TEMP + "audio.aac"));
+                    SoundFile soundFile = SoundFile.create(pathaudio);
+                    CroppAudio.croppAudio(soundFile, fileaudio, 0, (paths.size() + 3) * VideoUtils.FRAMES_PER_SECOND);
+                    addaudiovideo(Constant.PATH_TEMP + "test.mp4", fileaudio.getPath(), Constant.PATH_TEMP + "test1.mp4");
+                    return Constant.PATH_TEMP + "test1.mp4";
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                } catch (SoundFile.InvalidInputException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
             }
         }
 
@@ -178,6 +201,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             lnpro.setVisibility(View.INVISIBLE);
+            showDiaglog();
             showVideo(s);
         }
 
@@ -186,17 +210,6 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             videoView.start();
         }
 
-    }
-
-    public static Bitmap getBitmapFromLocalPath(String path, int sampleSize) {
-        try {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = sampleSize;
-            return BitmapFactory.decodeFile(path, options);
-        } catch (Exception e) {
-            //  Logger.e(e.toString());
-        }
-        return null;
     }
 
     public void addaudiovideo(String pathvideo, String pathaudio, String output) {
@@ -223,6 +236,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             MediaFormat audioFormat = audioExtractor.getTrackFormat(0);
             int audioTrack = muxer.addTrack(audioFormat);
 
+//            CroppedTrack cropperAacTrack = new CroppedTrack(, 0, paths.size()*1000);
             Log.d("DEBUG", "Video Format " + videoFormat.toString());
             Log.d("DEBUG", "Audio Format " + audioFormat.toString());
 
@@ -248,7 +262,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                 audioBufferInfo.size = audioExtractor.readSampleData(audioBuf,
                         offset);
                 int i = 0;
-                if (videoBufferInfo.size < 0 || audioBufferInfo.size < 0) {
+                if (videoBufferInfo.size < 0 && audioBufferInfo.size < 0) {
                     Log.d("DEBUG", "saw input EOS.");
                     sawEOS = true;
                     videoBufferInfo.size = 0;
@@ -278,8 +292,6 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
 
                     frameCount++;
                     Log.d("DEBUG", "franecount " + frameCount);
-
-
                 }
             }
             muxer.stop();
@@ -362,15 +374,17 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             if (data != null) {
                 lnpro.setVisibility(View.VISIBLE);
                 musicMP3 = (MusicMP3) data.getSerializableExtra("music");
-                Log.d("DEBUG", musicMP3.getPath());
-                txtmusis.setText(musicMP3.getNamemusic());
-                txtsong.setText(musicMP3.getNamesong());
-                new AsynAddAudio().execute(musicMP3.getPath());
+                if (musicMP3 != null) {
+                    Log.d("DEBUG", musicMP3.getPath());
+                    txtmusis.setText(musicMP3.getNamemusic());
+                    txtsong.setText(musicMP3.getNamesong());
+                    showDiaglog();
+                    new AsynAddAudio().execute(musicMP3.getPath());
+                }
 
             }
         }
     }
-
 
     private void createDiaglog() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -439,5 +453,17 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             Log.e("tag", e.getMessage());
         }
 
+    }
+
+    public void showDiaglog() {
+        if (lnpro.getVisibility() == View.VISIBLE) {
+            textsave.setClickable(false);
+            videoView.setClickable(false);
+            imgcontrolermusic.setClickable(false);
+        } else {
+            textsave.setClickable(true);
+            videoView.setClickable(true);
+            imgcontrolermusic.setClickable(true);
+        }
     }
 }

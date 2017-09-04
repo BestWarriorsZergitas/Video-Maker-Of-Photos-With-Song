@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.videomaker.photowithsong.R;
+import com.videomaker.photowithsong.utils.AnimationTranslate;
 import com.videomaker.photowithsong.utils.Constant;
 import com.videomaker.photowithsong.utils.FileMover;
 import com.videomaker.photowithsong.utils.Utils;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, MyVideoActivity.class));
+                AnimationTranslate.nextAnimation(MainActivity.this);
             }
         });
     }
@@ -160,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_new_video:
             case R.id.iv_creat: {
                 startActivity(new Intent(MainActivity.this, ImagePickerActivity.class));
+                AnimationTranslate.nextAnimation(MainActivity.this);
             }
         }
     }

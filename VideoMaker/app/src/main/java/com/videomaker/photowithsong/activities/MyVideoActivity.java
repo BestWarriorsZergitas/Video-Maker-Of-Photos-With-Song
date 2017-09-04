@@ -27,7 +27,8 @@ public class MyVideoActivity extends AppCompatActivity {
     private AdapterAblbumVideo adapterAblbumVideo;
     private ArrayList<MyVideo> arrVideo = new ArrayList<>();
     private TextView textsave, titleappbar;
-    private ImageView ivBack,ivNext;
+    private ImageView ivBack, ivNext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +45,8 @@ public class MyVideoActivity extends AppCompatActivity {
         textsave = (TextView) findViewById(R.id.tv_next);
         textsave.setVisibility(View.INVISIBLE);
         titleappbar = (TextView) findViewById(R.id.titleappbar);
-        ivBack= (ImageView) findViewById(R.id.iv_back);
-        ivNext= (ImageView) findViewById(R.id.iv_next);
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivNext = (ImageView) findViewById(R.id.iv_next);
         ivNext.setVisibility(View.INVISIBLE);
         titleappbar.setText(getString(R.string.my_video));
         arrVideo = new ArrayList<>();
@@ -55,13 +56,14 @@ public class MyVideoActivity extends AppCompatActivity {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    finish();
-                }
+                finish();
+            }
         });
         titleappbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+//                AnimationTranslate.previewAnimation(MyVideoActivity.this);
             }
         });
 

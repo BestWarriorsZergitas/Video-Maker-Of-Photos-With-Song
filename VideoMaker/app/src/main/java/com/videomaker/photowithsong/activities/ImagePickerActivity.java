@@ -21,6 +21,7 @@ import com.videomaker.photowithsong.adapters.PickedImageAdapter;
 import com.videomaker.photowithsong.fragments.AlbumFragment;
 import com.videomaker.photowithsong.fragments.ImageFragment;
 import com.videomaker.photowithsong.objects.Image;
+import com.videomaker.photowithsong.utils.AnimationTranslate;
 import com.videomaker.photowithsong.utils.Constant;
 import com.videomaker.photowithsong.utils.ManagerGalary;
 
@@ -104,6 +105,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
                     } else {
                         //                    super.onBackPressed();
                         finish();
+//                        AnimationTranslate.previewAnimation(ImagePickerActivity.this);
                     }
                 } catch (Exception e) {
                     finish();
@@ -117,6 +119,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
                 bundle.putParcelableArrayList(Constant.IMAGE, imagesPicked);
                 intent.putExtra(Constant.IMAGE, bundle);
                 startActivity(intent);
+                AnimationTranslate.nextAnimation(ImagePickerActivity.this);
                 break;
             case R.id.btn_clear:
                 for (int i = 0; i < imagesPicked.size(); i++) {
