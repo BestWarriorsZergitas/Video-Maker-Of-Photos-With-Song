@@ -5,5 +5,5 @@ package com.videomaker.photowithsong.helper;
  */
 
 public interface OnUpdateProcessingVideo {
-    void uploadIUVideo(float pt);
+    void uploadIUVideo(int pt);
 }

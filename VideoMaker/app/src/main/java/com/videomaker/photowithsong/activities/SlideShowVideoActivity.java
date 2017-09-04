@@ -30,11 +30,8 @@ import com.videomaker.photowithsong.objects.MusicMP3;
 import com.videomaker.photowithsong.soundfile.SoundFile;
 import com.videomaker.photowithsong.utils.AnimationTranslate;
 import com.videomaker.photowithsong.utils.Constant;
-
 import com.videomaker.photowithsong.utils.CroppAudio;
-
 import com.videomaker.photowithsong.utils.VideoUtils;
-
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,7 +43,7 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-public class SlideShowVideoActivity extends AppCompatActivity implements View.OnClickListener, OnUpdateProcessingVideo {
+public class SlideShowVideoActivity extends AppCompatActivity implements View.OnClickListener {
     private VideoUtils video;
     private VideoView videoView;
     private MediaController mediaController;
@@ -66,11 +63,11 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_slide_show);
         init();
-        Log.d("DEBUG", "process " + lnpro.isShown());
         creatFolder();
         loadbitmap();
         showDiaglog();
-        new AsynMakeVideo().execute(paths);
+        video = new VideoUtils(getBaseContext(), paths, Constant.PATH_TEMP + "test.mp4");
+        new AsynMakeVideo(tvupload).execute();
 
     }
 
@@ -81,6 +78,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     }
 
     public void init() {
+        lnpro = (LinearLayout) findViewById(R.id.lnprocess);
         back = (ImageView) findViewById(R.id.iv_back);
         next = (ImageView) findViewById(R.id.iv_next);
         videoView = (VideoView) findViewById(R.id.showvideo);
@@ -90,7 +88,6 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         txtsong = (TextView) findViewById(R.id.txtsong);
         imgmusic = (ImageView) findViewById(R.id.iconmusic);
         imgcontrolermusic = (ImageView) findViewById(R.id.img_controlmusic);
-        lnpro = (LinearLayout) findViewById(R.id.lnprocess);
         textsave = (TextView) findViewById(R.id.tv_next);
         textsave.setText(getString(R.string.save));
         txttitle.setText(getString(R.string.slide_video));
@@ -137,18 +134,16 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         }
     }
 
-    @Override
-    public void uploadIUVideo(float pt) {
-        tvupload.setText("Processing " + pt);
-    }
+    public class AsynMakeVideo extends AsyncTask<ArrayList<String>, Integer, String> implements OnUpdateProcessingVideo {
+        private TextView txt;
 
-    public class AsynMakeVideo extends AsyncTask<ArrayList<String>, Void, String> {
+        public AsynMakeVideo(TextView txt) {
+            this.txt = txt;
+        }
 
         @Override
         protected String doInBackground(ArrayList<String>... arrayLists) {
-            ArrayList<String> bitmaps = arrayLists[0];
-            video = new VideoUtils(getBaseContext(), bitmaps, Constant.PATH_TEMP + "test.mp4");
-            video.onUpdateProcessingVideo = SlideShowVideoActivity.this;
+            video.onUpdateProcessingVideo = this;
             String pavideo = video.makeVideo_();
             coppyFile(pavideo, Constant.PATH_TEMP + "test1.mp4");
             return pavideo;
@@ -168,13 +163,23 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             videoView.start();
         }
 
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            txt.setText("Processing " + values[0] + "%");
+        }
+
+        @Override
+        public void uploadIUVideo(int pt) {
+            publishProgress(pt);
+
+        }
     }
 
-    public class AsynAddAudio extends AsyncTask<String, Void, String> {
+    public class AsynAddAudio extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... arrayLists) {
-
+            publishProgress();
             String pathaudio = arrayLists[0];
             if (pathaudio == null) {
                 return null;
@@ -210,96 +215,100 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             videoView.start();
         }
 
-    }
-
-    public void addaudiovideo(String pathvideo, String pathaudio, String output) {
-        MediaExtractor videoExtractor = new MediaExtractor();
-        try {
-            videoExtractor.setDataSource(pathvideo);
-            MediaExtractor audioExtractor = new MediaExtractor();
-            audioExtractor.setDataSource(pathaudio);
-            Log.d("DEBUG",
-                    "Video Extractor Track Count "
-                            + videoExtractor.getTrackCount());
-            Log.d("DEBUG",
-                    "Audio Extractor Track Count "
-                            + audioExtractor.getTrackCount());
-
-            MediaMuxer muxer = new MediaMuxer(output,
-                    MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
-
-            videoExtractor.selectTrack(0);
-            MediaFormat videoFormat = videoExtractor.getTrackFormat(0);
-            int videoTrack = muxer.addTrack(videoFormat);
-
-            audioExtractor.selectTrack(0);
-            MediaFormat audioFormat = audioExtractor.getTrackFormat(0);
-            int audioTrack = muxer.addTrack(audioFormat);
-
-//            CroppedTrack cropperAacTrack = new CroppedTrack(, 0, paths.size()*1000);
-            Log.d("DEBUG", "Video Format " + videoFormat.toString());
-            Log.d("DEBUG", "Audio Format " + audioFormat.toString());
-
-            boolean sawEOS = false;
-            int frameCount = 0;
-            int offset = 100;
-            int sampleSize = 1024 * 1024;
-            ByteBuffer videoBuf = ByteBuffer.allocate(sampleSize);
-            ByteBuffer audioBuf = ByteBuffer.allocate(sampleSize);
-            MediaCodec.BufferInfo videoBufferInfo = new MediaCodec.BufferInfo();
-            MediaCodec.BufferInfo audioBufferInfo = new MediaCodec.BufferInfo();
-
-            videoExtractor.seekTo(0, MediaExtractor.SEEK_TO_CLOSEST_SYNC);
-            audioExtractor.seekTo(0, MediaExtractor.SEEK_TO_CLOSEST_SYNC);
-
-            muxer.start();
-
-            while (!sawEOS) {
-                videoBufferInfo.offset = offset;
-                audioBufferInfo.offset = offset;
-                videoBufferInfo.size = videoExtractor.readSampleData(videoBuf,
-                        offset);
-                audioBufferInfo.size = audioExtractor.readSampleData(audioBuf,
-                        offset);
-                int i = 0;
-                if (videoBufferInfo.size < 0 && audioBufferInfo.size < 0) {
-                    Log.d("DEBUG", "saw input EOS.");
-                    sawEOS = true;
-                    videoBufferInfo.size = 0;
-                    audioBufferInfo.size = 0;
-                } else {
-                    try {
-                        videoBufferInfo.presentationTimeUs = videoExtractor
-                                .getSampleTime();
-                        videoBufferInfo.flags = videoExtractor.getSampleFlags();
-                        muxer.writeSampleData(videoTrack, videoBuf, videoBufferInfo);
-                        videoExtractor.advance();
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                    try {
-                        audioBufferInfo.presentationTimeUs = audioExtractor
-                                .getSampleTime();
-                        audioBufferInfo.flags = audioExtractor.getSampleFlags();
-                        muxer.writeSampleData(audioTrack, audioBuf, audioBufferInfo);
-                        audioExtractor.advance();
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                    frameCount++;
-                    Log.d("DEBUG", "franecount " + frameCount);
-                }
-            }
-            muxer.stop();
-            muxer.release();
-        } catch (IOException e) {
-            e.printStackTrace();
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+//            super.onProgressUpdate(values);
+            tvupload.setText("Processing... ");
         }
 
+        public void addaudiovideo(String pathvideo, String pathaudio, String output) {
+            MediaExtractor videoExtractor = new MediaExtractor();
+            try {
+                videoExtractor.setDataSource(pathvideo);
+                MediaExtractor audioExtractor = new MediaExtractor();
+                audioExtractor.setDataSource(pathaudio);
+                Log.d("DEBUG",
+                        "Video Extractor Track Count "
+                                + videoExtractor.getTrackCount());
+                Log.d("DEBUG",
+                        "Audio Extractor Track Count "
+                                + audioExtractor.getTrackCount());
+
+                MediaMuxer muxer = new MediaMuxer(output,
+                        MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
+
+                videoExtractor.selectTrack(0);
+                MediaFormat videoFormat = videoExtractor.getTrackFormat(0);
+                int videoTrack = muxer.addTrack(videoFormat);
+
+                audioExtractor.selectTrack(0);
+                MediaFormat audioFormat = audioExtractor.getTrackFormat(0);
+                int audioTrack = muxer.addTrack(audioFormat);
+
+//            CroppedTrack cropperAacTrack = new CroppedTrack(, 0, paths.size()*1000);
+                Log.d("DEBUG", "Video Format " + videoFormat.toString());
+                Log.d("DEBUG", "Audio Format " + audioFormat.toString());
+
+                boolean sawEOS = false;
+                int frameCount = 0;
+                int offset = 100;
+                int sampleSize = 1024 * 1024;
+                ByteBuffer videoBuf = ByteBuffer.allocate(sampleSize);
+                ByteBuffer audioBuf = ByteBuffer.allocate(sampleSize);
+                MediaCodec.BufferInfo videoBufferInfo = new MediaCodec.BufferInfo();
+                MediaCodec.BufferInfo audioBufferInfo = new MediaCodec.BufferInfo();
+
+                videoExtractor.seekTo(0, MediaExtractor.SEEK_TO_CLOSEST_SYNC);
+                audioExtractor.seekTo(0, MediaExtractor.SEEK_TO_CLOSEST_SYNC);
+
+                muxer.start();
+
+                while (!sawEOS) {
+                    videoBufferInfo.offset = offset;
+                    audioBufferInfo.offset = offset;
+                    videoBufferInfo.size = videoExtractor.readSampleData(videoBuf,
+                            offset);
+                    audioBufferInfo.size = audioExtractor.readSampleData(audioBuf,
+                            offset);
+                    int i = 0;
+                    if (videoBufferInfo.size < 0 && audioBufferInfo.size < 0) {
+                        Log.d("DEBUG", "saw input EOS.");
+                        sawEOS = true;
+                        videoBufferInfo.size = 0;
+                        audioBufferInfo.size = 0;
+                    } else {
+                        try {
+                            videoBufferInfo.presentationTimeUs = videoExtractor
+                                    .getSampleTime();
+                            videoBufferInfo.flags = videoExtractor.getSampleFlags();
+                            muxer.writeSampleData(videoTrack, videoBuf, videoBufferInfo);
+                            videoExtractor.advance();
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            audioBufferInfo.presentationTimeUs = audioExtractor
+                                    .getSampleTime();
+                            audioBufferInfo.flags = audioExtractor.getSampleFlags();
+                            muxer.writeSampleData(audioTrack, audioBuf, audioBufferInfo);
+                            audioExtractor.advance();
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+
+                        Log.d("DEBUG", "franecount " + frameCount);
+                    }
+                }
+                muxer.stop();
+                muxer.release();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
 
     }
 
@@ -380,6 +389,9 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                     txtsong.setText(musicMP3.getNamesong());
                     showDiaglog();
                     new AsynAddAudio().execute(musicMP3.getPath());
+                } else {
+                    lnpro.setVisibility(View.VISIBLE);
+                    showDiaglog();
                 }
 
             }
@@ -457,13 +469,15 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
 
     public void showDiaglog() {
         if (lnpro.getVisibility() == View.VISIBLE) {
-            textsave.setClickable(false);
-            videoView.setClickable(false);
-            imgcontrolermusic.setClickable(false);
+            textsave.setEnabled(false);
+            videoView.setEnabled(false);
+            mediaController.setVisibility(View.INVISIBLE);
+            imgcontrolermusic.setEnabled(false);
         } else {
-            textsave.setClickable(true);
-            videoView.setClickable(true);
-            imgcontrolermusic.setClickable(true);
+            textsave.setEnabled(true);
+            videoView.setEnabled(true);
+            mediaController.setVisibility(View.VISIBLE);
+            imgcontrolermusic.setEnabled(true);
         }
     }
 }

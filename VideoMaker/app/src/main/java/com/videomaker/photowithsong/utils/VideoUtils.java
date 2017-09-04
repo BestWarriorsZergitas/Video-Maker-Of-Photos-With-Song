@@ -42,7 +42,7 @@ public class VideoUtils {
      * càng lớn sẽ càng mượt nhưng mắt thường khó cảm nhận được hết,
      * với các video HD  hiện tại trên Youtube đang ở mức 28
      **/
-    public static final int FRAMES_PER_SECOND = 30;
+    public static final int FRAMES_PER_SECOND = 20;
     private static final int IFRAME_INTERVAL = 5;
     /**
      * Khai báo width, height của video, các bạn có thể thay đổi thành video HD tuỳ ý muốn
@@ -72,7 +72,7 @@ public class VideoUtils {
      **/
     public static int maxFrame;
 
-    public OnUpdateProcessingVideo onUpdateProcessingVideo = null;
+    public static OnUpdateProcessingVideo onUpdateProcessingVideo = null;
 
     public VideoUtils(Context context, ArrayList<String> lsPathBitmap, String path) {
         this.context = context;
@@ -89,7 +89,7 @@ public class VideoUtils {
         try {
             /** Tạo ra video có thời lượng là 5giây **/
             //5s=maxFrame/FRAMES_PER_SECOND
-            maxFrame = (lsPathBitmap.size()) * 30;
+            maxFrame = (lsPathBitmap.size()) * FRAMES_PER_SECOND;
             for (int i = 0; i < maxFrame; i++) {
 //                // chuẩn bị cho việc vẽ lên surface
                 drainEncoder(false);
@@ -97,8 +97,8 @@ public class VideoUtils {
                 generateFrame_B(bitmap);
 
 //                /** Tính toán percent exported, để có thể đưa ra dialog thông báo cho người dùng, cho họ biết còn cần phải chờ bao lâu nữa **/
-                float percent = 100.0f * i / (float) maxFrame;
-//                onUpdateProcessingVideo.uploadIUVideo(percent);
+                int percent = (int) (100.0* i / maxFrame);
+                onUpdateProcessingVideo.uploadIUVideo(percent);
                 Log.d("DEBUG", "uploading " + percent);
             }
             drainEncoder(true);

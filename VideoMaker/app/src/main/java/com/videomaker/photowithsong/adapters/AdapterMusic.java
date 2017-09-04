@@ -1,5 +1,6 @@
 package com.videomaker.photowithsong.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,12 +60,16 @@ public class AdapterMusic extends BaseAdapter {
         txtnamemusic = (TextView) view.findViewById(R.id.txtnamems);
         imgcheck = (ImageView) view.findViewById(R.id.imgcheck);
         MusicMP3 musicMP3 = getItem(i);
+        txtnamemusic.setText(musicMP3.getNamemusic());
         if (musicMP3.isCheck()) {
             imgcheck.setImageResource(R.drawable.ic_music);
+            imgcheck.setAlpha(0.5f);
+            txtnamemusic.setTextColor(Color.parseColor("#cccccc"));
         } else {
             imgcheck.setImageResource(R.drawable.ic_music);
+            imgcheck.setAlpha(1f);
+            txtnamemusic.setTextColor(Color.parseColor("#111111"));
         }
-        txtnamemusic.setText(musicMP3.getNamemusic());
         return view;
     }
 }
