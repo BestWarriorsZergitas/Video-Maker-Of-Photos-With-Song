@@ -8,27 +8,10 @@ import java.io.Serializable;
 
 public class MusicMP3 implements Serializable {
     private boolean check;
-    private int id;
     private String namemusic;
     private String namesong;
     private String path;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public MusicMP3(boolean check, int id, String namemusic, String namesong, String path) {
-
-        this.check = check;
-        this.id = id;
-        this.namemusic = namemusic;
-        this.namesong = namesong;
-        this.path = path;
-    }
 
     public MusicMP3(boolean check, String namemusic, String namesong, String path) {
         this.check = check;

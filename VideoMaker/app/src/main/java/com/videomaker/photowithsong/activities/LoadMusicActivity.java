@@ -1,9 +1,9 @@
 package com.videomaker.photowithsong.activities;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Matrix;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -54,14 +54,15 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
         lnpr.setVisibility(View.INVISIBLE);
         lsmusic = new ArrayList<>();
         matrix = new Matrix();
-        lsmusic.add(new MusicMP3(false, "Christmas-1", "Unknow", getCacheDir() + "/NhacNenGiangSinh01.aac"));
-        lsmusic.add(new MusicMP3(false, "Christmas-2", "Unknow", getCacheDir() + "/NhacNenGiangSinh02.aac"));
-        lsmusic.add(new MusicMP3(false, "Love-1", "Unknow", getCacheDir() + "/NhacNenTinhYeu01.aac"));
-        lsmusic.add(new MusicMP3(false, "Love-2", "Unknow", getCacheDir() + "/NhacNenTinhYeu02.aac"));
-        lsmusic.add(new MusicMP3(false, "Happy New Year", "Unknow", getCacheDir() + "/NhacNenHappyNewYear01.aac"));
-        lsmusic.add(new MusicMP3(false, "Birthday", "Unknow", getCacheDir() + "/NhacNenSinhNhat01.aac"));
-        lsmusic.add(new MusicMP3(false, "Kiss the rain", "Yurima",
-                getCacheDir() + "/KissTheRain-Yiruma_.aac"));
+
+            lsmusic.add(new MusicMP3(false, "Christmas-1", "Unknow", "NhacNenGiangSinh01.aac"));
+            lsmusic.add(new MusicMP3(false, "Christmas-2", "Unknow", "NhacNenGiangSinh02.aac"));
+            lsmusic.add(new MusicMP3(false, "Love-1", "Unknow", "NhacNenTinhYeu01.aac"));
+            lsmusic.add(new MusicMP3(false, "Love-2", "Unknow", "NhacNenTinhYeu02.aac"));
+            lsmusic.add(new MusicMP3(false, "Happy New Year", "Unknow", "NhacNenHappyNewYear01.aac"));
+            lsmusic.add(new MusicMP3(false, "Birthday", "Unknow", "NhacNenSinhNhat01.aac"));
+            lsmusic.add(new MusicMP3(false, "Kiss the rain", "Yurima", "KissTheRain-Yiruma_.aac"));
+
 //        songMusic = new SongMusic();
         adapterMusic = new AdapterMusic(lsmusic, this.getLayoutInflater());
         lsview.setAdapter(adapterMusic);
@@ -143,8 +144,15 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
                 mediaPlayer.stop();
             }
         }
-        mediaPlayer = MediaPlayer.create(this, Uri.parse(musicMP3.getPath()));
-        mediaPlayer.setLooping(true);
+        mediaPlayer = new MediaPlayer();
+        try {
+            AssetFileDescriptor afd = getAssets().openFd(musicMP3.getPath());
+            mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            mediaPlayer.prepare();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mediaPlayer.start();
     }
 }
