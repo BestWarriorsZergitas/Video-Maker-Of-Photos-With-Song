@@ -97,7 +97,7 @@ public class VideoUtils {
                 generateFrame_B(bitmap);
 
 //                /** Tính toán percent exported, để có thể đưa ra dialog thông báo cho người dùng, cho họ biết còn cần phải chờ bao lâu nữa **/
-                int percent = (int) (100.0* i / maxFrame);
+                int percent = (int) (100.0 * i / maxFrame);
                 onUpdateProcessingVideo.uploadIUVideo(percent);
                 Log.d("DEBUG", "uploading " + percent);
             }
@@ -266,23 +266,30 @@ public class VideoUtils {
     }
 
     public Bitmap makeScaled(Bitmap src) {
-        int width = src.getWidth();
-        int height = src.getHeight();
-        // 480  889
-        //
-        float scale = (float) VIDEO_HEIGHT / height;
-        float scaledWidth = width * scale;
-        float scaledHeight = height * scale;
-        Matrix m = new Matrix();
-        m.setRectToRect(new RectF(0, 0, src.getWidth(), src.getHeight()), new RectF(0, 0, scaledWidth, scaledHeight), Matrix.ScaleToFit.CENTER);
-        Bitmap output = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), m, true);
-        Canvas xfas = new Canvas(output);
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setFilterBitmap(true);
-        paint.setDither(true);
-        xfas.drawBitmap(output, 0, 0, paint);
+        Bitmap output = null;
+        try {
+            int width = src.getWidth();
+            int height = src.getHeight();
+            // 480  889
+            //
+            float scale = (float) VIDEO_HEIGHT / height;
+            float scaledWidth = width * scale;
+            float scaledHeight = height * scale;
+            Matrix m = new Matrix();
+            m.setRectToRect(new RectF(0, 0, src.getWidth(), src.getHeight()), new RectF(0, 0, scaledWidth, scaledHeight), Matrix.ScaleToFit.CENTER);
+            output = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), m, true);
+            Canvas xfas = new Canvas(output);
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setFilterBitmap(true);
+            paint.setDither(true);
+            xfas.drawBitmap(output, 0, 0, paint);
+            return output;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return src;
+        }
 
-        return output;
+
     }
 }

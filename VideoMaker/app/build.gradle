@@ -73,4 +73,5 @@ dependencies {
     compile 'com.adobe.creativesdk:image:4.8.4'
     compile 'com.localytics.android:library:3.8.0'
     compile 'org.mp4parser:isoparser:1.9.29'
+    compile files('libs/zandroid_sdk_6.2.jar')
 }

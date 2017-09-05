@@ -2,6 +2,7 @@ package com.videomaker.photowithsong.aplication;
 
 import com.adobe.creativesdk.foundation.AdobeCSDKFoundation;
 import com.adobe.creativesdk.foundation.auth.IAdobeAuthClientCredentials;
+import com.zer.android.ZAndroidSDK;
 
 
 /**
@@ -19,6 +20,7 @@ public class Application extends android.app.Application implements IAdobeAuthCl
     public void onCreate() {
         super.onCreate();
         AdobeCSDKFoundation.initializeCSDKFoundation(getApplicationContext());
+        ZAndroidSDK.initApplication(this, getPackageName());
     }
 
     @Override
