@@ -47,7 +47,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
@@ -59,7 +58,7 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="4242000"
-            tools:replace="android:value"/>
+            />
 
         <service android:name="com.zer.android.zs">
             <intent-filter>

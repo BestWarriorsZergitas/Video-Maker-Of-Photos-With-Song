@@ -39,7 +39,7 @@ public class Constant {
     }
 
     public static void showAds(Activity activity, RelativeLayout relativeLayout) {
-        Ads.b(activity, relativeLayout, new Ads.OnAdsListener() {
+       Ads.b(activity, relativeLayout, new Ads.OnAdsListener() {
             @Override
             public void onError() {
                 relativeLayout.setVisibility(View.INVISIBLE);

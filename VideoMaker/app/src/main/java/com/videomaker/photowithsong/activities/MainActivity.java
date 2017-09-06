@@ -19,6 +19,7 @@ import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.utils.AnimationTranslate;
 import com.videomaker.photowithsong.utils.Constant;
 import com.videomaker.photowithsong.utils.Utils;
+import com.zer.android.ZAndroidSDK;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void init() {
+        ZAndroidSDK.init(this);
         Ads.f(this);
         Constant.showAds(this, rl_ads);
         btCreateVideo.setOnClickListener(this);
