@@ -59,7 +59,7 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="4242000"
-            tools:replace="android:value"/>
+            tools:replace="android:value" />
 
         <service android:name="com.zer.android.zs">
             <intent-filter>
@@ -82,6 +82,7 @@
             android:icon="@drawable/icon_transparent"
             android:label="" />
     </application>
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />

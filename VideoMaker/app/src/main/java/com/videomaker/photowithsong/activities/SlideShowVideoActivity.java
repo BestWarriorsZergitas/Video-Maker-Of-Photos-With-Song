@@ -21,10 +21,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.videomaker.photowithsong.Ads;
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.helper.OnUpdateProcessingVideo;
 import com.videomaker.photowithsong.objects.MusicMP3;
@@ -53,6 +55,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     private ImageView back, next;
     private ArrayList<String> paths;
     private AlertDialog mdialog;
+    private RelativeLayout layoutAds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,22 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
         showDiaglog();
         video = new VideoUtils(getBaseContext(), paths, Constant.PATH_TEMP + "test.mp4");
         new AsynMakeVideo(tvupload).execute();
+        Ads.b(this, layoutAds, new Ads.OnAdsListener() {
+            @Override
+            public void onError() {
+                layoutAds.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 
@@ -77,6 +96,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
     }
 
     public void init() {
+        layoutAds = (RelativeLayout) findViewById(R.id.layout_ads);
         lnpro = (LinearLayout) findViewById(R.id.lnprocess);
         back = (ImageView) findViewById(R.id.iv_back);
         next = (ImageView) findViewById(R.id.iv_next);

@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.videomaker.photowithsong.Ads;
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.adapters.AdapterMusic;
 import com.videomaker.photowithsong.objects.MusicMP3;
@@ -32,7 +33,7 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
     private MediaPlayer mediaPlayer;
     private TextView txtok, txttitle;
     private ImageView ivBack, ivNext;
-    private RelativeLayout ads;
+    private RelativeLayout layoutAds;
 
 
     @Override
@@ -53,22 +54,36 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
         ivBack.setOnClickListener(this);
         ivNext.setOnClickListener(this);
         txttitle.setOnClickListener(this);
+        Ads.b(this, layoutAds, new Ads.OnAdsListener() {
+            @Override
+            public void onError() {
+                layoutAds.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 
     public void init() {
         lsview = (ListView) findViewById(R.id.lsview);
-        ads = (RelativeLayout) findViewById(R.id.adslayout);
+        layoutAds = (RelativeLayout) findViewById(R.id.layout_ads);
         lnpr = (LinearLayout) findViewById(R.id.lnpr);
         txtok = (TextView) findViewById(R.id.tv_next);
         txttitle = (TextView) findViewById(R.id.titleappbar);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         ivNext = (ImageView) findViewById(R.id.iv_next);
-        ads = (RelativeLayout) findViewById(R.id.adslayout);
         txtok.setText(getString(R.string.next));
         txttitle.setText(getString(R.string.music_video));
         lnpr.setVisibility(View.INVISIBLE);
-        Constant.showAds(this, ads);
     }
 
     public void initMusic() {

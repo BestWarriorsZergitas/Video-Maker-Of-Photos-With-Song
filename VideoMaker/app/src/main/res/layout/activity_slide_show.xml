@@ -86,6 +86,12 @@
                     android:src="@drawable/ic_add"
                     />
             </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/layout_ads"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="50dp">
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

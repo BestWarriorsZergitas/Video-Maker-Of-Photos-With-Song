@@ -15,6 +15,7 @@
         android:layout_weight="1">
 
     </android.support.v7.widget.RecyclerView>
+
     <RelativeLayout
         android:id="@+id/layout_ads"
         android:layout_width="match_parent"
