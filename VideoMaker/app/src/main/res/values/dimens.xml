@@ -26,4 +26,5 @@
     <dimen name="s14sp">14sp</dimen>
     <dimen name="s30dp">30dp</dimen>
     <dimen name="s12sp">12sp</dimen>
+    <dimen name="s30sp">30sp</dimen>
 </resources>

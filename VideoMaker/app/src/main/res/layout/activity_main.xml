@@ -37,7 +37,7 @@
                     android:gravity="center|bottom"
                     android:text="@string/video_maker"
                     android:textColor="#fff"
-                    android:textSize="30sp" />
+                    android:textSize="@dimen/s30sp" />
 
                 <com.videomaker.photowithsong.utils.CustomTextView
                     android:layout_width="match_parent"
