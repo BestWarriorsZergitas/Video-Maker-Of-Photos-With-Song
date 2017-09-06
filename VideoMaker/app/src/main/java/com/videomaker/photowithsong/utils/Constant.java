@@ -1,8 +1,13 @@
 package com.videomaker.photowithsong.utils;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.view.View;
+import android.widget.RelativeLayout;
+
+import com.videomaker.photowithsong.Ads;
 
 /**
  * Created by Peih Gnaoh on 8/21/2017.
@@ -31,5 +36,24 @@ public class Constant {
             //  Logger.e(e.toString());
         }
         return null;
+    }
+
+    public static void showAds(Activity activity, RelativeLayout relativeLayout) {
+        Ads.b(activity, relativeLayout, new Ads.OnAdsListener() {
+            @Override
+            public void onError() {
+                relativeLayout.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                relativeLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                relativeLayout.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

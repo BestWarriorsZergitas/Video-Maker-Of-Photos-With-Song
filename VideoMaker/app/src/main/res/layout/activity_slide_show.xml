@@ -50,7 +50,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="@dimen/s8dp"
                     android:layout_weight="2"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -63,7 +63,7 @@
                         android:gravity="center_vertical"
                         android:text=""
                         android:textColor="#111"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/s20sp"
                         android:textStyle="bold" />
 
                     <com.videomaker.photowithsong.utils.CustomTextViewSanFranciscoMediem
@@ -82,7 +82,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="20dp"
+                    android:padding="@dimen/s20dp"
                     android:src="@drawable/ic_add"
                     />
             </LinearLayout>
@@ -107,6 +107,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#fff"
-            android:textSize="20sp" />
+            android:textSize="@dimen/s20sp" />
     </LinearLayout>
+
 </FrameLayout>

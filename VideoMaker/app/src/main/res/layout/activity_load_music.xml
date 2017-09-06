@@ -9,6 +9,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_marginBottom="@dimen/s50dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -18,7 +19,7 @@
                 android:id="@+id/lsview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="16dp">
+                android:layout_margin="@dimen/s16dp">
 
             </ListView>
         </LinearLayout>
@@ -36,6 +37,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/adslayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/s50dp"
+            android:layout_gravity="bottom">
+
+        </RelativeLayout>
     </FrameLayout>
 
 </LinearLayout>

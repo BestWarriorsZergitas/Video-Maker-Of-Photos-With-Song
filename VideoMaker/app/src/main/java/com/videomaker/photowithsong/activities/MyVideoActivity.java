@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.adapters.AdapterAblbumVideo;
 import com.videomaker.photowithsong.objects.MyVideo;
+import com.videomaker.photowithsong.utils.Constant;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -28,7 +30,7 @@ public class MyVideoActivity extends AppCompatActivity {
     private ArrayList<MyVideo> arrVideo = new ArrayList<>();
     private TextView textsave, titleappbar;
     private ImageView ivBack, ivNext;
-
+private RelativeLayout ads;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,7 @@ public class MyVideoActivity extends AppCompatActivity {
     }
 
     public void init() {
+        ads= (RelativeLayout) findViewById(R.id.adslayout);
         recycleView = (RecyclerView) findViewById(R.id.rv_fr_albumvideo);
         textsave = (TextView) findViewById(R.id.tv_next);
         textsave.setVisibility(View.INVISIBLE);
@@ -49,6 +52,7 @@ public class MyVideoActivity extends AppCompatActivity {
         ivNext = (ImageView) findViewById(R.id.iv_next);
         ivNext.setVisibility(View.INVISIBLE);
         titleappbar.setText(getString(R.string.my_video));
+        Constant.showAds(this,ads);
         arrVideo = new ArrayList<>();
         recycleView.setLayoutManager(new GridLayoutManager(getBaseContext(), 2));
         adapterAblbumVideo = new AdapterAblbumVideo(getBaseContext(), arrVideo);

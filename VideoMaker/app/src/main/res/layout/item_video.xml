@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:elevation="3dp"
-        card_view:cardCornerRadius="10dp"
+        android:layout_margin="@dimen/s5dp"
+        android:elevation="@dimen/s3dp"
+        card_view:cardCornerRadius="@dimen/s10dp"
         card_view:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -21,7 +21,7 @@
             <FrameLayout
                 android:id="@+id/framlay"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="@dimen/s160dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:scaleType="centerCrop">
@@ -29,7 +29,7 @@
                 <ImageView
                     android:id="@+id/preview_video"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="@dimen/s160dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:scaleType="centerCrop"
@@ -46,8 +46,8 @@
 
                 <ImageView
                     android:layout_gravity="center_vertical"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/s30dp"
+                    android:layout_height="@dimen/s30dp"
                     android:src="@drawable/ic_play" />
 
                 <LinearLayout
@@ -59,9 +59,9 @@
                         android:id="@+id/titlevideo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingLeft="@dimen/s10dp"
+                        android:paddingRight="@dimen/s10dp"
+                        android:paddingTop="@dimen/s10dp"
                         android:textColor="@android:color/black"
                         android:textSize="15sp" />
 
@@ -69,10 +69,10 @@
                         android:id="@+id/counttime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="5dp"
-                        android:textSize="12sp" />
+                        android:paddingLeft="@dimen/s10dp"
+                        android:paddingRight="@dimen/s10dp"
+                        android:paddingTop="@dimen/s5dp"
+                        android:textSize="@dimen/s12sp" />
                 </LinearLayout>
             </LinearLayout>
 

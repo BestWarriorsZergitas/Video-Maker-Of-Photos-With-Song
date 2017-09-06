@@ -2,9 +2,7 @@ package com.videomaker.photowithsong.activities;
 
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
-import android.graphics.Matrix;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,12 +12,13 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.adapters.AdapterMusic;
 import com.videomaker.photowithsong.objects.MusicMP3;
-import com.videomaker.photowithsong.utils.SongMusic;
+import com.videomaker.photowithsong.utils.Constant;
 
 import java.util.ArrayList;
 
@@ -27,13 +26,13 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
     private ArrayList<MusicMP3> lsmusic;
     private ListView lsview;
     private AdapterMusic adapterMusic;
-    private SongMusic songMusic;
     private LinearLayout lnpr;
     private MusicMP3 musicMP3;
     private MediaPlayer mediaPlayer;
     private TextView txtok, txttitle;
     private ImageView ivBack, ivNext;
-    private Matrix matrix;
+    private RelativeLayout ads;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,26 +42,8 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_load_music);
-        lsview = (ListView) findViewById(R.id.lsview);
-        lnpr = (LinearLayout) findViewById(R.id.lnpr);
-        txtok = (TextView) findViewById(R.id.tv_next);
-        txttitle = (TextView) findViewById(R.id.titleappbar);
-        ivBack = (ImageView) findViewById(R.id.iv_back);
-        ivNext = (ImageView) findViewById(R.id.iv_next);
-        txtok.setText(getString(R.string.next));
-        txttitle.setText(getString(R.string.music_video));
-        lnpr.setVisibility(View.INVISIBLE);
-        lsmusic = new ArrayList<>();
-        matrix = new Matrix();
-
-            lsmusic.add(new MusicMP3(false, "Christmas-1", "Unknow", "NhacNenGiangSinh01.aac"));
-            lsmusic.add(new MusicMP3(false, "Christmas-2", "Unknow", "NhacNenGiangSinh02.aac"));
-            lsmusic.add(new MusicMP3(false, "Love-1", "Unknow", "NhacNenTinhYeu01.aac"));
-            lsmusic.add(new MusicMP3(false, "Love-2", "Unknow", "NhacNenTinhYeu02.aac"));
-            lsmusic.add(new MusicMP3(false, "Happy New Year", "Unknow", "NhacNenHappyNewYear01.aac"));
-            lsmusic.add(new MusicMP3(false, "Birthday", "Unknow", "NhacNenSinhNhat01.aac"));
-            lsmusic.add(new MusicMP3(false, "Kiss the rain", "Yurima", "KissTheRain-Yiruma_.aac"));
-
+        init();
+        initMusic();
 //        songMusic = new SongMusic();
         adapterMusic = new AdapterMusic(lsmusic, this.getLayoutInflater());
         lsview.setAdapter(adapterMusic);
@@ -74,6 +55,36 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
 
     }
 
+    public void init() {
+        lsview = (ListView) findViewById(R.id.lsview);
+        ads = (RelativeLayout) findViewById(R.id.adslayout);
+        lnpr = (LinearLayout) findViewById(R.id.lnpr);
+        txtok = (TextView) findViewById(R.id.tv_next);
+        txttitle = (TextView) findViewById(R.id.titleappbar);
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivNext = (ImageView) findViewById(R.id.iv_next);
+        ads = (RelativeLayout) findViewById(R.id.adslayout);
+        txtok.setText(getString(R.string.next));
+        txttitle.setText(getString(R.string.music_video));
+        lnpr.setVisibility(View.INVISIBLE);
+        Constant.showAds(this, ads);
+    }
+
+    public void initMusic() {
+        lsmusic = new ArrayList<>();
+        lsmusic.add(new MusicMP3(false, "Christmas-1", "Unknow", "NhacNenGiangSinh01.aac"));
+        lsmusic.add(new MusicMP3(false, "Christmas-2", "Unknow", "NhacNenGiangSinh02.aac"));
+        lsmusic.add(new MusicMP3(false, "Love-1", "Unknow", "NhacNenTinhYeu01.aac"));
+        lsmusic.add(new MusicMP3(false, "Love-2", "Unknow", "NhacNenTinhYeu02.aac"));
+        lsmusic.add(new MusicMP3(false, "Happy New Year", "Unknow", "NhacNenHappyNewYear01.aac"));
+        lsmusic.add(new MusicMP3(false, "Birthday", "Unknow", "NhacNenSinhNhat01.aac"));
+        lsmusic.add(new MusicMP3(false, "Hope You", "Unknow", "HopeYou.aac"));
+        lsmusic.add(new MusicMP3(false, "Kiss the rain", "Yurima", "KissTheRain-Yiruma_.aac"));
+        lsmusic.add(new MusicMP3(false, "Happy Day", "AyanaTaketatsu", "HappyDay-AyanaTaketatsu.aac"));
+        lsmusic.add(new MusicMP3(false, "In Love", "July", "InLove-July.aac"));
+        lsmusic.add(new MusicMP3(false, "TenshiTekiKenpouYonjou", "MatsumotoTama", "TenshiTekiKenpouYonjou-MatsumotoTama.aac"));
+
+    }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -121,22 +132,6 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
 
     }
 
-    public class loadMusic extends AsyncTask<Void, Void, ArrayList<MusicMP3>> {
-        @Override
-        protected ArrayList<MusicMP3> doInBackground(Void... voids) {
-            return songMusic.getPlayList();
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<MusicMP3> objectMusics) {
-            adapterMusic.setLsmusic(objectMusics);
-            adapterMusic.notifyDataSetChanged();
-            lnpr.setVisibility(View.INVISIBLE);
-            this.cancel(true);
-
-        }
-
-    }
 
     public void playMusic() {
         if (mediaPlayer != null) {

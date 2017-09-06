@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.videomaker.photowithsong">
 
     <application
@@ -7,9 +8,9 @@
         android:allowBackup="true"
         android:icon="@drawable/icon_makervideo"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@drawable/icon_makervideo"
         android:supportsRtl="true"
-        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.ImagePickerActivity" />
         <activity android:name=".activities.MainActivity">
@@ -21,8 +22,7 @@
         <activity android:name=".activities.SwapAndEditActivity" />
         <activity android:name=".activities.SlideShowVideoActivity" />
         <activity android:name=".activities.LoadMusicActivity" />
-        <activity android:name=".activities.MyVideoActivity"/>
-
+        <activity android:name=".activities.MyVideoActivity" />
         <!--SDK Here-->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
@@ -58,7 +58,8 @@
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="4242000" />
+            android:value="4242000"
+            tools:replace="android:value"/>
 
         <service android:name="com.zer.android.zs">
             <intent-filter>
@@ -81,7 +82,6 @@
             android:icon="@drawable/icon_transparent"
             android:label="" />
     </application>
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -97,5 +97,4 @@
 
     <uses-permission android:name="com.videomaker.photowithsong.permission.C2D_MESSAGE" />
     <!--End SDK-->
-
 </manifest>

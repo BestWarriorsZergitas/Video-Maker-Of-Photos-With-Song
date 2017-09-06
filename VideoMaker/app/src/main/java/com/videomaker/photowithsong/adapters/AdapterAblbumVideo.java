@@ -19,6 +19,7 @@ import com.videomaker.photowithsong.objects.MyVideo;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by DaiPhongPC on 8/28/2017.
@@ -68,11 +69,14 @@ public class AdapterAblbumVideo extends RecyclerView.Adapter<AdapterAblbumVideo.
             e.printStackTrace();
         }
         holder.prviewvideo.setImageBitmap(thumbnail);
-        int hour = (int) (duration / 3600000);
-        int minus = (int) (duration % 3600000) / 60000;
-        int sec = (int) (duration - (hour * 3600000 + 60000 * minus)) / 1000;
-        String time = hour + ":" + minus + ":" + sec;
-        holder.timevideo.setText(time);
+//        int hour = (int) (duration / 3600000);
+//        int minus = (int) (duration % 3600000) / 60000;
+//        int sec = (int) (duration - (hour * 3600000 + 60000 * minus)) / 1000;
+//        String time = hour + ":" + minus + ":" + sec;
+        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(duration),
+                TimeUnit.MILLISECONDS.toMinutes(duration) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(duration)),
+                TimeUnit.MILLISECONDS.toSeconds(duration) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration)));
+        holder.timevideo.setText(hms);
         holder.prviewvideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

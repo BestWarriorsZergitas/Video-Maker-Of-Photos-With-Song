@@ -11,28 +11,28 @@
         android:layout_height="wrap_content"
         android:text="@string/save_video"
         android:textColor="#111"
-        android:textSize="28sp" />
+        android:textSize="@dimen/s28sp" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="@dimen/s2dp"
+        android:layout_marginTop="@dimen/s8dp"
         android:textColor="#ccc" />
 
     <EditText
         android:id="@+id/edit_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/s8dp"
         android:hint="@string/input_name" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="@dimen/s24dp"
+        android:layout_marginRight="@dimen/s24dp"
+        android:layout_marginTop="@dimen/s16dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="2">
@@ -46,17 +46,17 @@
             android:gravity="center"
             android:text="@string/save"
             android:textColor="#fff"
-            android:textSize="20sp" />
+            android:textSize="@dimen/s20sp" />
 
         <com.videomaker.photowithsong.utils.CustomTextViewSanFranciscoMediem
             android:id="@+id/bt_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="@dimen/s24dp"
             android:layout_weight="1"
             android:background="@drawable/selector_buton_cancel"
             android:gravity="center"
             android:text="@string/cancel"
-            android:textSize="20sp" />
+            android:textSize="@dimen/s20sp" />
     </LinearLayout>
 </LinearLayout>

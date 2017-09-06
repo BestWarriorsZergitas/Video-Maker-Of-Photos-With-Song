@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/imgcheck"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/s30dp"
+            android:layout_height="@dimen/s30dp"
             android:src="@drawable/ic_music" />
 
         <com.videomaker.photowithsong.utils.CustomTextViewSanFranciscoMediem
@@ -22,9 +22,9 @@
             android:id="@+id/txtnamems"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="@dimen/s8dp"
             android:text=""
-            android:textSize="20sp" />
+            android:textSize="@dimen/s20sp" />
     </LinearLayout>
 
 </LinearLayout>

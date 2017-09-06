@@ -3,4 +3,27 @@
     <dimen name="dgv_overlap_if_switch_straight_line">16dp</dimen>
     <dimen name="dp260">260dp</dimen>
     <dimen name="dp70">70dp</dimen>
+    <dimen name="s56dp">56dp</dimen>
+    <dimen name="s20sp">20sp</dimen>
+    <dimen name="s150dp">150dp</dimen>
+    <dimen name="s60dp">60dp</dimen>
+    <dimen name="s200dp">200dp</dimen>
+    <dimen name="s40dp">40dp</dimen>
+    <dimen name="s20dp">20dp</dimen>
+    <dimen name="s10dp">10dp</dimen>
+    <dimen name="s50dp">50dp</dimen>
+    <dimen name="s16dp">16dp</dimen>
+    <dimen name="s120dp">120dp</dimen>
+    <dimen name="s8dp">8dp</dimen>
+    <dimen name="s22sp">22sp</dimen>
+    <dimen name="s28sp">28sp</dimen>
+    <dimen name="s2dp">2dp</dimen>
+    <dimen name="s24dp">24dp</dimen>
+    <dimen name="s5dp">5dp</dimen>
+    <dimen name="s3dp">3dp</dimen>
+    <dimen name="s160dp">160dp</dimen>
+    <dimen name="s16sp">16sp</dimen>
+    <dimen name="s14sp">14sp</dimen>
+    <dimen name="s30dp">30dp</dimen>
+    <dimen name="s12sp">12sp</dimen>
 </resources>

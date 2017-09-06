@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.videomaker.photowithsong.R;
@@ -44,6 +45,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     private PickedImageAdapter pickedImageAdapter;
     private TextView tvNext, tvSelected, tvTitle;
     private ImageView btClear;
+    private RelativeLayout ads;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,21 +63,19 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
         tvTitle = (TextView) findViewById(R.id.titleappbar);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         ivNext = (ImageView) findViewById(R.id.iv_next);
+        ads = (RelativeLayout) findViewById(R.id.adslayout);
+        Constant.showAds(this, ads);
         ivBack.setOnClickListener(this);
         ivNext.setOnClickListener(this);
         tvNext.setOnClickListener(this);
         tvTitle.setOnClickListener(this);
         btClear = (ImageView) findViewById(R.id.btn_clear);
         btClear.setOnClickListener(this);
-
         rvPickedImage = (RecyclerView) findViewById(R.id.rv_picked_image);
         rvPickedImage.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
         imagesPicked = new ArrayList<>();
-
         pickedImageAdapter = new PickedImageAdapter(imagesPicked, this, this);
         pickedImageAdapter.setHasStableIds(true);
-
         rvPickedImage.setAdapter(pickedImageAdapter);
 
         managerGalary = new ManagerGalary(this);
