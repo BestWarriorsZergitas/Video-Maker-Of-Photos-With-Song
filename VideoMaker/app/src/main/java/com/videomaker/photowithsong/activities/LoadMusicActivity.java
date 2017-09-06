@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.adapters.AdapterMusic;
 import com.videomaker.photowithsong.objects.MusicMP3;
+import com.videomaker.photowithsong.utils.AnimationTranslate;
 import com.videomaker.photowithsong.utils.Constant;
 
 import java.util.ArrayList;
@@ -111,9 +112,10 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
                 Intent intent = new Intent();
                 if (musicMP3 != null) {
                     intent.putExtra("music", musicMP3);
+                    setResult(500, intent);
                 }
-                setResult(500, intent);
                 finish();
+                AnimationTranslate.previewAnimation(LoadMusicActivity.this);
                 break;
             }
             case R.id.titleappbar:
@@ -126,6 +128,7 @@ public class LoadMusicActivity extends AppCompatActivity implements AdapterView.
                 Intent intent = new Intent();
                 setResult(500, intent);
                 finish();
+                AnimationTranslate.previewAnimation(LoadMusicActivity.this);
                 break;
             }
         }

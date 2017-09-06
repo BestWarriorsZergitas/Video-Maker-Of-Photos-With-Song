@@ -105,10 +105,11 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
                     } else {
                         //                    super.onBackPressed();
                         finish();
-//                        AnimationTranslate.previewAnimation(ImagePickerActivity.this);
+                    AnimationTranslate.previewAnimation(ImagePickerActivity.this);
                     }
                 } catch (Exception e) {
                     finish();
+                    AnimationTranslate.previewAnimation(ImagePickerActivity.this);
                     e.printStackTrace();
                 }
                 break;
@@ -175,14 +176,21 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
 
     @Override
     public void onBackPressed() {
-        if (imageFragment.isVisible() && imageFragment != null) {
-            ((TextView) findViewById(R.id.titleappbar)).setText(getString(R.string.pick_album));
-            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-            t.replace(R.id.frame_image_picker, albumFragment);
-            t.commit();
-        } else {
+        try{
+            if (imageFragment.isVisible() && imageFragment != null) {
+                ((TextView) findViewById(R.id.titleappbar)).setText(getString(R.string.pick_album));
+                FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+                t.replace(R.id.frame_image_picker, albumFragment);
+                t.commit();
+            } else {
 //            super.onBackPressed();
+                finish();
+                AnimationTranslate.previewAnimation(ImagePickerActivity.this);
+            }
+        }catch (NullPointerException e){
             finish();
+            AnimationTranslate.previewAnimation(ImagePickerActivity.this);
         }
+
     }
 }

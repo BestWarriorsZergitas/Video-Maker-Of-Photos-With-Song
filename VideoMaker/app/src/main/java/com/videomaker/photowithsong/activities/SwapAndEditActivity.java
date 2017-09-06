@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adobe.creativesdk.aviary.AdobeImageIntent;
 import com.videomaker.photowithsong.R;
@@ -147,7 +148,7 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
             case R.id.titleappbar:
             case R.id.iv_back: {
                 finish();
-//                AnimationTranslate.previewAnimation(SwapAndEditActivity.this);
+                AnimationTranslate.previewAnimation(SwapAndEditActivity.this);
                 break;
             }
             case R.id.iv_next:
@@ -156,14 +157,25 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
                 for (int i = 0; i < imageList.size(); i++) {
                     paths.add(imageList.get(i).getPath());
                 }
-                Intent data = new Intent(SwapAndEditActivity.this, SlideShowVideoActivity.class);
-                data.putExtra(Constant.IMAGE_ARR, paths);
-                startActivity(data);
-                AnimationTranslate.nextAnimation(SwapAndEditActivity.this);
+                if (paths.size()!=0){
+                    Intent data = new Intent(SwapAndEditActivity.this, SlideShowVideoActivity.class);
+                    data.putExtra(Constant.IMAGE_ARR, paths);
+                    startActivity(data);
+                    AnimationTranslate.nextAnimation(SwapAndEditActivity.this);
+                }else {
+                    Toast.makeText(this, "Bạn chưa chọn ảnh", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             }
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AnimationTranslate.previewAnimation(SwapAndEditActivity.this);
     }
 }

@@ -123,6 +123,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             }
             case R.id.iv_back:
             case R.id.titleappbar: {
+                AnimationTranslate.previewAnimation(SlideShowVideoActivity.this);
                 finish();
                 break;
             }
@@ -130,7 +131,15 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
             case R.id.tv_next: {
                 createDiaglog();
             }
+            default:
+                break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AnimationTranslate.previewAnimation(SlideShowVideoActivity.this);
     }
 
     public class AsynMakeVideo extends AsyncTask<ArrayList<String>, Integer, String> implements OnUpdateProcessingVideo {
@@ -376,6 +385,7 @@ public class SlideShowVideoActivity extends AppCompatActivity implements View.On
                     showDiaglog();
                     new AsynAddAudio().execute(musicMP3.getPath());
                 } else {
+                    Log.d("DEBUG","null");
                     lnpro.setVisibility(View.VISIBLE);
                     showDiaglog();
                 }

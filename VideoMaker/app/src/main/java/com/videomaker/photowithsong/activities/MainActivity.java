@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.videomaker.photowithsong.Ads;
 import com.videomaker.photowithsong.R;
+import com.videomaker.photowithsong.dialog.RateAppDialog;
 import com.videomaker.photowithsong.utils.AnimationTranslate;
 import com.videomaker.photowithsong.utils.Constant;
 import com.videomaker.photowithsong.utils.Utils;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     , Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private LinearLayout btCreateVideo, btMyVideo;
     private RelativeLayout rl_ads;
+    private RateAppDialog rateAppDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, MyVideoActivity.class));
                 AnimationTranslate.nextAnimation(MainActivity.this);
+            }
+        });
+        rateAppDialog = new RateAppDialog(this, new RateAppDialog.OnButtonClicked() {
+            @Override
+            public void onRateClicked() {
+                Utils.rateApp(MainActivity.this);
+            }
+
+            @Override
+            public void onCancelClicked() {
+                finish();
             }
         });
     }
@@ -131,4 +144,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        rateAppDialog.show();
+    }
 }

@@ -2,16 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="#e5e4e5"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <LinearLayout
-            android:layout_marginBottom="@dimen/s50dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/layout_ads"
             android:orientation="vertical">
             <include layout="@layout/action_bar" />
 
@@ -32,18 +33,21 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ProgressBar
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <com.github.ybq.android.spinkit.SpinKitView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/spin_kit"
+                style="@style/SpinKitView.Large.Wave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@android:color/white" />
         </LinearLayout>
         <RelativeLayout
-            android:id="@+id/adslayout"
+            android:id="@+id/layout_ads"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/s50dp"
-            android:layout_gravity="bottom">
-
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:layout_height="50dp">
         </RelativeLayout>
-    </FrameLayout>
-
+    </RelativeLayout>
 </LinearLayout>
