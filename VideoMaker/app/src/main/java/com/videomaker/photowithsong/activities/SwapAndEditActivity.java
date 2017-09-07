@@ -18,8 +18,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adobe.creativesdk.aviary.AdobeImageIntent;
+import com.videomaker.photowithsong.Ads;
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.adapters.RecyclerListAdapter;
 import com.videomaker.photowithsong.helper.OnStartDragListener;
@@ -43,7 +45,7 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
     private Image imageClick;
     private ImageView ivBack, ivNext;
     private int position;
-    private RelativeLayout ads;
+    private RelativeLayout layoutAds;
 
     public static Bitmap getBitmapFromLocalPath(String path, int sampleSize) {
         try {
@@ -64,12 +66,10 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_swap_and_edit);
-        ads = (RelativeLayout) findViewById(R.id.adslayout);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         ivNext = (ImageView) findViewById(R.id.iv_next);
         tvNext = (TextView) findViewById(R.id.tv_next);
         tvtitle = (TextView) findViewById(R.id.titleappbar);
-        Constant.showAds(this,ads);
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra(Constant.IMAGE);
         imageList = bundle.getParcelableArrayList(Constant.IMAGE);
@@ -87,6 +87,23 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
         ivBack.setOnClickListener(this);
         tvNext.setOnClickListener(this);
         tvtitle.setOnClickListener(this);
+        layoutAds = (RelativeLayout) findViewById(R.id.layout_ads);
+        Ads.b(this, layoutAds, new Ads.OnAdsListener() {
+            @Override
+            public void onError() {
+                layoutAds.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 
@@ -147,7 +164,7 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
             case R.id.titleappbar:
             case R.id.iv_back: {
                 finish();
-//                AnimationTranslate.previewAnimation(SwapAndEditActivity.this);
+                AnimationTranslate.previewAnimation(SwapAndEditActivity.this);
                 break;
             }
             case R.id.iv_next:
@@ -156,14 +173,25 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
                 for (int i = 0; i < imageList.size(); i++) {
                     paths.add(imageList.get(i).getPath());
                 }
-                Intent data = new Intent(SwapAndEditActivity.this, SlideShowVideoActivity.class);
-                data.putExtra(Constant.IMAGE_ARR, paths);
-                startActivity(data);
-                AnimationTranslate.nextAnimation(SwapAndEditActivity.this);
+                if (paths.size()!=0){
+                    Intent data = new Intent(SwapAndEditActivity.this, SlideShowVideoActivity.class);
+                    data.putExtra(Constant.IMAGE_ARR, paths);
+                    startActivity(data);
+                    AnimationTranslate.nextAnimation(SwapAndEditActivity.this);
+                }else {
+                    Toast.makeText(this, "Bạn chưa chọn ảnh", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             }
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AnimationTranslate.previewAnimation(SwapAndEditActivity.this);
     }
 }

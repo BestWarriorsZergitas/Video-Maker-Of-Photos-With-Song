@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.videomaker.photowithsong.Ads;
 import com.videomaker.photowithsong.R;
+import com.videomaker.photowithsong.dialog.RateAppDialog;
 import com.videomaker.photowithsong.utils.AnimationTranslate;
 import com.videomaker.photowithsong.utils.Constant;
 import com.videomaker.photowithsong.utils.Utils;
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {Manifest.permission.READ_EXTERNAL_STORAGE
                     , Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private LinearLayout btCreateVideo, btMyVideo;
-    private RelativeLayout rl_ads;
+    private RelativeLayout layoutAds;
+    private RateAppDialog rateAppDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,21 +43,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         btCreateVideo = (LinearLayout) findViewById(R.id.bt_new_video);
         btMyVideo = (LinearLayout) findViewById(R.id.bt_my_video);
-        rl_ads = (RelativeLayout) findViewById(R.id.adslayout);
         turnPermiss();
+
+        ZAndroidSDK.init(this);
+        Ads.b(this, layoutAds, new Ads.OnAdsListener() {
+            @Override
+            public void onError() {
+                layoutAds.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
 
     public void init() {
         ZAndroidSDK.init(this);
         Ads.f(this);
-        Constant.showAds(this, rl_ads);
+        layoutAds = (RelativeLayout) findViewById(R.id.layout_ads);
         btCreateVideo.setOnClickListener(this);
         btMyVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, MyVideoActivity.class));
                 AnimationTranslate.nextAnimation(MainActivity.this);
+            }
+        });
+        rateAppDialog = new RateAppDialog(this, new RateAppDialog.OnButtonClicked() {
+            @Override
+            public void onRateClicked() {
+                Utils.rateApp(MainActivity.this);
+            }
+
+            @Override
+            public void onCancelClicked() {
+                finish();
             }
         });
     }
@@ -133,4 +163,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        rateAppDialog.show();
+    }
 }

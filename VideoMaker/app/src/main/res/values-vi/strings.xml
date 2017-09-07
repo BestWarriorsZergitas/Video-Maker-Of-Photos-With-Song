@@ -18,4 +18,7 @@
     <string name="music_video">Nhạc nền</string>
     <string name="video_maker">Video Maker</string>
     <string name="pick_image">Chọn ảnh</string>
+    <string name="rate">Bạn có thấy đây là ứng dụng hữa ích? Hãy rate 5* để ủng hộ nhà phát triển!</string>
+    <string name="notnow">Lúc khác!</string>
+    <string name="ratenow">Đánh giá ngay!</string>
 </resources>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/s56dp"
+    android:layout_height="@dimen/dp70"
     android:background="#a24bfc">
 
     <ImageView
         android:id="@+id/iv_back"
-        android:layout_width="@dimen/s56dp"
+        android:layout_width="@dimen/dp70"
         android:layout_height="match_parent"
         android:scaleType="center"
         android:src="@drawable/ic_back" />
@@ -19,7 +19,7 @@
         android:gravity="center_vertical"
         android:text="@string/pick_album"
         android:textColor="#fff"
-        android:textSize="@dimen/s20sp" />
+        android:textSize="@dimen/s24dp" />
 
     <com.videomaker.photowithsong.utils.CustomTextView
         android:id="@+id/tv_next"
@@ -31,9 +31,9 @@
         android:text="@string/next"
         android:layout_toLeftOf="@+id/iv_next"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/s20sp" />
+        android:textSize="@dimen/s24dp" />
     <ImageView
-        android:layout_width="@dimen/s56dp"
+        android:layout_width="@dimen/dp70"
         android:layout_height="match_parent"
         android:scaleType="center"
         android:id="@+id/iv_next"

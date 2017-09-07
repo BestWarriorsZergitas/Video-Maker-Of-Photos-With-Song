@@ -15,10 +15,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.videomaker.photowithsong.Ads;
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.adapters.AlbumAdapter;
 import com.videomaker.photowithsong.adapters.ImageAdapter;
 import com.videomaker.photowithsong.adapters.PickedImageAdapter;
+import com.videomaker.photowithsong.dialog.RateAppDialog;
 import com.videomaker.photowithsong.fragments.AlbumFragment;
 import com.videomaker.photowithsong.fragments.ImageFragment;
 import com.videomaker.photowithsong.objects.Image;
@@ -45,7 +47,8 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
     private PickedImageAdapter pickedImageAdapter;
     private TextView tvNext, tvSelected, tvTitle;
     private ImageView btClear;
-    private RelativeLayout ads;
+    private RelativeLayout layoutAds;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +58,22 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_image_picker);
         initUI();
+        Ads.b(this, layoutAds, new Ads.OnAdsListener() {
+            @Override
+            public void onError() {
+                layoutAds.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void initUI() {
@@ -63,8 +82,7 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
         tvTitle = (TextView) findViewById(R.id.titleappbar);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         ivNext = (ImageView) findViewById(R.id.iv_next);
-        ads = (RelativeLayout) findViewById(R.id.adslayout);
-        Constant.showAds(this, ads);
+        layoutAds = (RelativeLayout) findViewById(R.id.layout_ads);
         ivBack.setOnClickListener(this);
         ivNext.setOnClickListener(this);
         tvNext.setOnClickListener(this);
@@ -105,10 +123,11 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
                     } else {
                         //                    super.onBackPressed();
                         finish();
-//                        AnimationTranslate.previewAnimation(ImagePickerActivity.this);
+                    AnimationTranslate.previewAnimation(ImagePickerActivity.this);
                     }
                 } catch (Exception e) {
                     finish();
+                    AnimationTranslate.previewAnimation(ImagePickerActivity.this);
                     e.printStackTrace();
                 }
                 break;
@@ -175,14 +194,21 @@ public class ImagePickerActivity extends AppCompatActivity implements AlbumAdapt
 
     @Override
     public void onBackPressed() {
-        if (imageFragment.isVisible() && imageFragment != null) {
-            ((TextView) findViewById(R.id.titleappbar)).setText(getString(R.string.pick_album));
-            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-            t.replace(R.id.frame_image_picker, albumFragment);
-            t.commit();
-        } else {
+        try{
+            if (imageFragment.isVisible() && imageFragment != null) {
+                ((TextView) findViewById(R.id.titleappbar)).setText(getString(R.string.pick_album));
+                FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+                t.replace(R.id.frame_image_picker, albumFragment);
+                t.commit();
+            } else {
 //            super.onBackPressed();
+                finish();
+                AnimationTranslate.previewAnimation(ImagePickerActivity.this);
+            }
+        }catch (NullPointerException e){
             finish();
+            AnimationTranslate.previewAnimation(ImagePickerActivity.this);
         }
+
     }
 }

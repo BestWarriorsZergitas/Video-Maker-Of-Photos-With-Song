@@ -19,12 +19,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/s150dp"
+            android:layout_height="@dimen/s200dp"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/s60dp"
+                android:layout_height="@dimen/dp70"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical">
 
@@ -48,20 +48,18 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_picked_image"
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
             </android.support.v7.widget.RecyclerView>
-
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_ads"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:visibility="gone"></RelativeLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/adslayout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/s50dp"
-        android:layout_gravity="bottom">
 
-    </RelativeLayout>
 </FrameLayout>

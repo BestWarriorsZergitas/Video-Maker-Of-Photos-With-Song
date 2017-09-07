@@ -20,7 +20,7 @@
             <ImageView
                 android:id="@+id/thumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/s160dp"
+                android:layout_height="@dimen/dp180"
                 android:src="@mipmap/ic_launcher"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"

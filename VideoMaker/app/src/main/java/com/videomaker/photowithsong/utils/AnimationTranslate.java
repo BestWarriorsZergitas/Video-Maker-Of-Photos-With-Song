@@ -13,6 +13,6 @@ public class AnimationTranslate {
         activity.overridePendingTransition(R.anim.anim_right, R.anim.anim_left);
     }
     public static void previewAnimation(Activity activity){
-        activity.overridePendingTransition(R.anim.anim_left, R.anim.anim_right);
+        activity.overridePendingTransition(R.anim.enter_anim_rtl, R.anim.exit_anim_rtl);
     }
 }

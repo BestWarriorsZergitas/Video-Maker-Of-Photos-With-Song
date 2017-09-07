@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<dimen name="dgv_overlap_if_switch_straight_line">20.0dp</dimen>
+<dimen name="dp260">325.0dp</dimen>
+<dimen name="dp70">87.5dp</dimen>
+<dimen name="s56dp">70.0dp</dimen>
+<dimen name="s20sp">25.0sp</dimen>
+<dimen name="s150dp">187.5dp</dimen>
+<dimen name="s60dp">75.0dp</dimen>
+<dimen name="s200dp">250.0dp</dimen>
+<dimen name="s40dp">50.0dp</dimen>
+<dimen name="s20dp">25.0dp</dimen>
+<dimen name="s10dp">12.5dp</dimen>
+<dimen name="s50dp">62.5dp</dimen>
+<dimen name="s16dp">20.0dp</dimen>
+<dimen name="s120dp">150.0dp</dimen>
+<dimen name="s8dp">10.0dp</dimen>
+<dimen name="s22sp">27.5sp</dimen>
+<dimen name="s28sp">35.0sp</dimen>
+<dimen name="s2dp">2.5dp</dimen>
+<dimen name="s24dp">30.0dp</dimen>
+<dimen name="s5dp">6.25dp</dimen>
+<dimen name="s3dp">3.75dp</dimen>
+<dimen name="s160dp">200.0dp</dimen>
+<dimen name="s16sp">20.0sp</dimen>
+<dimen name="s14sp">17.5sp</dimen>
+<dimen name="s30dp">37.5dp</dimen>
+<dimen name="s12sp">15.0sp</dimen>
+<dimen name="s30sp">37.5sp</dimen>
+<dimen name="dp180">225.0dp</dimen>
+</resources>

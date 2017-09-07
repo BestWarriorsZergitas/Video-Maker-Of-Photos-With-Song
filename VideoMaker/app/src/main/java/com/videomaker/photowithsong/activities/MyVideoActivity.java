@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.videomaker.photowithsong.Ads;
 import com.videomaker.photowithsong.R;
 import com.videomaker.photowithsong.adapters.AdapterAblbumVideo;
 import com.videomaker.photowithsong.objects.MyVideo;
@@ -30,7 +31,7 @@ public class MyVideoActivity extends AppCompatActivity {
     private ArrayList<MyVideo> arrVideo = new ArrayList<>();
     private TextView textsave, titleappbar;
     private ImageView ivBack, ivNext;
-private RelativeLayout ads;
+    private RelativeLayout layoutAds;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +40,27 @@ private RelativeLayout ads;
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_my_video);
         init();
+        Ads.b(this, layoutAds, new Ads.OnAdsListener() {
+            @Override
+            public void onError() {
+                layoutAds.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdOpened() {
+                layoutAds.setVisibility(View.VISIBLE);
+            }
+        });
         new loadVideo().execute();
     }
 
     public void init() {
-        ads= (RelativeLayout) findViewById(R.id.adslayout);
+        layoutAds = (RelativeLayout) findViewById(R.id.layout_ads);
         recycleView = (RecyclerView) findViewById(R.id.rv_fr_albumvideo);
         textsave = (TextView) findViewById(R.id.tv_next);
         textsave.setVisibility(View.INVISIBLE);
@@ -52,7 +69,6 @@ private RelativeLayout ads;
         ivNext = (ImageView) findViewById(R.id.iv_next);
         ivNext.setVisibility(View.INVISIBLE);
         titleappbar.setText(getString(R.string.my_video));
-        Constant.showAds(this,ads);
         arrVideo = new ArrayList<>();
         recycleView.setLayoutManager(new GridLayoutManager(getBaseContext(), 2));
         adapterAblbumVideo = new AdapterAblbumVideo(getBaseContext(), arrVideo);

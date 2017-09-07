@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.videomaker.photowithsong.activities.MyVideoActivity">
+
     <include layout="@layout/action_bar" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_fr_albumvideo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
     </android.support.v7.widget.RecyclerView>
-    <RelativeLayout
-        android:id="@+id/adslayout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/s50dp"
-        android:layout_gravity="bottom">
 
+    <RelativeLayout
+        android:id="@+id/layout_ads"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="50dp">
     </RelativeLayout>
-</FrameLayout>
+</LinearLayout>

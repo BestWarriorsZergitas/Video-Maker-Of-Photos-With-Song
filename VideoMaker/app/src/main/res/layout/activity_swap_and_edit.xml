@@ -38,13 +38,12 @@
         <!--android:text="Time (1 second)"-->
         <!--android:layout_weight="1"/>-->
         <!--</LinearLayout>-->
+
+        <RelativeLayout
+            android:id="@+id/layout_ads"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="50dp">
+        </RelativeLayout>
     </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/adslayout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/s50dp"
-        android:layout_gravity="bottom">
-
-    </RelativeLayout>
 </FrameLayout>
