@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Làm video từ ảnh</string>
+    <string name="feather_promo_title2">a</string>
     <string name="create_new">Tạo mới video</string>
     <string name="my_video">Video của tôi</string>
     <string name="pick_album">Thư viện ảnh</string>
@@ -21,4 +22,5 @@
     <string name="rate">Bạn có thấy đây là ứng dụng hữa ích? Hãy rate 5* để ủng hộ nhà phát triển!</string>
     <string name="notnow">Lúc khác!</string>
     <string name="ratenow">Đánh giá ngay!</string>
+    <string name="nullimg">Bạn phải chọn ít nhất 1 ảnh!</string>
 </resources>

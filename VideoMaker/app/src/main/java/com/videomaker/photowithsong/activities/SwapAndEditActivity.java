@@ -179,7 +179,7 @@ public class SwapAndEditActivity extends AppCompatActivity implements View.OnCli
                     startActivity(data);
                     AnimationTranslate.nextAnimation(SwapAndEditActivity.this);
                 }else {
-                    Toast.makeText(this, "Bạn chưa chọn ảnh", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,getResources().getString(R.string.nullimg), Toast.LENGTH_SHORT).show();
                 }
 
                 break;

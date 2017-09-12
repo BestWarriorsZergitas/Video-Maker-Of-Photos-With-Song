@@ -93,7 +93,7 @@ public class VideoUtils {
             for (int i = 0; i < maxFrame; i++) {
 //                // chuẩn bị cho việc vẽ lên surface
                 drainEncoder(false);
-                Bitmap bitmap = makeScaled(Constant.getBitmapFromLocalPath(lsPathBitmap.get(i / FRAMES_PER_SECOND), 1));
+                Bitmap bitmap = makeScaled(Constant.getBitmapFromLocalPath(lsPathBitmap.get(i / FRAMES_PER_SECOND)));
                 generateFrame_B(bitmap);
 
 //                /** Tính toán percent exported, để có thể đưa ra dialog thông báo cho người dùng, cho họ biết còn cần phải chờ bao lâu nữa **/

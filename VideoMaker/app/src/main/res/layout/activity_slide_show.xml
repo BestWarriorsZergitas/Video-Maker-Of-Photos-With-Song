@@ -101,10 +101,11 @@
         android:layout_height="match_parent"
         android:background="#62111111"
         android:gravity="center"
+        android:clickable="true"
+        android:touchscreenBlocksFocus="true"
         android:orientation="vertical">
 
-        <com.github.ybq.android.spinkit.SpinKitView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/spin_kit"
             style="@style/SpinKitView.Large.Wave"
             android:layout_width="wrap_content"

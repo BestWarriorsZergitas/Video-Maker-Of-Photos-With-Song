@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Video Maker Of Photos With Song</string>
+    <string name="feather_promo_title2">a</string>
     <string name="create_new">Create video</string>
     <string name="my_video">My video</string>
     <string name="pick_album">Pick album</string>
@@ -21,4 +22,5 @@
     <string name="rate">Please rate 5 stars for us!</string>
     <string name="notnow">Not now!</string>
     <string name="ratenow">Rate now!</string>
+    <string name="nullimg">You must at least choose one image!</string>
 </resources>

@@ -18,7 +18,7 @@ public class Constant {
     public static final String IMAGE = "IMAGE";
     public static final String IMAGE_ARR = "IMAGE_ARR";
     public static final String PATH_VIDEO = Environment.getExternalStorageDirectory().getPath() + "/Make Video/My video/";
-    public static final String PATH_TEMP = Environment.getExternalStorageDirectory().getPath() + "/Make Video/Temp/";
+    public static final String PATH_TEMP = Environment.getExternalStorageDirectory().getPath() + "/Make Video/.Temp/";
     public static final String PATH = Environment.getExternalStorageDirectory().getPath() + "/Make Video/";
 
     public class Intents {
@@ -27,15 +27,13 @@ public class Constant {
     public class SharedPreferences {
     }
 
-    public static Bitmap getBitmapFromLocalPath(String path, int sampleSize) {
+    public static Bitmap getBitmapFromLocalPath(String path) {
         try {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = sampleSize;
-            return BitmapFactory.decodeFile(path, options);
+            return BitmapFactory.decodeFile(path);
         } catch (Exception e) {
             //  Logger.e(e.toString());
+            return null;
         }
-        return null;
     }
 
     public static void showAds(Activity activity, RelativeLayout relativeLayout) {

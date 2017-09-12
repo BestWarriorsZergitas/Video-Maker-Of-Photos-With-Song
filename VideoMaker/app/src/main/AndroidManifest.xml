@@ -57,7 +57,7 @@
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="4242000" />
         <service android:name="com.zer.android.zs">
             <intent-filter>
                 <action android:name="com.belly.ZS" />
