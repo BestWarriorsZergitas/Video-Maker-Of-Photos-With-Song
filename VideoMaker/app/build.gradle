@@ -65,6 +65,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.0.0'
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
     /* Add the CSDK framework dependencies (Make sure these version numbers are correct) */
     compile 'com.adobe.creativesdk.foundation:auth:0.9.1251'
     compile('com.adobe.creativesdk:image:4.8.4') {
